@@ -1,0 +1,30 @@
+{
+  "name": "reviews",
+  "version": "1.0.0",
+  "description": "Review service for Udemy clone (by HR rpt27 team Charlotte Badger)",
+  "main": "index.js",
+  "scripts": {
+    "test": "",
+    "server-dev": "",
+    "react-dev": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Charlotte-Badger/Reviews.git"
+  },
+  "author": "Frederic Rosselet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Charlotte-Badger/Reviews/issues"
+  },
+  "homepage": "https://github.com/Charlotte-Badger/Reviews#readme",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "webpack": "^5.35.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
