@@ -1,8 +1,8 @@
 import React from 'react';
 import Review from './review.jsx';
-import Search from './search.jsx'
+import Search from './search.jsx';
 
-const ReviewList = (props) => (
+const ReviewList = (props) => ( // shows all reviews (displayed 12 at a time)
   <div>
     <h2>Reviews</h2>
     <Search />
