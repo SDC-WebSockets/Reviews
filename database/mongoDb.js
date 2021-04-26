@@ -24,8 +24,8 @@ const reviewSchema = new mongoose.Schema({
   reviewer: Object,   // {“reviewerId”: Number,
                       // “name”: String,
                       // “pictureUrl”: String,
-                      // “coursesTaken”: Number,
-                      // “reviews”: Number}
+                      // “coursesTaken”: Number, // only for featured review
+                      // “reviews”: Number} // only for featured review
   rating: Number,
   comment: String,
   createdAt: Date,
