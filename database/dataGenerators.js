@@ -10,6 +10,16 @@ const generateRandomReview = () => {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
+  let randomInclusiveIntegerWithExceptions = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    let randomInteger = Math.floor(Math.random() * (max - min + 1) + min);
+    let exceptions = [13, 26, 39, 52, 65, 78, 91]; // those courseIds will not have any reviews
+    while (exceptions.includes(randomInteger)) {
+      randomInteger = Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    return randomInteger;
+  };
   let randomDate = (date1, date2) => {
     return new Date(date1.getTime() + Math.random() * (date2.getTime() - date1.getTime()));
   };
@@ -17,9 +27,10 @@ const generateRandomReview = () => {
   // let randomReviews = [];
 
   // for (let i = 0; i < 1000; i++) {
-  let randomCourseId = randomInclusiveInteger(1, 100);
+  let randomCourseId = randomInclusiveIntegerWithExceptions(1, 100);
 
   let randomReviewerId = randomInclusiveInteger(100000, 999999);
+  // in this scenario, it is very unlikely that two reviewers will have the same ID
   let randomName = faker.name.findName();
   let initials = randomName.split(' ').map((n)=>n[0]).join('').slice(0, 2);
   let randomAvatar = faker.image.avatar();
@@ -60,6 +71,8 @@ const generateRandomReview = () => {
 };
 
 
+
+
 // ------ ADD 1000 RANDOM REVIEWS TO DATABASE ------
 const add1000reviews = () => {
   let numberOfTimes = 1000;
@@ -71,7 +84,7 @@ const add1000reviews = () => {
     }, i * interval);
   }
 };
-// add1000reviews();
+add1000reviews();
 
 
 
