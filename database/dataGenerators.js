@@ -1,105 +1,7 @@
-const Review = require('./mongoDb.js').Review;
-const Rating = require('./mongoDb.js').Rating;
+const addReviewAndUpdateRating = require('./mongoDb.js').addReviewAndUpdateRating;
+const resetRating = require('./mongoDb.js').resetRating;
 const faker = require('faker');
 
-// ====== ADD REVIEWS TO DATABASE ======
-const addReview = (review) => {
-  return new Promise ((resolve, reject) => {
-
-    let document = new Review({
-      courseId: review.courseId,
-      reviewer: {
-        reviewerId: review.reviewer.reviewerId,
-        name: review.reviewer.name,
-        picture: review.reviewer.picture,
-        coursesTaken: review.reviewer.coursesTaken,
-        reviews: review.reviewer.reviews
-      },
-      rating: review.rating,
-      comment: review.comment,
-      createdAt: review.createdAt,
-      helpful: review.helpful,
-      reported: false
-    });
-
-    document.save((err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        console.log(`Review for course id ${review.courseId} saved/updated in database`);
-        resolve(result); // = review
-      }
-    });
-  });
-};
-
-const findRating = (review) => {
-  return new Promise ((resolve, reject) => {
-    Rating.findOne({courseId: review.courseId}, (err, rating) => {
-      if (err) {
-        reject(err);
-      } else {
-        console.log('Corresponding rating found:', rating);
-        resolve(rating);
-      }
-    });
-  });
-};
-
-const updateRating = (review, rating) => {
-  return new Promise ((resolve, reject) => {
-    let filter = {courseId: review.courseId};
-    let currentRating = review.rating;
-    let newTotalStars = rating.totalStars + currentRating;
-    let newTotalRatings = rating.totalRatings + 1;
-    let updatedTier = rating.fiveStars + 1;
-    let newOverallRating = newTotalStars / newTotalRatings;
-    let valuesToSet = { overallRating: newOverallRating, totalRatings: newTotalRatings, totalStars: newTotalStars };
-    let callback = (err, results) => {
-      if (err) {
-        console.log('Error updating corresponding rating:', err);
-        reject(err);
-      } else {
-        console.log('Results from updateRating:', results);
-        resolve(results);
-      }
-    };
-    if (review.rating === 5) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: { fiveStars: 1}}, callback);
-    } else if (review.rating === 4) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: { fourStars: 1}}, callback);
-    } else if (review.rating === 3) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: { threeStars: 1}}, callback);
-    } else if (review.rating === 2) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: { twoStars: 1}}, callback);
-    } else if (review.rating === 1) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: { oneStar: 1}}, callback);
-    }
-  });
-};
-
-const addReviewAndUpdateRating = (review) => {
-  addReview(review)
-    .then((result) => {
-      // console.log('Result from addReview:', result);
-      findRating(result)
-        .then((rating) => {
-          console.log('Result from findRating:', rating);
-          updateRating(review, rating);
-        })
-        .catch((err) => {
-          console.log('Error in addReviewAndUpdateRating:', err);
-        });
-    });
-};
-
-
-
-
-
-
-
-// ------ GENERATE RANDOM REVIEWS ------
 
 const generateRandomReview = () => {
   // helper functions
@@ -116,13 +18,24 @@ const generateRandomReview = () => {
 
   // for (let i = 0; i < 1000; i++) {
   let randomCourseId = randomInclusiveInteger(1, 100);
+
+  let randomReviewerId = randomInclusiveInteger(100000, 999999);
+  let randomName = faker.name.findName();
+  let initials = randomName.split(' ').map((n)=>n[0]).join('').slice(0, 2);
+  let randomAvatar = faker.image.avatar();
+  let avatars = [initials, initials, initials, randomAvatar];
+  let avatarVsNoAvatar = avatars[randomInclusiveInteger(0, 3)];
+  let randomNoOfCourses = randomInclusiveInteger(1, 50);
+  let randomNoOfReviews = randomInclusiveInteger(1, randomNoOfCourses);
+
   let randomReviewer = {
-    reviewerId: randomInclusiveInteger(100000, 999999),
-    name: faker.name.findName(),
-    picture: faker.image.avatar(),
-    coursesTaken: randomInclusiveInteger(1, 50),
-    reviews: randomInclusiveInteger(1, 50)
+    reviewerId: randomReviewerId,
+    name: randomName,
+    picture: avatarVsNoAvatar,
+    coursesTaken: randomNoOfCourses,
+    reviews: randomNoOfReviews
   };
+
   const ratings = [5, 5, 5, 5, 5, 4, 4, 3, 2, 1]; // making it more likely for it to have good ratings
   let randomRating = ratings[randomInclusiveInteger(0, 9)];
   let randomComment = faker.lorem.sentences();
@@ -147,62 +60,33 @@ const generateRandomReview = () => {
 };
 
 
-// ------ ADD RANDOM REVIEWS TO DATABASE ------
-// setInterval(() => {
-//   let randomReview = generateRandomReview();
-//   addReviewAndUpdateRating(randomReview);
-// }, 100);
-
-
-
-
-
-
-
-
-
-
-// ====== RESET RATINGS COLLECTION ======
-
-const resetRating = (rating) => {
-  Rating.updateOne({courseId: rating.courseId},
-    {
-      courseId: rating.courseId,
-      overallRating: 0,
-      totalRatings: 0,
-      totalStars: 0,
-      fiveStars: 0,
-      fourStars: 0,
-      threeStars: 0,
-      twoStars: 0,
-      oneStar: 0
-    }, {upsert: true}, (err) => {
-      err ? console.log('Error saving rating to database:', err) : console.log(`Rating for course id ${rating.courseId} saved/updated in database`);
-    });
+// ------ ADD 1000 RANDOM REVIEWS TO DATABASE ------
+const add1000reviews = () => {
+  let numberOfTimes = 1000;
+  let interval = 100;
+  for (let i = 0; i < numberOfTimes; i++) {
+    setTimeout(() => {
+      let randomReview = generateRandomReview();
+      addReviewAndUpdateRating(randomReview);
+    }, i * interval);
+  }
 };
-
-// ------ RESET ONE RATING ------
-// let exampleRating = {
-//   course_id: 1
-// }
-
-// resetRating(exampleRating);
+// add1000reviews();
 
 
 
 // ------ RESET 100 RATINGS ------
-// const resetRatings = () => {
-//   let exampleRating = {
-//     courseId: 1
-//   };
-//   let numberOfTimes = 100;
-//   let delay = 200;
-//   for (let i = 0; i < numberOfTimes; i++) {
-//     setTimeout(() => {
-//       resetRating(exampleRating);
-//       exampleRating.courseId++;
-//     }, delay * i);
-//   }
-// };
-
+const resetRatings = () => {
+  let exampleRating = {
+    courseId: 1
+  };
+  let numberOfTimes = 100;
+  let interval = 200;
+  for (let i = 0; i < numberOfTimes; i++) {
+    setTimeout(() => {
+      resetRating(exampleRating);
+      exampleRating.courseId++;
+    }, interval * i);
+  }
+};
 // resetRatings();
