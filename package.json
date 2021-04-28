@@ -2,7 +2,7 @@
   "name": "reviews",
   "version": "1.0.0",
   "description": "Review service for Udemy clone (by HR rpt27 team Charlotte Badger)",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "",
     "start": "nodemon server/index.js",
@@ -26,12 +26,16 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.13.16",
     "babel-loader": "^8.0.2",
+    "eslint": "^7.25.0",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "webpack": "^5.35.1",
     "webpack-cli": "^4.6.0",
     "webpack-dev": "^1.1.1"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "express": "^4.17.1",
+    "faker": "^5.5.3",
     "mongoose": "^5.12.5",
     "nodemon": "^2.0.7",
     "react": "^17.0.2",

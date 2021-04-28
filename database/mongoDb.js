@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/review-service', { useNewUrlParser: true,  useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost/review-service', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const mongoDb = mongoose.connection;
 mongoDb.on('error', console.error.bind(console, 'connection error:'));
@@ -8,12 +8,8 @@ mongoDb.once('open', () => {
 });
 
 const reviewSchema = new mongoose.Schema({ // 1 -> many: course_id -> reviews
-  course_id: Number,  // "foreign key"
-  reviewer: Object,   // {“reviewerId”: Number,
-                      // “name”: String,
-                      // “pictureUrl”: String,
-                      // “coursesTaken”: Number, // only for featured review
-                      // “reviews”: Number} // only for featured review
+  courseId: Number,
+  reviewer: Object, // {“reviewerId”: Number, “name”: String, “picture”: String, “coursesTaken”: Number, “reviews”: Number}
   rating: Number,
   comment: String,
   createdAt: Date,
@@ -22,7 +18,7 @@ const reviewSchema = new mongoose.Schema({ // 1 -> many: course_id -> reviews
 });
 
 const ratingSchema = new mongoose.Schema({ // 1 <-> 1: course_id <-> rating
-  course_id: Number,
+  courseId: Number,
   overallRating: Number, // average rating
   totalRatings: Number, // amount of ratings
   totalStars: Number, // total of stars

@@ -5,7 +5,7 @@ const dataGenerators = require('../database/dataGenerators.js');
 const app = express();
 const port = 2712;
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client/public')));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
