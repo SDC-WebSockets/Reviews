@@ -62,9 +62,22 @@ const addReview = (review) => {
   });
 };
 
-const findRating = (review) => {
+const getReviews = (id) => {
   return new Promise ((resolve, reject) => {
-    Rating.findOne({courseId: review.courseId}, (err, rating) => {
+    Review.find({courseId: id}, (err, reviews) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log(`Found ${reviews.length} reviews for courseId ${id}.`);
+        resolve(reviews);
+      }
+    });
+  });
+};
+
+const getRating = (id) => {
+  return new Promise ((resolve, reject) => {
+    Rating.findOne({courseId: id}, (err, rating) => {
       if (err) {
         reject(err);
       } else {
@@ -111,7 +124,7 @@ const addReviewAndUpdateRating = (review) => {
   addReview(review)
     .then((result) => {
       // console.log('Result from addReview:', result);
-      findRating(result)
+      getRating(result.courseId)
         .then((rating) => {
           // console.log('Result from findRating:', rating);
           updateRating(review, rating);
@@ -141,4 +154,4 @@ const resetRating = (rating) => {
     });
 };
 
-module.exports = { addReviewAndUpdateRating, resetRating };
+module.exports = { addReviewAndUpdateRating, getReviews, getRating, resetRating };

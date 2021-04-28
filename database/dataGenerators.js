@@ -84,7 +84,7 @@ const add1000reviews = () => {
     }, i * interval);
   }
 };
-add1000reviews();
+// add1000reviews();
 
 
 
