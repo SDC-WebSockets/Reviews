@@ -3,20 +3,16 @@ import Review from './review.jsx';
 import Search from './search.jsx';
 
 const ReviewList = (props) => { // shows all reviews (displayed 12 at a time)
-  if (props.ratings === undefined) {
+  // console.log('Props in ReviewList:', props);
+  if (props.reviews === undefined) {
     return null;
   } else {
-    console.log('Props in ReviewList:', props);
     return (
       <div>
         <h2>Reviews</h2>
         <Search />
 
-        <Review />
-        <Review />
-        <Review />
-        <Review />
-        <Review />
+        {props.reviews.map((review) => <Review key={review._id} review={review}/>)}
       </div>
     );
   }
