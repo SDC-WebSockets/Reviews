@@ -150,7 +150,7 @@ const addReviewAndUpdateRating = (review) => {
   addReview(review)
     .then((result) => {
       // console.log('Result from addReview:', result);
-      getRating(result.courseId)
+      getRatingForOneCourse(result.courseId)
         .then((rating) => {
           // console.log('Result from findRating:', rating);
           updateRating(review, rating);
