@@ -38,7 +38,7 @@ const getAllReviews = () => {
       if (err) {
         reject(err);
       } else {
-        console.log(`Found ${reviews.length} reviews.`);
+        // console.log(`Found ${reviews.length} reviews.`);
         resolve(reviews);
       }
     });
@@ -51,7 +51,7 @@ const getReviewsForOneCourse = (id) => {
       if (err) {
         reject(err);
       } else {
-        console.log(`Found ${reviews.length} reviews for courseId ${id}.`);
+        // console.log(`Found ${reviews.length} reviews for courseId ${id}.`);
         resolve(reviews);
       }
     });
@@ -64,7 +64,7 @@ const getAllRatings = () => {
       if (err) {
         reject(err);
       } else {
-        console.log(`Found ${ratings.length} ratings.`);
+        // console.log(`Found ${ratings.length} ratings.`);
         resolve(ratings);
       }
     });
@@ -77,7 +77,7 @@ const getRatingForOneCourse = (id) => {
       if (err) {
         reject(err);
       } else {
-        console.log('Corresponding rating found:', rating);
+        // console.log('Corresponding rating found:', rating);
         resolve(rating);
       }
     });

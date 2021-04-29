@@ -1,5 +1,9 @@
+const path = require('path');
+const entryPath = path.join(__dirname, '/client/src/index.jsx');
+const outputPath = path.join(__dirname, '/client/public');
+
 module.exports = {
-  entry: __dirname + '/client/src/index.jsx',
+  entry: entryPath,
   module: {
     rules: [
       {
@@ -17,7 +21,7 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: __dirname + '/client/public'
+    path: outputPath
   },
 
   mode: 'development',
