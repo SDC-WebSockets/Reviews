@@ -11,7 +11,19 @@ class ReviewService extends React.Component {
     super(props);
     this.state = {
       featuredReview: {}
-    }
+    };
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:2712/reviews', {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => console.log(data));
   }
 
 
@@ -22,7 +34,7 @@ class ReviewService extends React.Component {
         <Feedback />
         <ReviewList />
       </div>
-    )
+    );
   }
 }
 

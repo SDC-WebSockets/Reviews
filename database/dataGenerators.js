@@ -3,6 +3,8 @@ const resetRating = require('./mongoDb.js').resetRating;
 const faker = require('faker');
 
 
+let usedReviewerIds = [];
+
 const generateRandomReview = () => {
   // helper functions
   let randomInclusiveInteger = (min, max) => {
@@ -10,11 +12,10 @@ const generateRandomReview = () => {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
-  let randomInclusiveIntegerWithExceptions = (min, max) => {
+  let randomInclusiveIntegerWithExceptions = (min, max, exceptions) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     let randomInteger = Math.floor(Math.random() * (max - min + 1) + min);
-    let exceptions = [13, 26, 39, 52, 65, 78, 91]; // those courseIds will not have any reviews
     while (exceptions.includes(randomInteger)) {
       randomInteger = Math.floor(Math.random() * (max - min + 1) + min);
     }
@@ -27,22 +28,23 @@ const generateRandomReview = () => {
   // let randomReviews = [];
 
   // for (let i = 0; i < 1000; i++) {
-  let randomCourseId = randomInclusiveIntegerWithExceptions(1, 100);
+  let randomCourseId = randomInclusiveIntegerWithExceptions(1, 100, [13, 26, 39, 52, 65, 78, 91]);
 
-  let randomReviewerId = randomInclusiveInteger(100000, 999999);
-  // in this scenario, it is very unlikely that two reviewers will have the same ID
+  let randomReviewerId = randomInclusiveIntegerWithExceptions(100000, 999999, usedReviewerIds);
+  usedReviewerIds.push(randomReviewerId);
+
   let randomName = faker.name.findName();
   let initials = randomName.split(' ').map((n)=>n[0]).join('').slice(0, 2);
   let randomAvatar = faker.image.avatar();
   let avatars = [initials, initials, initials, randomAvatar];
-  let avatarVsNoAvatar = avatars[randomInclusiveInteger(0, 3)];
+  let avatarOrNoAvatar = avatars[randomInclusiveInteger(0, 3)];
   let randomNoOfCourses = randomInclusiveInteger(1, 50);
   let randomNoOfReviews = randomInclusiveInteger(1, randomNoOfCourses);
 
   let randomReviewer = {
     reviewerId: randomReviewerId,
     name: randomName,
-    picture: avatarVsNoAvatar,
+    picture: avatarOrNoAvatar,
     coursesTaken: randomNoOfCourses,
     reviews: randomNoOfReviews
   };
@@ -69,6 +71,8 @@ const generateRandomReview = () => {
 
   return randomReview;
 };
+
+
 
 
 

@@ -32,6 +32,58 @@ const ratingSchema = new mongoose.Schema({ // 1 <-> 1: course_id <-> rating
 let Review = mongoose.model('Review', reviewSchema);
 let Rating = mongoose.model('Rating', ratingSchema);
 
+const getAllReviews = () => {
+  return new Promise ((resolve, reject) => {
+    Review.find((err, reviews) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log(`Found ${reviews.length} reviews.`);
+        resolve(reviews);
+      }
+    });
+  });
+};
+
+const getReviewsForOneCourse = (id) => {
+  return new Promise ((resolve, reject) => {
+    Review.find({courseId: id}, (err, reviews) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log(`Found ${reviews.length} reviews for courseId ${id}.`);
+        resolve(reviews);
+      }
+    });
+  });
+};
+
+const getAllRatings = () => {
+  return new Promise ((resolve, reject) => {
+    Rating.find((err, ratings) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log(`Found ${ratings.length} ratings.`);
+        resolve(ratings);
+      }
+    });
+  });
+};
+
+const getRatingForOneCourse = (id) => {
+  return new Promise ((resolve, reject) => {
+    Rating.findOne({courseId: id}, (err, rating) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log('Corresponding rating found:', rating);
+        resolve(rating);
+      }
+    });
+  });
+};
+
 const addReview = (review) => {
   return new Promise ((resolve, reject) => {
 
@@ -57,32 +109,6 @@ const addReview = (review) => {
       } else {
         console.log(`Review for course id ${review.courseId} saved/updated in database`);
         resolve(result); // = review as it appears in DB
-      }
-    });
-  });
-};
-
-const getReviews = (id) => {
-  return new Promise ((resolve, reject) => {
-    Review.find({courseId: id}, (err, reviews) => {
-      if (err) {
-        reject(err);
-      } else {
-        console.log(`Found ${reviews.length} reviews for courseId ${id}.`);
-        resolve(reviews);
-      }
-    });
-  });
-};
-
-const getRating = (id) => {
-  return new Promise ((resolve, reject) => {
-    Rating.findOne({courseId: id}, (err, rating) => {
-      if (err) {
-        reject(err);
-      } else {
-        console.log('Corresponding rating found:', rating);
-        resolve(rating);
       }
     });
   });
@@ -135,8 +161,6 @@ const addReviewAndUpdateRating = (review) => {
     });
 };
 
-
-
 const resetRating = (rating) => {
   Rating.updateOne({courseId: rating.courseId},
     {
@@ -154,4 +178,11 @@ const resetRating = (rating) => {
     });
 };
 
-module.exports = { addReviewAndUpdateRating, getReviews, getRating, resetRating };
+module.exports = {
+  getAllReviews,
+  getReviewsForOneCourse,
+  getAllRatings,
+  getRatingForOneCourse,
+  addReviewAndUpdateRating,
+  resetRating
+};
