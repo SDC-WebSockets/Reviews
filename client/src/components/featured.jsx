@@ -1,21 +1,32 @@
 import React from 'react';
 import Review from './review.jsx';
+import moment from 'moment';
 
-const Featured = (props) => (
-  <div>
-    <h2>Featured review</h2>
-    <div>[reviewer profile picture]</div>
-    <div>[reviewer name]</div>
-    <div>[reviewer coursesTaken]</div>
-    <div>[reviewer reviews]</div>
-    <div>[rating]</div>
-    <div>[createdAt]</div>
-    <div>[comment]</div>
-    <p>Was this review helpful?</p>
-    <button className="thumbs-up">[thumbs-up]</button>
-    <button className="thumbs-down">[thumbs-down]</button>
-    <button className="report">Report</button>
-  </div>
-)
+const Featured = (props) => {
+  // console.log('Props in Featured:', props);
+  if (props.review.reviewer === undefined) {
+    return null;
+  } else {
+    return (
+      <div>
+        {}
+        <h2>Featured review</h2>
+        <div>
+          {props.review.reviewer.picture.length === 2 ? <div>{props.review.reviewer.picture}</div> : <img src={props.review.reviewer.picture}></img>}
+        </div>
+        <div>{props.review.reviewer.name}</div>
+        <div>{props.review.reviewer.coursesTaken} courses</div>
+        <div>{props.review.reviewer.reviews} reviews</div>
+        <div>{props.review.rating}</div>
+        <div>{moment(props.review.createdAt).fromNow()}</div>
+        <div>{props.review.comment}</div>
+        <p>Was this review helpful?</p>
+        <button className="thumbs-up">[thumbs-up]</button>
+        <button className="thumbs-down">[thumbs-down]</button>
+        <button className="report">Report</button>
+      </div>
+    );
+  }
+};
 
 export default Featured;

@@ -7,7 +7,6 @@ const Review = (props) => ( // if a comment is more than 5 lines long, use the '
     <div>
       {props.review.reviewer.picture.length === 2 ? <div>{props.review.reviewer.picture}</div> : <img src={props.review.reviewer.picture}></img>}
     </div>
-
     <div>{props.review.reviewer.name}</div>
     <div>{props.review.rating}</div>
     <div>{moment(props.review.createdAt).fromNow()}</div>
