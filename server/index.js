@@ -7,6 +7,7 @@ const dataGenerators = require('../database/dataGenerators.js');
 const app = express();
 const port = 2712;
 
+
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 app.use(cors());
 
@@ -25,8 +26,8 @@ app.get('/reviews', (req, res) => {
 });
 
 app.get('/reviews/item', (req, res) => {
+  console.log(req.originalUrl);
   let courseId = req.query.id;
-  console.log(courseId);
   let reviews;
   let rating;
   mongoDb.getReviewsForOneCourse(courseId)

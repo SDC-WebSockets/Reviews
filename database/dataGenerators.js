@@ -43,8 +43,8 @@ const generateRandomReview = (courseId) => {
     reviews: randomNoOfReviews
   };
 
-  const ratings = [5, 5, 5, 5, 5, 4, 4, 3, 2, 1]; // makes it more likely for it to have good ratings
-  let randomRating = ratings[randomInclusiveInteger(0, 9)];
+  const ratings = [5, 5, 5, 5, 5, 4.5, 4.5, 4, 4, 3.5, 3, 2.5, 2, 1.5, 1]; // makes it more likely for it to have good ratings
+  let randomRating = ratings[randomInclusiveInteger(0, ratings.length - 1)];
 
   let randomComment = faker.lorem.sentences();
 

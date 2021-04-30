@@ -15,6 +15,7 @@ class ReviewService extends React.Component {
 
   componentDidMount() {
     this.getReviews();
+    console.log(window.location.href);
   }
 
   getReviews(id = 1) {

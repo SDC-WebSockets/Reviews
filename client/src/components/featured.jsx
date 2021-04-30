@@ -4,12 +4,16 @@ import moment from 'moment';
 
 const Featured = (props) => {
   // console.log('Props in Featured:', props);
-  if (props.review.reviewer === undefined) {
-    return null;
+  if (props.review === undefined || props.review.reviewer === undefined) {
+    return (
+      <div>
+        <h2>Featured review</h2>
+        <div>This course does not have any reviews yet.</div>
+      </div>
+    );
   } else {
     return (
       <div>
-        {}
         <h2>Featured review</h2>
         <div>
           {props.review.reviewer.picture.length === 2 ? <div>{props.review.reviewer.picture}</div> : <img src={props.review.reviewer.picture}></img>}
