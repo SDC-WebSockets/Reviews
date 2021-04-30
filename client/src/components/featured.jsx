@@ -4,13 +4,8 @@ import moment from 'moment';
 
 const Featured = (props) => {
   // console.log('Props in Featured:', props);
-  if (props.review === undefined || props.review.reviewer === undefined) {
-    return (
-      <div>
-        <h2>Featured review</h2>
-        <div>This course does not have any reviews yet.</div>
-      </div>
-    );
+  if (!props.review || !props.review.reviewer) {
+    return null;
   } else {
     return (
       <div>

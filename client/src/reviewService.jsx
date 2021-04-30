@@ -15,7 +15,6 @@ class ReviewService extends React.Component {
 
   componentDidMount() {
     this.getReviews();
-    console.log(window.location.href);
   }
 
   getReviews(id = 1) {
@@ -35,26 +34,28 @@ class ReviewService extends React.Component {
   }
 
   chooseBestReview() {
-    let reviews = this.state.currentCourse.reviews;
-    let bestReview = reviews[0];
-    let tiedBest = [reviews[0]];
-    for (let i = 1; i < reviews.length; i++) {
-      if (reviews[i].rating > bestReview.rating) {
-        bestReview = reviews[i];
-        tiedBest = [reviews[i]];
-      } else if (reviews[i].rating === bestReview.rating) {
-        tiedBest.push(reviews[i]);
-      }
-    }
-    if (tiedBest.length > 1) {
-      bestReview = tiedBest[0];
-      for (let j = 1; j < tiedBest.length; j++) {
-        if (tiedBest[j].comment.length > bestReview.comment.length) {
-          bestReview = tiedBest[j];
+    if (this.state.currentCourse.reviews) {
+      let reviews = this.state.currentCourse.reviews;
+      let bestReview = reviews[0];
+      let tiedBest = [reviews[0]];
+      for (let i = 1; i < reviews.length; i++) {
+        if (reviews[i].rating > bestReview.rating) {
+          bestReview = reviews[i];
+          tiedBest = [reviews[i]];
+        } else if (reviews[i].rating === bestReview.rating) {
+          tiedBest.push(reviews[i]);
         }
       }
+      if (tiedBest.length > 1) {
+        bestReview = tiedBest[0];
+        for (let j = 1; j < tiedBest.length; j++) {
+          if (tiedBest[j].comment.length > bestReview.comment.length) {
+            bestReview = tiedBest[j];
+          }
+        }
+      }
+      this.setState({featuredReview: bestReview});
     }
-    this.setState({featuredReview: bestReview});
   }
 
 

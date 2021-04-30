@@ -93,13 +93,11 @@ const addRandomReviews = async (noOfCourses) => {
 // ------ RESET AND REPOPULATE DATABASE ------
 const resetDatabase = async (noOfCourses) => {
   await Rating.countDocuments().then((results) => {
-    console.log(results);
     if (results > 0) {
       Rating.collection.drop();
     }
   });
   await Review.countDocuments().then((results) => {
-    console.log(results);
     if (results > 0) {
       Review.collection.drop();
     }
@@ -109,7 +107,7 @@ const resetDatabase = async (noOfCourses) => {
 };
 
 // === ACTIVATE HERE ===
-// // resetDatabase(100);
+// resetDatabase(100);
 
 
 

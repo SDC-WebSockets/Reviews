@@ -2,7 +2,7 @@ import React from 'react';
 
 const Feedback = (props) => {
   // console.log('Props in Feedback:', props);
-  if (props.ratings === undefined) {
+  if (!props.ratings) {
     return null;
   } else if (props.ratings.totalRatings === 0) {
     return (

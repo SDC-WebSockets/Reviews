@@ -4,7 +4,7 @@ import Search from './search.jsx';
 
 const ReviewList = (props) => { // shows all reviews (displayed 12 at a time)
   // console.log('Props in ReviewList:', props);
-  if (props.reviews === undefined) {
+  if (!props.reviews) {
     return null;
   } else if (props.reviews.length === 0) {
     return (
