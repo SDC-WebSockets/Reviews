@@ -17,8 +17,7 @@ class ReviewService extends React.Component {
     this.getReviews();
   }
 
-  getReviews() {
-    let id = 5; // this.state.currentCourse.courseId
+  getReviews(id = 1) {
     fetch(`http://localhost:2712/reviews/item?id=${id}`, {
       method: 'GET',
       mode: 'cors',
@@ -28,7 +27,7 @@ class ReviewService extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
+        console.log(data);
         this.setState({currentCourse: data});
         this.chooseBestReview();
       });

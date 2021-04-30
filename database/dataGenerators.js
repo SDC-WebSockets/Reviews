@@ -22,8 +22,6 @@ const generateRandomReview = (courseId) => {
     return new Date(date1.getTime() + Math.random() * (date2.getTime() - date1.getTime()));
   };
 
-  // let randomCourseId = randomInclusiveInteger(1, 100, [13, 26, 39, 52, 65, 78, 91]);
-
   let randomReviewerId = randomInclusiveInteger(100000, 999999, usedReviewerIds);
   usedReviewerIds.push(randomReviewerId);
 
@@ -93,7 +91,7 @@ const addReviewsInCourseOrder = () => {
   }
 
 };
-// addReviewsInCourseOrder();
+// // addReviewsInCourseOrder();
 
 
 
@@ -111,4 +109,4 @@ const resetRatingsInDb = () => {
     }, interval * i);
   }
 };
-// resetRatingsInDb();
+// // resetRatingsInDb();
