@@ -42,7 +42,6 @@ const getAllReviews = () => {
       if (err) {
         reject(err);
       } else {
-        // console.log(`Found ${reviews.length} reviews.`);
         resolve(reviews);
       }
     });
@@ -112,7 +111,7 @@ const addReview = (review) => {
       if (err) {
         reject(err);
       } else {
-        console.log(`Review for course id ${review.courseId} saved/updated in database`);
+        // console.log(`Review for course id ${review.courseId} saved/updated in database`);
         resolve(result); // = review as it appears in DB
       }
     });
@@ -132,7 +131,7 @@ const updateRating = (review, rating) => {
         console.log('Error updating corresponding rating:', err);
         reject(err);
       } else {
-        console.log('Results from updateRating:', results);
+        // console.log('Results from updateRating:', results);
         resolve(results);
       }
     };
@@ -159,48 +158,88 @@ const updateRating = (review, rating) => {
 };
 
 const addReviewAndUpdateRating = (review) => {
-  addReview(review)
-    .then((result) => {
-      console.log('Result from addReview:', result);
-      getRatingForOneCourse(result.courseId)
-        .then((rating) => {
-          console.log('Result from findRating:', rating);
-          updateRating(review, rating);
-        })
-        .catch((err) => {
-          console.log('Error in addReviewAndUpdateRating:', err);
-        });
-    });
+  return new Promise ((resolve, reject) => {
+    addReview(review)
+      .catch((err) => {
+        console.log(err);
+      })
+      .then((result) => {
+        // console.log(result);
+        getRatingForOneCourse(result.courseId)
+          .catch((err) => {
+            console.log(err);
+          })
+          .then((rating) => {
+            // console.log(rating);
+            updateRating(review, rating)
+              .catch((err) => {
+                reject(err);
+              })
+              .then((result) => {
+                // console.log(result);
+                resolve(result);
+              });
+          });
+      });
+  });
 };
 
-const resetRating = (rating) => { // turn into a promise
-  Rating.updateOne({courseId: rating.courseId},
-    {
-      courseId: rating.courseId,
-      overallRating: 0,
-      totalRatings: 0,
-      totalStars: 0,
-      stars: {
+// getRatingForOneCourse(review.courseId)
+//   .then((rating) => {
+//     console.log(updateRating(review, rating));
+//   });
+
+// addReview(review)
+//   .then((result) => {
+//     console.log('Result from addReview:', result);
+//     getRatingForOneCourse(result.courseId)
+//       .then((rating) => {
+//         console.log('Result from findRating:', rating);
+//         updateRating(review, rating)
+//           .then((result) => {
+//             console.log('Result from updateRating:', result);
+//           });
+//       });
+//   .catch((err) => {
+//     console.log('Error in addReviewAndUpdateRating:', err);
+//   });
+// });
+
+const resetRating = (rating) => {
+  return new Promise ((resolve, reject) => {
+    Rating.updateOne({courseId: rating.courseId},
+      {
+        courseId: rating.courseId,
+        overallRating: 0,
+        totalRatings: 0,
+        totalStars: 0,
         '5': 0,
-        '4.5': 0,
+        '4 1/2': 0,
         '4': 0,
-        '3.5': 0,
+        '3 1/2': 0,
         '3': 0,
-        '2.5': 0,
+        '2 1/2': 0,
         '2': 0,
-        '1.5': 0,
+        '1 1/2': 0,
         '1': 0,
-      }
-    }, {upsert: true}, (err) => {
-      err ? console.log('Error resetting rating to database:', err) : console.log(`Rating for course id ${rating.courseId} set to 0 in database`);
-    });
+      }, {upsert: true}, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          // console.log(result);
+          resolve(result);
+        }
+      });
+  });
 };
 
 module.exports = {
-  getAllReviews,
-  getReviewsForOneCourse,
-  getAllRatings,
-  getRatingForOneCourse,
-  addReviewAndUpdateRating,
-  resetRating
+  Review, // used in dataGenerators.js
+  Rating, // used in dataGenerators.js
+  getAllReviews, // used in server
+  getReviewsForOneCourse, // used in server
+  getAllRatings, // used in server
+  getRatingForOneCourse, // used in server
+  addReviewAndUpdateRating, // used in dataGenerators.js
+  resetRating // used in dataGenerators.js
 };

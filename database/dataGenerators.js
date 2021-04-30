@@ -1,9 +1,12 @@
-const addReviewAndUpdateRatingInDb = require('./mongoDb.js').addReviewAndUpdateRating;
-const resetRatingInDb = require('./mongoDb.js').resetRating;
+const Rating = require('./mongoDb.js').Rating;
+const Review = require('./mongoDb.js').Review;
+
+const addReviewAndUpdateRating = require('./mongoDb.js').addReviewAndUpdateRating;
+const resetRating = require('./mongoDb.js').resetRating;
 const faker = require('faker');
 
 
-// helper functions
+// helper function
 const randomInclusiveInteger = (min, max, exceptions = []) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -16,7 +19,7 @@ const randomInclusiveInteger = (min, max, exceptions = []) => {
 
 let usedReviewerIds = [];
 
-// create a random review for a given course
+// create a random review for a given course ID
 const generateRandomReview = (courseId) => {
   let randomDate = (date1, date2) => {
     return new Date(date1.getTime() + Math.random() * (date2.getTime() - date1.getTime()));
@@ -67,46 +70,46 @@ const generateRandomReview = (courseId) => {
   return randomReview;
 };
 
-
+// ------ SET ALL RATINGS TO 0 ------
+const resetRatings = async (noOfCourses) => {
+  for (let i = 1; i <= noOfCourses; i++) {
+    await resetRating({courseId: i});
+  }
+};
 
 // ------ ADD RANDOM REVIEWS TO DATABASE ------
-const addReviewsInCourseOrder = () => {
-  let numberOfCourses = 100;
-  let outerInterval = 2000;
-  let innerInterval = 100;
-
-  for (let i = 1; i <= numberOfCourses; i++) {
-    setTimeout(() => {
-      if (i % 13 !== 0) {
-        let randomTimes = randomInclusiveInteger(1, 10);
-        for (let j = 0; j < randomTimes; j++) {
-          setTimeout(() => {
-            let randomReview = generateRandomReview(i);
-            addReviewAndUpdateRatingInDb(randomReview);
-            console.log(randomReview);
-          }, j * innerInterval);
-        }
+const addRandomReviews = async (noOfCourses) => {
+  for (let i = 1; i <= noOfCourses; i++) {
+    if (i % 13 !== 0) {
+      let randomNumberOfReviews = randomInclusiveInteger(1, 5);
+      for (let j = 0; j < randomNumberOfReviews; j++) {
+        let randomReview = generateRandomReview(i);
+        await addReviewAndUpdateRating(randomReview);
       }
-    }, i * outerInterval);
-  }
-
-};
-// // addReviewsInCourseOrder();
-
-
-
-// ------ RESET 100 RATINGS ------
-const resetRatingsInDb = () => {
-  let exampleRating = {
-    courseId: 1
-  };
-  let numberOfTimes = 100;
-  let interval = 200;
-  for (let i = 0; i < numberOfTimes; i++) {
-    setTimeout(() => {
-      resetRatingInDb(exampleRating);
-      exampleRating.courseId++;
-    }, interval * i);
+    }
   }
 };
-// // resetRatingsInDb();
+
+// ------ RESET AND REPOPULATE DATABASE ------
+const resetDatabase = async (noOfCourses) => {
+  await Rating.countDocuments().then((results) => {
+    console.log(results);
+    if (results > 0) {
+      Rating.collection.drop();
+    }
+  });
+  await Review.countDocuments().then((results) => {
+    console.log(results);
+    if (results > 0) {
+      Review.collection.drop();
+    }
+  });
+  await resetRatings(noOfCourses);
+  await addRandomReviews(noOfCourses);
+};
+
+// === ACTIVATE HERE ===
+// // resetDatabase(100);
+
+
+
