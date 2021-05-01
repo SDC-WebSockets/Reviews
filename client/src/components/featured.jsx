@@ -4,13 +4,13 @@ import moment from 'moment';
 
 const Featured = (props) => {
   // console.log('Props in Featured:', props);
-  if (!props.review || !props.review.reviewer) {
-    return null;
-  } else {
-    return (
+  return (
+    <div>
+      {props.review && props.review.reviewer &&
       <div>
         <h2>Featured review</h2>
         <div>
+          {/* if the reviewer has no avatar, the default avatar consists of reviewer's initials */}
           {props.review.reviewer.picture.length === 2 ? <div>{props.review.reviewer.picture}</div> : <img src={props.review.reviewer.picture}></img>}
         </div>
         <div>{props.review.reviewer.name}</div>
@@ -24,8 +24,9 @@ const Featured = (props) => {
         <button className="thumbs-down">[thumbs-down]</button>
         <button className="report">Report</button>
       </div>
-    );
-  }
+      }
+    </div>
+  );
 };
 
 export default Featured;

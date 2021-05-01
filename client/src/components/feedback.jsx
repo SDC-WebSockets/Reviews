@@ -4,7 +4,7 @@ const Feedback = (props) => {
   // console.log('Props in Feedback:', props);
   if (!props.ratings) {
     return null;
-  } else if (props.ratings.totalRatings === 0) {
+  } else if (!props.ratings || props.ratings.totalRatings === 0) {
     return (
       <div>
         <h2>Student feedback</h2>
