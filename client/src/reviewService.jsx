@@ -29,7 +29,7 @@ class ReviewService extends React.Component {
       .then(data => {
         console.log(data);
         this.setState({currentCourse: data});
-        this.chooseBestReview(this.state.currentCourse.reviews);
+        this.chooseBestReview(data.reviews);
       });
   }
 

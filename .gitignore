@@ -1,6 +1,5 @@
 node_modules
 package-lock.json
+bundle.js
 scribbles.js
-commentsMock.js
-reviewersMock.js
-Reviews.png
+WebSequence.png
