@@ -54,14 +54,11 @@ const getReviewsForOneCourse = (id) => {
       if (err) {
         reject(err);
       } else {
-        // console.log(`Found ${reviews.length} reviews for courseId ${id}.`);
         resolve(reviews);
       }
     });
   });
 };
-
-// console.log(getReviewsForOneCourse(1).then((results)=> console.log(results)));
 
 const getAllRatings = () => {
   return new Promise ((resolve, reject) => {
@@ -69,7 +66,6 @@ const getAllRatings = () => {
       if (err) {
         reject(err);
       } else {
-        // console.log(`Found ${ratings.length} ratings.`);
         resolve(ratings);
       }
     });
@@ -82,7 +78,6 @@ const getRatingForOneCourse = (id) => {
       if (err) {
         reject(err);
       } else {
-        // console.log('Corresponding rating found:', rating);
         resolve(rating);
       }
     });
@@ -111,7 +106,6 @@ const addReview = (review) => {
       if (err) {
         reject(err);
       } else {
-        // console.log(`Review for course id ${review.courseId} saved/updated in database`);
         resolve(result); // = review as it appears in DB
       }
     });
@@ -131,7 +125,6 @@ const updateRating = (review, rating) => {
         console.log('Error updating corresponding rating:', err);
         reject(err);
       } else {
-        // console.log('Results from updateRating:', results);
         resolve(results);
       }
     };
@@ -164,19 +157,16 @@ const addReviewAndUpdateRating = (review) => {
         console.log(err);
       })
       .then((result) => {
-        // console.log(result);
         getRatingForOneCourse(result.courseId)
           .catch((err) => {
             console.log(err);
           })
           .then((rating) => {
-            // console.log(rating);
             updateRating(review, rating)
               .catch((err) => {
                 reject(err);
               })
               .then((result) => {
-                // console.log(result);
                 resolve(result);
               });
           });
@@ -184,26 +174,6 @@ const addReviewAndUpdateRating = (review) => {
   });
 };
 
-// getRatingForOneCourse(review.courseId)
-//   .then((rating) => {
-//     console.log(updateRating(review, rating));
-//   });
-
-// addReview(review)
-//   .then((result) => {
-//     console.log('Result from addReview:', result);
-//     getRatingForOneCourse(result.courseId)
-//       .then((rating) => {
-//         console.log('Result from findRating:', rating);
-//         updateRating(review, rating)
-//           .then((result) => {
-//             console.log('Result from updateRating:', result);
-//           });
-//       });
-//   .catch((err) => {
-//     console.log('Error in addReviewAndUpdateRating:', err);
-//   });
-// });
 
 const resetRating = (rating) => {
   return new Promise ((resolve, reject) => {
@@ -226,7 +196,6 @@ const resetRating = (rating) => {
         if (err) {
           reject(err);
         } else {
-          // console.log(result);
           resolve(result);
         }
       });

@@ -29,13 +29,12 @@ class ReviewService extends React.Component {
       .then(data => {
         console.log(data);
         this.setState({currentCourse: data});
-        this.chooseBestReview();
+        this.chooseBestReview(this.state.currentCourse.reviews);
       });
   }
 
-  chooseBestReview() {
-    if (this.state.currentCourse.reviews) {
-      let reviews = this.state.currentCourse.reviews;
+  chooseBestReview(reviews) {
+    if (reviews) {
       let bestReview = reviews[0];
       let tiedBest = [reviews[0]];
       for (let i = 1; i < reviews.length; i++) {

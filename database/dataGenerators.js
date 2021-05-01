@@ -1,10 +1,8 @@
 const Rating = require('./mongoDb.js').Rating;
 const Review = require('./mongoDb.js').Review;
-
 const addReviewAndUpdateRating = require('./mongoDb.js').addReviewAndUpdateRating;
 const resetRating = require('./mongoDb.js').resetRating;
 const faker = require('faker');
-
 
 // helper function
 const randomInclusiveInteger = (min, max, exceptions = []) => {
@@ -81,7 +79,7 @@ const resetRatings = async (noOfCourses) => {
 const addRandomReviews = async (noOfCourses) => {
   for (let i = 1; i <= noOfCourses; i++) {
     if (i % 13 !== 0) {
-      let randomNumberOfReviews = randomInclusiveInteger(1, 5);
+      let randomNumberOfReviews = randomInclusiveInteger(1, 100); // creates a random number of reviews for current course
       for (let j = 0; j < randomNumberOfReviews; j++) {
         let randomReview = generateRandomReview(i);
         await addReviewAndUpdateRating(randomReview);
