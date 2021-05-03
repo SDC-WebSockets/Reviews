@@ -5,8 +5,8 @@ const Review = (props) => ( // if a comment is more than 5 lines long, use the '
   <div>
     {/* {console.log('Props in Review:', props)} */}
     <div>
-      {/* if the reviewer has no avatar, the dafault avatar consists of reviewer's initials */}
-      {props.review.reviewer.picture.length === 2 ? <div>{props.review.reviewer.picture}</div> : <img src={props.review.reviewer.picture}></img>}
+      {/* if the reviewer has no avatar, the default avatar consists of reviewer's initials */}
+      {props.review.reviewer.picture === null ? <div>{props.review.reviewer.name.split(' ').map((n)=>n[0]).join('').slice(0, 2)}</div> : <img src={props.review.reviewer.picture}></img>}
     </div>
     <div>{props.review.reviewer.name}</div>
     <div>{props.review.rating}</div>
