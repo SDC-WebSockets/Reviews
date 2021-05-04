@@ -104,8 +104,8 @@ const resetDatabase = async (noOfCourses) => {
   console.log('Finished populating database')
 };
 
-// === ACTIVATE HERE ===
-// resetDatabase(100);
+// === ACTIVATE HERE === (node database/dataGenerators.js)
+resetDatabase(100);
 
 
 

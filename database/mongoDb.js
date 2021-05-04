@@ -39,11 +39,7 @@ let Rating = mongoose.model('Rating', ratingSchema);
 const getAllReviews = () => {
   return new Promise ((resolve, reject) => {
     Review.find((err, reviews) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(reviews);
-      }
+      err ? reject(err) : resolve(reviews);
     });
   });
 };
@@ -51,11 +47,7 @@ const getAllReviews = () => {
 const getReviewsForOneCourse = (id) => {
   return new Promise ((resolve, reject) => {
     Review.find({courseId: id}, (err, reviews) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(reviews);
-      }
+      err ? reject(err) : resolve(reviews);
     });
   });
 };
@@ -63,11 +55,7 @@ const getReviewsForOneCourse = (id) => {
 const getAllRatings = () => {
   return new Promise ((resolve, reject) => {
     Rating.find((err, ratings) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(ratings);
-      }
+      err ? reject(err) : resolve(ratings);
     });
   });
 };
@@ -75,11 +63,7 @@ const getAllRatings = () => {
 const getRatingForOneCourse = (id) => {
   return new Promise ((resolve, reject) => {
     Rating.findOne({courseId: id}, (err, rating) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(rating);
-      }
+      err ? reject(err) : resolve(rating);
     });
   });
 };
@@ -103,11 +87,7 @@ const addReview = (review) => {
     });
 
     document.save((err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result); // = review as it appears in DB
-      }
+      err ? reject(err) : resolve(result); // = review as it is stored in DB
     });
   });
 };
@@ -119,15 +99,10 @@ const updateRating = (review, rating) => {
     let newTotalRatings = rating.totalRatings + 1;
     let currentRating = review.rating.toString();
     let newOverallRating = newTotalStars / newTotalRatings;
+
     let valuesToSet = { overallRating: newOverallRating, totalRatings: newTotalRatings, totalStars: newTotalStars };
-    let callback = (err, results) => {
-      if (err) {
-        console.log('Error updating corresponding rating:', err);
-        reject(err);
-      } else {
-        resolve(results);
-      }
-    };
+    let callback = (err, results) => { err ? reject(err) : resolve(results); };
+
     if (review.rating === 5) {
       Rating.updateOne(filter, { $set: valuesToSet, $inc: { '5': 1} }, callback);
     } else if (review.rating === 4.5) {
@@ -193,11 +168,7 @@ const resetRating = (rating) => {
         '1 1/2': 0,
         '1': 0,
       }, {upsert: true}, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
+        err ? reject(err) : resolve(result);
       });
   });
 };
@@ -205,9 +176,9 @@ const resetRating = (rating) => {
 module.exports = {
   Review, // used in dataGenerators.js
   Rating, // used in dataGenerators.js
-  getAllReviews, // used in server
+  getAllReviews, // used in server and s3.js
   getReviewsForOneCourse, // used in server
-  getAllRatings, // used in server
+  getAllRatings, // used in server and s3.js
   getRatingForOneCourse, // used in server
   addReviewAndUpdateRating, // used in dataGenerators.js
   resetRating // used in dataGenerators.js

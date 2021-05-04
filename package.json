@@ -33,11 +33,13 @@
     "webpack-dev": "^1.1.1"
   },
   "dependencies": {
+    "aws-sdk": "^2.897.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "faker": "^5.5.3",
+    "fs": "^0.0.1-security",
     "moment": "^2.29.1",
     "mongoose": "^5.12.5",
     "nodemon": "^2.0.7",
