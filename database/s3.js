@@ -1,5 +1,4 @@
 const AWS = require('aws-sdk');
-const fs = require('fs');
 const path = require('path');
 const AWSconfig = require('./AWSconfig.js');
 const mongoDb = require('../database/mongoDb.js');
