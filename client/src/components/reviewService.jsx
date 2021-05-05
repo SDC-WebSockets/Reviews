@@ -34,9 +34,12 @@ class ReviewService extends React.Component {
       });
   }
 
-  updateReviews(reviews) {
+  // function to update reviewList's state on star tier select (prevent refresh)
+  updateReviews(reviews, tier) {
     this.setState({reviews: reviews});
   }
+
+
 
   chooseBestReview(reviews) {
     if (reviews) {

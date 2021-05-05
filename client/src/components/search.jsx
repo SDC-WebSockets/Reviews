@@ -1,31 +1,49 @@
 import React from 'react';
+import SearchMessage from './searchMessage.jsx';
 
 class Search extends React.Component {
   constructor(props) {
-    console.log('Props in Search:', props);
+    // console.log('Props in Search:', props);
     super(props);
-    // this.state = {
-    //   term: ''
-    // };
+    this.handleChange = this.handleChange.bind(this);
+    this.resetSearch = this.resetSearch.bind(this);
+    this.state = {
+      term: ''
+    };
   }
 
-  // function to update reviewList's state on search submit (prevent refresh)
+  handleChange(e) {
+    this.setState({term: e.target.value});
+  }
 
-  // function to update reviewList's state on star tier select (prevent refresh)
+  filter(reviews, term) {
+    term = term.toLowerCase();
+    let filteredReviews = [];
+    reviews.forEach((review) => {
+      let comment = review.comment.toLowerCase();
+      if (comment.includes(term)) {
+        filteredReviews.push(review);
+      }
+    });
+    console.log(filteredReviews);
+    this.props.setReviews(filteredReviews);
+  }
 
-  // function for X button
 
 
-
+  resetSearch() {
+    this.setState({term: ''});
+    this.props.setReviews(null);
+    let searchField = document.getElementById('search');
+    searchField.value = '';
+  }
 
   render() {
     return (
       <div>
-        <form>
-          <input type="text" placeholder="Search reviews"></input>
-          <button>X</button>
-          <input type="submit" value="Search"></input>
-        </form>
+        <input id="search" type="text" placeholder="Search reviews" onChange={this.handleChange}></input>
+        {this.state.term ? <button onClick={this.resetSearch}>X</button> : null}
+        <input type="submit" value="Search" onClick={() => { this.filter(this.props.reviews, this.state.term); }}></input>
         <select>
           <option value>All ratings</option>
           <option value="5">Five stars</option>
@@ -34,9 +52,13 @@ class Search extends React.Component {
           <option value="2">Two stars</option>
           <option value="1">One star</option>
         </select>
+        {this.props.filtered === null ? null : <SearchMessage filtered={this.props.filtered} term={this.state.term}/>}
       </div>
     );
   }
 }
+
+
+
 
 export default Search;

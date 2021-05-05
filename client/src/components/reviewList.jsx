@@ -6,14 +6,18 @@ class ReviewList extends React.Component { // shows all reviews (displayed 12 at
   constructor(props) {
     // console.log('Props in ReviewList:', props);
     super(props);
-    this.filterReviews = this.filterReviews.bind(this);
+    this.setReviews = this.setReviews.bind(this);
     this.state = {
       filteredReviews: null
     };
   }
 
-  filterReviews(reviews) {
-    this.setState({filteredReviews: reviews});
+  setReviews(reviews) {
+    if (reviews === null) {
+      this.setState({filteredReviews: null});
+    } else {
+      this.setState({filteredReviews: reviews});
+    }
   }
 
   render() {
@@ -32,7 +36,7 @@ class ReviewList extends React.Component { // shows all reviews (displayed 12 at
       return (
         <div>
           <h2>Reviews</h2>
-          <Search reviews={this.props.reviews} filterReviews={this.filterReviews}/>
+          <Search reviews={this.props.reviews} setReviews={this.setReviews} filtered={this.state.filteredReviews}/>
           {currentReviews.map((review) => <Review key={review._id} review={review}/>)}
         </div>
       );
