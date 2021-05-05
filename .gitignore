@@ -4,3 +4,5 @@ AWSconfig.js
 bundle.js
 scribbles.js
 WebSequence.png
+.DS_Store
+rootkey.numbers

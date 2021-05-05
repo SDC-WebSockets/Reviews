@@ -1,3 +1,10 @@
 module.exports = {
-  extends: './node_modules/eslint-config-hackreactor/index.js'
+  extends: './node_modules/eslint-config-hackreactor/index.js',
+  env: {
+    node: true,
+    es6: true
+  },
+  parserOptions: {
+    ecmaVersion: 8
+  }
 };

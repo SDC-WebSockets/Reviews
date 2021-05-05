@@ -15,10 +15,10 @@ class ReviewService extends React.Component {
   }
 
   componentDidMount() {
-    this.getReviews();
+    this.getReviews(this.props.courseId);
   }
 
-  getReviews(id = this.props.courseId) {
+  getReviews(id) {
     fetch(`http://localhost:2712/reviews/item?courseId=${id}`, {
       method: 'GET',
       mode: 'cors',
@@ -29,9 +29,13 @@ class ReviewService extends React.Component {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        this.setState({reviews: data});
+        this.updateReviews(data);
         this.chooseBestReview(data.reviews);
       });
+  }
+
+  updateReviews(reviews) {
+    this.setState({reviews: reviews});
   }
 
   chooseBestReview(reviews) {

@@ -1,5 +1,3 @@
-reviewersMock.js
-commentsMock.js
+scribbles.js
 bundle.js
-dataGenerators.js
-s3.js
+reviewBundle.js

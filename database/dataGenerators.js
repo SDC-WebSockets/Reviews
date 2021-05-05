@@ -4,7 +4,7 @@ const addReviewAndUpdateRating = require('./mongoDb.js').addReviewAndUpdateRatin
 const resetRating = require('./mongoDb.js').resetRating;
 const faker = require('faker');
 
-// helper function
+// helper functions
 const randomInclusiveInteger = (min, max, exceptions = []) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -15,27 +15,23 @@ const randomInclusiveInteger = (min, max, exceptions = []) => {
   return randomInteger;
 };
 
+const randomDate = (date1, date2) => {
+  return new Date(date1.getTime() + Math.random() * (date2.getTime() - date1.getTime()));
+};
+
 let usedReviewerIds = [];
 
 // create a random review for a given course ID
 const generateRandomReview = (courseId) => {
-  let randomDate = (date1, date2) => {
-    return new Date(date1.getTime() + Math.random() * (date2.getTime() - date1.getTime()));
-  };
-
-  let randomReviewerId = randomInclusiveInteger(100000, 999999, usedReviewerIds);
+  const randomReviewerId = randomInclusiveInteger(100000, 999999, usedReviewerIds);
   usedReviewerIds.push(randomReviewerId);
-
-  let randomName = faker.name.findName();
-
-  let randomAvatar = faker.image.avatar();
-  let avatars = [null, null, null, randomAvatar];
-  let avatarOrNoAvatar = avatars[randomInclusiveInteger(0, 3)];
-
-  let randomNoOfCourses = randomInclusiveInteger(1, 50);
-  let randomNoOfReviews = randomInclusiveInteger(1, randomNoOfCourses);
-
-  let randomReviewer = {
+  const randomName = faker.name.findName();
+  const randomAvatar = faker.image.avatar();
+  const avatars = [null, null, null, randomAvatar];
+  const avatarOrNoAvatar = avatars[randomInclusiveInteger(0, 3)];
+  const randomNoOfCourses = randomInclusiveInteger(1, 50);
+  const randomNoOfReviews = randomInclusiveInteger(1, randomNoOfCourses);
+  const randomReviewer = {
     reviewerId: randomReviewerId,
     name: randomName,
     picture: avatarOrNoAvatar,
@@ -44,17 +40,14 @@ const generateRandomReview = (courseId) => {
   };
 
   const ratings = [5, 5, 5, 5, 5, 4.5, 4.5, 4, 4, 3.5, 3, 2.5, 2, 1.5, 1]; // makes it more likely for it to have good ratings
-  let randomRating = ratings[randomInclusiveInteger(0, ratings.length - 1)];
+  const randomRating = ratings[randomInclusiveInteger(0, ratings.length - 1)];
+  const randomComment = faker.lorem.sentences();
+  const startTime = new Date('01 January 2018 00:00 UTC');
+  const currentTime = new Date();
+  const randomTime = randomDate(startTime, currentTime).toISOString();
+  const randomHelpful = randomInclusiveInteger(1, 50);
 
-  let randomComment = faker.lorem.sentences();
-
-  let startTime = new Date('01 January 2018 00:00 UTC');
-  let currentTime = new Date('27 April 2021 10:30 UTC');
-  let randomTime = randomDate(startTime, currentTime).toISOString();
-
-  let randomHelpful = randomInclusiveInteger(1, 50);
-
-  let randomReview = {
+  const randomReview = {
     courseId: courseId,
     reviewer: randomReviewer,
     rating: randomRating,
@@ -101,7 +94,7 @@ const resetDatabase = async (noOfCourses) => {
   });
   await resetRatings(noOfCourses);
   await addRandomReviews(noOfCourses);
-  console.log('Finished populating database')
+  console.log('Finished populating database');
 };
 
 // === ACTIVATE HERE === (node database/dataGenerators.js)
