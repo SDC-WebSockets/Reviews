@@ -2,7 +2,6 @@ node_modules
 package-lock.json
 
 bundle.js
-client/public/reviewBundle.js
 
 AWSconfig.js
 
