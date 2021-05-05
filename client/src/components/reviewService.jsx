@@ -39,8 +39,6 @@ class ReviewService extends React.Component {
     this.setState({reviews: reviews});
   }
 
-
-
   chooseBestReview(reviews) {
     if (reviews) {
       let bestReview = reviews[0];
