@@ -1,5 +1,8 @@
 node_modules
 package-lock.json
+AWSconfig.js
 bundle.js
 scribbles.js
 WebSequence.png
+.DS_Store
+rootkey.numbers

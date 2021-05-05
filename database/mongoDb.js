@@ -15,7 +15,7 @@ const reviewSchema = new mongoose.Schema({ // 1 -> many: course_id -> reviews
   createdAt: Date,
   helpful: Number,
   reported: Boolean
-});
+}, { versionKey: false });
 
 const ratingSchema = new mongoose.Schema({ // 1 <-> 1: course_id <-> rating
   courseId: Number,
@@ -31,123 +31,75 @@ const ratingSchema = new mongoose.Schema({ // 1 <-> 1: course_id <-> rating
   '2': Number,
   '1 1/2': Number,
   '1': Number
-});
+}, { versionKey: false });
 
 let Review = mongoose.model('Review', reviewSchema);
 let Rating = mongoose.model('Rating', ratingSchema);
 
 const getAllReviews = () => {
-  return new Promise ((resolve, reject) => {
-    Review.find((err, reviews) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(reviews);
-      }
-    });
-  });
+  return Review.find().exec();
 };
 
 const getReviewsForOneCourse = (id) => {
-  return new Promise ((resolve, reject) => {
-    Review.find({courseId: id}, (err, reviews) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(reviews);
-      }
-    });
-  });
+  return Review.find({courseId: id}).exec();
 };
 
 const getAllRatings = () => {
-  return new Promise ((resolve, reject) => {
-    Rating.find((err, ratings) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(ratings);
-      }
-    });
-  });
+  return Rating.find().exec();
 };
 
 const getRatingForOneCourse = (id) => {
-  return new Promise ((resolve, reject) => {
-    Rating.findOne({courseId: id}, (err, rating) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(rating);
-      }
-    });
-  });
+  return Rating.findOne({courseId: id}).exec();
 };
 
 const addReview = (review) => {
-  return new Promise ((resolve, reject) => {
-    let document = new Review({
-      courseId: review.courseId,
-      reviewer: {
-        reviewerId: review.reviewer.reviewerId,
-        name: review.reviewer.name,
-        picture: review.reviewer.picture,
-        coursesTaken: review.reviewer.coursesTaken,
-        reviews: review.reviewer.reviews
-      },
-      rating: review.rating,
-      comment: review.comment,
-      createdAt: review.createdAt,
-      helpful: review.helpful,
-      reported: false
-    });
-
-    document.save((err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result); // = review as it appears in DB
-      }
-    });
+  let document = new Review({
+    courseId: review.courseId,
+    reviewer: {
+      reviewerId: review.reviewer.reviewerId,
+      name: review.reviewer.name,
+      picture: review.reviewer.picture,
+      coursesTaken: review.reviewer.coursesTaken,
+      reviews: review.reviewer.reviews
+    },
+    rating: review.rating,
+    comment: review.comment,
+    createdAt: review.createdAt,
+    helpful: review.helpful,
+    reported: false
   });
+
+  return document.save();
 };
 
 const updateRating = (review, rating) => {
-  return new Promise ((resolve, reject) => {
-    let filter = {courseId: review.courseId};
-    let newTotalStars = rating.totalStars + review.rating;
-    let newTotalRatings = rating.totalRatings + 1;
-    let currentRating = review.rating.toString();
-    let newOverallRating = newTotalStars / newTotalRatings;
-    let valuesToSet = { overallRating: newOverallRating, totalRatings: newTotalRatings, totalStars: newTotalStars };
-    let callback = (err, results) => {
-      if (err) {
-        console.log('Error updating corresponding rating:', err);
-        reject(err);
-      } else {
-        resolve(results);
-      }
-    };
-    if (review.rating === 5) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: { '5': 1} }, callback);
-    } else if (review.rating === 4.5) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: {'4 1/2': 1} }, callback);
-    } else if (review.rating === 4) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: {'4': 1} }, callback);
-    } else if (review.rating === 3.5) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: {'3 1/2': 1} }, callback);
-    } else if (review.rating === 3) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: {'3': 1} }, callback);
-    } else if (review.rating === 2.5) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: {'2 1/2': 1} }, callback);
-    } else if (review.rating === 2) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: {'2': 1} }, callback);
-    } else if (review.rating === 1.5) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: {'1 1/2': 1} }, callback);
-    } else if (review.rating === 1) {
-      Rating.updateOne(filter, { $set: valuesToSet, $inc: {'1': 1} }, callback);
-    }
-  });
+  let filter = {courseId: review.courseId};
+  let newTotalStars = rating.totalStars + review.rating;
+  let newTotalRatings = rating.totalRatings + 1;
+  let currentRating = review.rating.toString();
+  let newOverallRating = newTotalStars / newTotalRatings;
+
+  let valuesToSet = { overallRating: newOverallRating, totalRatings: newTotalRatings, totalStars: newTotalStars };
+
+  if (review.rating === 5) {
+    return Rating.updateOne(filter, { $set: valuesToSet, $inc: { '5': 1} }).exec();
+  } else if (review.rating === 4.5) {
+    return Rating.updateOne(filter, { $set: valuesToSet, $inc: {'4 1/2': 1} }).exec();
+  } else if (review.rating === 4) {
+    return Rating.updateOne(filter, { $set: valuesToSet, $inc: {'4': 1} }).exec();
+  } else if (review.rating === 3.5) {
+    return Rating.updateOne(filter, { $set: valuesToSet, $inc: {'3 1/2': 1} }).exec();
+  } else if (review.rating === 3) {
+    return Rating.updateOne(filter, { $set: valuesToSet, $inc: {'3': 1} }).exec();
+  } else if (review.rating === 2.5) {
+    return Rating.updateOne(filter, { $set: valuesToSet, $inc: {'2 1/2': 1} }).exec();
+  } else if (review.rating === 2) {
+    return Rating.updateOne(filter, { $set: valuesToSet, $inc: {'2': 1} }).exec();
+  } else if (review.rating === 1.5) {
+    return Rating.updateOne(filter, { $set: valuesToSet, $inc: {'1 1/2': 1} }).exec();
+  } else if (review.rating === 1) {
+    return Rating.updateOne(filter, { $set: valuesToSet, $inc: {'1': 1} }).exec();
+  }
 };
 
 const addReviewAndUpdateRating = (review) => {
@@ -176,38 +128,30 @@ const addReviewAndUpdateRating = (review) => {
 
 
 const resetRating = (rating) => {
-  return new Promise ((resolve, reject) => {
-    Rating.updateOne({courseId: rating.courseId},
-      {
-        courseId: rating.courseId,
-        overallRating: 0,
-        totalRatings: 0,
-        totalStars: 0,
-        '5': 0,
-        '4 1/2': 0,
-        '4': 0,
-        '3 1/2': 0,
-        '3': 0,
-        '2 1/2': 0,
-        '2': 0,
-        '1 1/2': 0,
-        '1': 0,
-      }, {upsert: true}, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-  });
+  return Rating.updateOne({courseId: rating.courseId},
+    {
+      courseId: rating.courseId,
+      overallRating: 0,
+      totalRatings: 0,
+      totalStars: 0,
+      '5': 0,
+      '4 1/2': 0,
+      '4': 0,
+      '3 1/2': 0,
+      '3': 0,
+      '2 1/2': 0,
+      '2': 0,
+      '1 1/2': 0,
+      '1': 0,
+    }, {upsert: true}).exec();
 };
 
 module.exports = {
   Review, // used in dataGenerators.js
   Rating, // used in dataGenerators.js
-  getAllReviews, // used in server
+  getAllReviews, // used in server and s3.js
   getReviewsForOneCourse, // used in server
-  getAllRatings, // used in server
+  getAllRatings, // used in server and s3.js
   getRatingForOneCourse, // used in server
   addReviewAndUpdateRating, // used in dataGenerators.js
   resetRating // used in dataGenerators.js

@@ -3,10 +3,8 @@ const path = require('path');
 
 const cors = require('cors');
 const mongoDb = require('../database/mongoDb.js');
-const dataGenerators = require('../database/dataGenerators.js');
 const app = express();
 const port = 2712;
-
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 app.use(cors());
@@ -26,8 +24,7 @@ app.get('/reviews', (req, res) => {
 });
 
 app.get('/reviews/item', (req, res) => {
-  console.log(req.originalUrl);
-  let courseId = req.query.id;
+  let courseId = req.query.courseId;
   let reviews;
   let rating;
   mongoDb.getReviewsForOneCourse(courseId)
@@ -41,7 +38,7 @@ app.get('/reviews/item', (req, res) => {
             ratings: rating,
             reviews: reviews
           };
-          res.status(200).send(JSON.stringify(data));
+          res.status(200).end(JSON.stringify(data));
         });
     });
 });

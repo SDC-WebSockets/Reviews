@@ -1,24 +1,25 @@
 import React from 'react';
-import Featured from './components/featured.jsx';
-import Feedback from './components/feedback.jsx';
-import ReviewList from './components/reviewList.jsx';
+import Featured from './featured.jsx';
+import Feedback from './feedback.jsx';
+import ReviewList from './reviewList.jsx';
 
 
 class ReviewService extends React.Component {
   constructor(props) {
+    // console.log('Props in ReviewService:', props);
     super(props);
     this.state = {
-      currentCourse: {},
-      featuredReview: {}
+      reviews: {},
+      featuredReview: {},
     };
   }
 
   componentDidMount() {
-    this.getReviews();
+    this.getReviews(this.props.courseId);
   }
 
-  getReviews(id = 1) {
-    fetch(`http://localhost:2712/reviews/item?id=${id}`, {
+  getReviews(id) {
+    fetch(`http://localhost:2712/reviews/item?courseId=${id}`, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -28,9 +29,13 @@ class ReviewService extends React.Component {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        this.setState({currentCourse: data});
+        this.updateReviews(data);
         this.chooseBestReview(data.reviews);
       });
+  }
+
+  updateReviews(reviews) {
+    this.setState({reviews: reviews});
   }
 
   chooseBestReview(reviews) {
@@ -57,13 +62,12 @@ class ReviewService extends React.Component {
     }
   }
 
-
   render() {
     return (
       <div>
         <Featured review={this.state.featuredReview}/>
-        <Feedback ratings={this.state.currentCourse.ratings}/>
-        <ReviewList reviews={this.state.currentCourse.reviews}/>
+        <Feedback ratings={this.state.reviews.ratings}/>
+        <ReviewList reviews={this.state.reviews.reviews}/>
       </div>
     );
   }
