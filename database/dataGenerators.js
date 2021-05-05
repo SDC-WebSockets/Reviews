@@ -27,10 +27,9 @@ const generateRandomReview = (courseId) => {
   usedReviewerIds.push(randomReviewerId);
 
   let randomName = faker.name.findName();
-  let initials = randomName.split(' ').map((n)=>n[0]).join('').slice(0, 2);
 
   let randomAvatar = faker.image.avatar();
-  let avatars = [initials, initials, initials, randomAvatar];
+  let avatars = [null, null, null, randomAvatar];
   let avatarOrNoAvatar = avatars[randomInclusiveInteger(0, 3)];
 
   let randomNoOfCourses = randomInclusiveInteger(1, 50);
@@ -102,10 +101,11 @@ const resetDatabase = async (noOfCourses) => {
   });
   await resetRatings(noOfCourses);
   await addRandomReviews(noOfCourses);
+  console.log('Finished populating database')
 };
 
-// === ACTIVATE HERE ===
-// resetDatabase(100);
+// === ACTIVATE HERE === (node database/dataGenerators.js)
+resetDatabase(100);
 
 
 
