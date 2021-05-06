@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SearchMessage = (props) => {
-  console.log('Props in SearchMessage:', props);
+  // console.log('Props in SearchMessage:', props);
   if (props.filtered.length > 0) {
     return (
       <div>{props.filtered.length} reviews mentioning '<b>{props.term}</b>'</div>

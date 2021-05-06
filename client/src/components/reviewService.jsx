@@ -8,9 +8,13 @@ class ReviewService extends React.Component {
   constructor(props) {
     // console.log('Props in ReviewService:', props);
     super(props);
+    this.updateReviews = this.updateReviews.bind(this);
+    this.updateRatings = this.updateRatings.bind(this);
     this.state = {
-      reviews: {},
-      featuredReview: {},
+      totalReviews: null,
+      reviewsByTier: null,
+      ratings: null,
+      featuredReview: null
     };
   }
 
@@ -28,15 +32,35 @@ class ReviewService extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
-        this.updateReviews(data);
+        console.log('Data from server:', data);
+        this.updateReviews(data.reviews);
+        this.updateRatings(data.ratings);
         this.chooseBestReview(data.reviews);
       });
   }
 
   // function to update reviewList's state on star tier select (prevent refresh)
   updateReviews(reviews, tier) {
-    this.setState({reviews: reviews});
+    if (!tier) {
+      this.setState({totalReviews: reviews});
+    } else if (tier === 'all') {
+      this.setState({reviewsByTier: null});
+    } else {
+      let reviewsByTier = [];
+      reviews.forEach((review) => {
+        if (Math.floor(review.rating).toString() === tier) {
+          reviewsByTier.push(review);
+        }
+      });
+      if (reviewsByTier.length > 0) {
+        console.log(`Reviews with ${tier} stars:`, reviewsByTier);
+        this.setState({reviewsByTier: reviewsByTier});
+      }
+    }
+  }
+
+  updateRatings(ratings) {
+    this.setState({ratings: ratings});
   }
 
   chooseBestReview(reviews) {
@@ -66,9 +90,15 @@ class ReviewService extends React.Component {
   render() {
     return (
       <div>
+        {this.state.featuredReview &&
         <Featured review={this.state.featuredReview}/>
-        <Feedback ratings={this.state.reviews.ratings}/>
-        <ReviewList reviews={this.state.reviews.reviews}/>
+        }
+        {this.state.ratings &&
+        <Feedback ratings={this.state.ratings} totalReviews={this.state.totalReviews} updateReviews={this.updateReviews}/>
+        }
+        {this.state.totalReviews &&
+        <ReviewList totalReviews={this.state.totalReviews} reviewsByTier={this.state.reviewsByTier} updateReviews={this.updateReviews}/>
+        }
       </div>
     );
   }
