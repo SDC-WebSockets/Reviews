@@ -6,18 +6,6 @@ class ReviewList extends React.Component { // shows all reviews (displayed 12 at
   constructor(props) {
     // console.log('Props in ReviewList:', props);
     super(props);
-    this.setFilteredReviews = this.setFilteredReviews.bind(this);
-    this.state = {
-      filteredReviews: null
-    };
-  }
-
-  setFilteredReviews(reviews) {
-    if (reviews === null) {
-      this.setState({filteredReviews: null});
-    } else {
-      this.setState({filteredReviews: reviews});
-    }
   }
 
   render() {
@@ -30,8 +18,12 @@ class ReviewList extends React.Component { // shows all reviews (displayed 12 at
       );
     } else {
       let currentReviews;
-      if (this.state.filteredReviews) {
-        currentReviews = this.state.filteredReviews;
+      // console.log(this.props.reviewsBySearch);
+      // console.log(this.props.reviewsByTier);
+      // console.log(this.props.totalReviews);
+
+      if (this.props.reviewsBySearch) {
+        currentReviews = this.props.reviewsBySearch;
       } else if (this.props.reviewsByTier) {
         currentReviews = this.props.reviewsByTier;
       } else {
@@ -40,13 +32,12 @@ class ReviewList extends React.Component { // shows all reviews (displayed 12 at
       return (
         <div>
           <h2>Reviews</h2>
-          <Search totalReviews={this.props.totalReviews} setFilteredReviews={this.setFilteredReviews} filtered={this.state.filteredReviews} updateReviews={this.props.updateReviews}/>
-          {currentReviews.map((review) => <Review key={review._id} review={review}/>)}
+          <Search propsFromReviewService={this.props}/>
+          {currentReviews.map((review) => <Review key={review._id} review={review} currentSearchTerm={this.props.currentSearchTerm}/>)}
         </div>
       );
     }
   }
-
 }
 
 export default ReviewList;
