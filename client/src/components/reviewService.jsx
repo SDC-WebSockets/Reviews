@@ -60,8 +60,8 @@ class ReviewService extends React.Component {
       this.setState({reviewsBySearch: null});
       this.setState({currentSearchTerm: null});
     } else {
-      this.setState({currentSearchTerm: term});
       term = term.toLowerCase().trim();
+      this.setState({currentSearchTerm: term});
       let filteredReviews = [];
       currentReviews.forEach((review) => {
         let words = review.comment.toLowerCase().split(' ');

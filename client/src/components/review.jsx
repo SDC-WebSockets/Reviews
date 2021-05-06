@@ -6,9 +6,13 @@ const Review = (props) => { // if a comment is more than 5 lines long, use the '
   const CommentWithBoldSearchTerm = () => {
     let comment = props.review.comment;
     let term = props.currentSearchTerm;
+    let occurrenceIndex = comment.toLowerCase().indexOf(term);
+    let isCapitalized = comment.charAt(occurrenceIndex) === comment.charAt(occurrenceIndex).toUpperCase();
+    isCapitalized ? term = term[0].toUpperCase() + term.slice(1) : term;
+
     return (
       <div>
-        {comment.slice(0, comment.indexOf(term))}<strong>{term}</strong>{comment.slice(comment.indexOf(term) + term.length)}
+        {comment.slice(0, occurrenceIndex)}<strong>{term}</strong>{comment.slice(occurrenceIndex + term.length)}
       </div>
     );
 
