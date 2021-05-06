@@ -53,6 +53,9 @@ class ReviewService extends React.Component {
   }
 
   setReviewsFilteredBySearch(term) {
+    let currentReviews;
+    this.state.reviewsByTier === null ? currentReviews = this.state.totalReviews : currentReviews = this.state.reviewsByTier;
+
     if (term === null || term.trim() === '') {
       this.setState({reviewsBySearch: null});
       this.setState({currentSearchTerm: null});
@@ -60,24 +63,26 @@ class ReviewService extends React.Component {
       this.setState({currentSearchTerm: term});
       term = term.toLowerCase().trim();
       let filteredReviews = [];
-      this.state.totalReviews.forEach((review) => {
-        let comment = review.comment.toLowerCase();
-        if (comment.includes(term)) {
-          // review.comment = review.comment.replaceAll(term, `<strong>${term}</strong>`); // check if that works
+      currentReviews.forEach((review) => {
+        let words = review.comment.toLowerCase().split(' ');
+        if (words.includes(term) || words.includes(term + 's')) {
           filteredReviews.push(review);
         }
       });
-      console.log(`Reviews with ${term}:`, filteredReviews);
+      console.log(`Reviews with the word ${term}:`, filteredReviews);
       this.setState({reviewsBySearch: filteredReviews});
     }
   }
 
   setReviewsFilteredByTier(tier) {
+    let currentReviews;
+    this.state.reviewsBySearch === null ? currentReviews = this.state.totalReviews : currentReviews = this.state.reviewsBySearch;
+
     if (tier === 'all') {
       this.setState({reviewsByTier: null});
     } else {
       let filteredReviews = [];
-      this.state.totalReviews.forEach((review) => {
+      currentReviews.forEach((review) => {
         if (Math.floor(review.rating).toString() === tier) {
           filteredReviews.push(review);
         }

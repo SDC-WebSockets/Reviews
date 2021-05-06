@@ -3,7 +3,7 @@ import SearchMessage from './searchMessage.jsx';
 
 class Search extends React.Component {
   constructor(props) {
-    // console.log('Props in Search:', props);
+    console.log('Props in Search:', props);
     super(props);
     this.handleTermChange = this.handleTermChange.bind(this);
     this.filterByTier = this.filterByTier.bind(this);
@@ -32,8 +32,7 @@ class Search extends React.Component {
   resetSearch() {
     this.setState({term: ''});
     this.props.propsFromReviewService.setReviewsFilteredBySearch(null);
-    let searchField = document.getElementById('search');
-    searchField.value = '';
+    document.getElementById('search').value = '';
   }
 
   render() {
