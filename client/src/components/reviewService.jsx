@@ -3,6 +3,7 @@ import Featured from './featured.jsx';
 import Feedback from './feedback.jsx';
 import ReviewList from './reviewList.jsx';
 import Search from './search.jsx';
+import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from '../filters.js';
 
 
 class ReviewService extends React.Component {
@@ -15,12 +16,18 @@ class ReviewService extends React.Component {
 
     this.state = {
       totalReviews: null,
+
+      currentSearchTerm: null,
       reviewsBySearch: null,
+
+      currentTier: 0,
       reviewsByTier: null,
+
       reviewsBySearchAndTier: null,
+
       featuredReview: null,
-      ratings: null,
-      currentSearchTerm: null
+
+      ratings: null
     };
   }
 
@@ -54,91 +61,53 @@ class ReviewService extends React.Component {
   }
 
   updateFeaturedReview(reviews) {
-    if (reviews.length === 0) {
-      return;
-    }
-
-    let bestReview = reviews[0];
-    let tiedBest = [reviews[0]];
-    for (let i = 1; i < reviews.length; i++) {
-      if (reviews[i].rating > bestReview.rating) {
-        bestReview = reviews[i];
-        tiedBest = [reviews[i]];
-      } else if (reviews[i].rating === bestReview.rating) {
-        tiedBest.push(reviews[i]);
-      }
-    }
-    if (tiedBest.length > 1) {
-      bestReview = tiedBest[0];
-      for (let j = 1; j < tiedBest.length; j++) {
-        if (tiedBest[j].comment.length > bestReview.comment.length) {
-          bestReview = tiedBest[j];
-        }
-      }
-    }
+    const bestReview = getBestReview(reviews);
     this.setState({featuredReview: bestReview});
   }
 
-  setReviewsFilteredBySearch(term, currentReviews = this.state.totalReviews) {
-    if (term === null || term.trim() === '') {
+  setReviewsFilteredBySearch(term, reviews = this.state.totalReviews) {
+    if (term === null || term === '') {
       this.setState({
         reviewsBySearch: null,
         reviewsBySearchAndTier: null,
         currentSearchTerm: null
       });
     } else {
-      term = term.toLowerCase().trim();
-      this.setState({currentSearchTerm: term});
-      let filteredReviews = [];
-      currentReviews.forEach((review) => {
-        let words = review.comment.toLowerCase().split(' ');
-        if (words.includes(term) || words.includes(term + 's')) {
-          filteredReviews.push(review);
-        }
+      let filteredReviews = filterReviewsByTerm(reviews, term);
+      this.setState({
+        reviewsBySearch: filteredReviews,
+        currentSearchTerm: term
       });
       console.log(`Reviews with the word ${term}:`, filteredReviews);
-      this.setState({reviewsBySearch: filteredReviews});
       return filteredReviews;
     }
   }
 
-  setReviewsFilteredByTier(tier, currentReviews = this.state.totalReviews) {
+  setReviewsFilteredByTier(tier, reviews = this.state.totalReviews) {
     if (tier === 0) {
       this.setState({
         reviewsByTier: null,
-        reviewsBySearchAndTier: null
+        reviewsBySearchAndTier: null,
+        currentTier: null
       });
     } else {
-      let filteredReviews = [];
-      currentReviews.forEach((review) => {
-        if (Math.floor(review.rating) === tier) {
-          filteredReviews.push(review);
-        }
+      let filteredReviews = filterReviewsByTier(reviews, tier);
+      this.setState({
+        reviewsByTier: filteredReviews,
+        currentTier: tier
       });
-      if (filteredReviews.length > 0) {
-        console.log(`Reviews with ${tier} stars:`, filteredReviews);
-        this.setState({reviewsByTier: filteredReviews});
-        return filteredReviews;
-      }
+      console.log(`Reviews with ${tier} stars:`, filteredReviews);
+      return filteredReviews;
     }
   }
 
   setReviewsFilteredBySearchAndTier(term, tier) {
-    let currentReviews;
-    let filteredReviews;
-    if (this.state.reviewsBySearch && !this.state.reviewsByTier) {
-      currentReviews = this.state.reviewsBySearch;
-      filteredReviews = this.setReviewsFilteredByTier(tier, currentReviews);
-      this.setReviewsFilteredByTier(tier);
-    } else if (this.state.reviewsByTier && !this.state.reviewsBySearch) {
-      currentReviews = this.state.reviewsByTier;
-      filteredReviews = this.setReviewsFilteredBySearch(term, currentReviews);
-      this.setReviewsFilteredBySearch(term);
-    }
-    if (filteredReviews) {
-      this.setState({reviewsBySearchAndTier: filteredReviews});
-    }
-
+    const reviews = this.state.totalReviews;
+    this.setReviewsFilteredBySearch(term, reviews);
+    this.setReviewsFilteredByTier(tier, reviews);
+    const filteredReviewsByTier = filterReviewsByTier(reviews, tier);
+    const filterReviewsByTierAndTerm = filterReviewsByTerm(filteredReviewsByTier, term);
+    this.setState({reviewsBySearchAndTier: filterReviewsByTierAndTerm});
   }
 
   render() {
@@ -152,6 +121,7 @@ class ReviewService extends React.Component {
         {this.state.ratings &&
         <Feedback
           ratings={this.state.ratings}
+          currentSearchTerm={this.state.currentSearchTerm}
           reviewsBySearch={this.state.reviewsBySearch}
 
           setReviewsFilteredByTier={this.setReviewsFilteredByTier}
@@ -162,6 +132,7 @@ class ReviewService extends React.Component {
         <Search
           totalReviews={this.state.totalReviews}
           reviewsBySearch={this.state.reviewsBySearch}
+          currentTier={this.state.currentTier}
           reviewsByTier={this.state.reviewsByTier}
           reviewsBySearchAndTier={this.state.reviewsBySearchAndTier}
 

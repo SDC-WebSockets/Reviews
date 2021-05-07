@@ -2,7 +2,7 @@ import React from 'react';
 
 class Feedback extends React.Component {
   constructor(props) {
-    // console.log('Props in Feedback:', props);
+    console.log('Props in Feedback:', props);
     super(props);
     this.filterByTier = this.filterByTier.bind(this);
     this.removeFilter = this.removeFilter.bind(this);
@@ -30,10 +30,10 @@ class Feedback extends React.Component {
   }
 
   filterByTier(tier) {
-    if (!this.props.reviewsBySearch) {
+    if (!this.props.currentSearchTerm) {
       this.props.setReviewsFilteredByTier(tier);
     } else {
-      this.props.setReviewsFilteredBySearchAndTier(null, tier);
+      this.props.setReviewsFilteredBySearchAndTier(this.props.currentSearchTerm, tier);
     }
     this.setState({currentTier: tier});
   }

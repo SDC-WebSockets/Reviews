@@ -18,10 +18,11 @@ class Search extends React.Component {
   }
 
   filterByTerm(term) {
-    if (!this.props.reviewsByTier) {
+    term = term.toLowerCase().trim();
+    if (!this.props.currentTier) {
       this.props.setReviewsFilteredBySearch(term);
     } else {
-      this.props.setReviewsFilteredBySearchAndTier(term, null);
+      this.props.setReviewsFilteredBySearchAndTier(term, this.props.currentTier);
     }
   }
 
