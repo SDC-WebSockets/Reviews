@@ -1,12 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 
-// notes for later: if a comment is more than 5 lines long, use the 'Show more' button
+// note for later: if a comment is more than 5 lines long, hide the rest use a 'Show more' button
 
 const Review = (props) => {
   // console.log('Props in Review:', props);
 
-  const CommentWithBoldSearchTerm = () => { // subcomponent: search term should be bold in each filtered review
+  const CommentWithBoldSearchTerm = () => {
+    // subcomponent: current search term should be bold in each filtered review (for now, only works for the first occurrence of that word in each review)
 
     let comment = props.review.comment;
     let term = props.currentSearchTerm;

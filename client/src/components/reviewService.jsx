@@ -16,17 +16,12 @@ class ReviewService extends React.Component {
 
     this.state = {
       totalReviews: null,
-
       currentSearchTerm: null,
       reviewsBySearch: null,
-
-      currentTier: 0,
+      currentTier: null,
       reviewsByTier: null,
-
       reviewsBySearchAndTier: null,
-
       featuredReview: null,
-
       ratings: null
     };
   }

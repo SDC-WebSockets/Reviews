@@ -2,6 +2,8 @@ import React from 'react';
 import Review from './review.jsx';
 import SearchMessage from './searchMessage.jsx';
 
+// note for later: only display 12 reviews ("See more reviews" displays 12 more)
+
 const ReviewList = (props) => {
   // console.log('Props in ReviewList:', props);
   if (props.totalReviews.length === 0) {
