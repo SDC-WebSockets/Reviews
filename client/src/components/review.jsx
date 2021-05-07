@@ -1,9 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 
-const Review = (props) => { // if a comment is more than 5 lines long, use the 'Show more' button
+// notes for later: if a comment is more than 5 lines long, use the 'Show more' button
+
+const Review = (props) => {
   // console.log('Props in Review:', props);
-  const CommentWithBoldSearchTerm = () => {
+
+  const CommentWithBoldSearchTerm = () => { // subcomponent: search term should be bold in each filtered review
+
     let comment = props.review.comment;
     let term = props.currentSearchTerm;
     let occurrenceIndex = comment.toLowerCase().indexOf(term);
@@ -15,8 +19,8 @@ const Review = (props) => { // if a comment is more than 5 lines long, use the '
         {comment.slice(0, occurrenceIndex)}<strong>{term}</strong>{comment.slice(occurrenceIndex + term.length)}
       </div>
     );
-
   };
+
   return (
     <div>
       <div>

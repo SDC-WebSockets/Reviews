@@ -27,5 +27,4 @@ const Featured = (props) => (
   </div>
 );
 
-
 export default Featured;

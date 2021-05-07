@@ -2,9 +2,9 @@ import React from 'react';
 
 const SearchMessage = (props) => {
   // console.log('Props in SearchMessage:', props);
-  if (props.filtered.length > 0) {
+  if (props.currentReviews.length > 0) {
     return (
-      <div>{props.filtered.length} reviews mentioning '<strong>{props.term}</strong>'</div>
+      <div>{props.currentReviews.length} reviews mentioning '<strong>{props.term}</strong>'</div>
     );
   } else {
     return (
