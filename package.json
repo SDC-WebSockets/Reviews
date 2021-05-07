@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon server/index.js",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "seedMongo": "node database/dataGenerators.js"
   },
   "repository": {
     "type": "git",
@@ -36,8 +37,6 @@
   },
   "dependencies": {
     "aws-sdk": "^2.897.0",
-    "bluebird": "^3.5.1",
-    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "faker": "^5.5.3",
