@@ -122,8 +122,7 @@ class ReviewService extends React.Component {
         <Feedback
           ratings={this.state.ratings}
           currentSearchTerm={this.state.currentSearchTerm}
-          reviewsBySearch={this.state.reviewsBySearch}
-
+          currentTier={this.state.currentTier}
           setReviewsFilteredByTier={this.setReviewsFilteredByTier}
           setReviewsFilteredBySearchAndTier={this.setReviewsFilteredBySearchAndTier}
         />
@@ -131,13 +130,8 @@ class ReviewService extends React.Component {
         {this.state.totalReviews &&
         <Search
           totalReviews={this.state.totalReviews}
-          reviewsBySearch={this.state.reviewsBySearch}
           currentTier={this.state.currentTier}
-          reviewsByTier={this.state.reviewsByTier}
-          reviewsBySearchAndTier={this.state.reviewsBySearchAndTier}
-
           setReviewsFilteredBySearch={this.setReviewsFilteredBySearch}
-          setReviewsFilteredByTier={this.setReviewsFilteredByTier}
           setReviewsFilteredBySearchAndTier={this.setReviewsFilteredBySearchAndTier}
         />
         }

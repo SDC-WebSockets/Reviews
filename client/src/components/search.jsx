@@ -2,7 +2,7 @@ import React from 'react';
 
 class Search extends React.Component {
   constructor(props) {
-    console.log('Props in Search:', props);
+    // console.log('Props in Search:', props);
     super(props);
     this.handleTermChange = this.handleTermChange.bind(this);
     this.filterByTerm = this.filterByTerm.bind(this);
