@@ -25,6 +25,11 @@ From within the Reviews directory:
 ```sh
 npm install
 ```
+### Creating the bundle file
+From within the Reviews directory:
+```sh
+npm run build
+```
 ### Populating the database
 From within the Reviews directory:
 ```sh
