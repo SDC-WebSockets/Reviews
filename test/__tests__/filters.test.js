@@ -1,4 +1,3 @@
-// import React from 'react';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from '../../client/src/filters.js';
 import { sampleDataForOneCourse } from '../mockData/sampleDataForOneCourse.js';
 
@@ -19,16 +18,47 @@ describe('Function "getBestReview"', () => {
 
 describe('Function "filterReviewsByTerm"', () => {
   it ('returns all reviews that match the search term', () => {
-    expect().toBe();
+    let resultReviews = filterReviewsByTerm(sampleDataForOneCourse.reviews, 'et');
+    expect(resultReviews.length).toBe(4);
   });
   it ('ignores case', () => {
-    expect().toBe();
+    let resultReviews = filterReviewsByTerm(sampleDataForOneCourse.reviews, 'NON');
+    expect(resultReviews.length).toBe(2);
   });
   it ('returns a review if it contains the search term whether that word ends with an "s" or not', () => {
-    expect().toBe();
+    let resultReviews = filterReviewsByTerm(sampleDataForOneCourse.reviews, 'qua');
+    expect(resultReviews.length).toBe(5);
   });
   it ('returns an empty array if no reviews match the search word', () => {
-    expect().toBe();
+    let resultReviews = filterReviewsByTerm(sampleDataForOneCourse.reviews, 'absent');
+    expect(resultReviews.length).toBe(0);
+  });
+  it ('returns an empty array if there are no input reviews', () => {
+    let resultReviews = filterReviewsByTier(null, 'et');
+    expect(resultReviews.length).toBe(0);
+  });
+  it ('returns all reviews if there is no input search term', () => {
+    let resultReviews = filterReviewsByTier(sampleDataForOneCourse.reviews, null);
+    expect(resultReviews.length).toBe(5);
+  });
+});
+
+describe('Function "filterReviewsByTier"', () => {
+  it ('returns all reviews that match the input tier', () => {
+    let resultReviews = filterReviewsByTier(sampleDataForOneCourse.reviews, 5);
+    expect(resultReviews.length).toBe(2);
+  });
+  it ('returns an empty array if no reviews match the input tier', () => {
+    let resultReviews = filterReviewsByTier(sampleDataForOneCourse.reviews, 2);
+    expect(resultReviews.length).toBe(0);
+  });
+  it ('returns an empty array if there are no input reviews', () => {
+    let resultReviews = filterReviewsByTier(null, 1);
+    expect(resultReviews.length).toBe(0);
+  });
+  it ('returns all reviews if there is no input tier', () => {
+    let resultReviews = filterReviewsByTier(sampleDataForOneCourse.reviews, null);
+    expect(resultReviews.length).toBe(5);
   });
 });
 
