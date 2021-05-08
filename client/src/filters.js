@@ -1,5 +1,5 @@
 export const getBestReview = (reviews) => {
-  if (reviews.length === 0) {
+  if (!reviews || reviews.length === 0) {
     return;
   }
 
@@ -25,6 +25,7 @@ export const getBestReview = (reviews) => {
 };
 
 export const filterReviewsByTerm = (reviews, term) => {
+  term.toLowerCase();
   let filteredReviews = [];
   reviews.forEach((review) => {
     let words = review.comment.toLowerCase().split(' ');

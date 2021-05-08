@@ -24,6 +24,5 @@ module.exports = {
     path: outputPath
   },
 
-  mode: 'development',
   watch: true
 };
