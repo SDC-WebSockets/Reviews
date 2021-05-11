@@ -20,7 +20,7 @@ module.exports = {
     ]
   },
   output: {
-    filename: 'bundle.js',
+    filename: 'reviewBundle.js',
     path: outputPath
   },
 

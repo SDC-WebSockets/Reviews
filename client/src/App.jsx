@@ -19,10 +19,12 @@ class App extends React.Component {
     return (
       <div>
         <form>
-          <input type="number" placeholder={this.state.courseId || 'id'} name="courseId" min="1" max="100"/>
+          <input id="numberInput" type="number" placeholder={this.state.courseId || 'id'} name="courseId" min="1" max="100"/>
           <input type="submit" value="Submit"/>
         </form>
-        {this.state.courseId ? <ReviewService courseId={this.state.courseId}/> : null}
+        {this.state.courseId > 0 && this.state.courseId <= 100 ?
+          <ReviewService courseId={this.state.courseId}/> :
+          <div>Enter a course number</div>}
       </div>
     );
   }

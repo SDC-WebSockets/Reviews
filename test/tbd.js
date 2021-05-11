@@ -1,3 +1,11 @@
+
+// --- CLIENT ---
+// tests for each component
+
+// --- SERVER ---
+
+// --- DATABASE ---
+
 // REVIEWS COLLECTION
 // multiples of 13 courseIds should not have reviews or ratings
 

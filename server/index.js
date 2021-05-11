@@ -24,7 +24,7 @@ app.get('/reviews', (req, res) => {
 });
 
 app.get('/reviews/item', (req, res) => {
-  let courseId = req.query.courseId;
+  let courseId = Number(req.query.courseId);
   let reviews;
   let rating;
   mongoDb.getReviewsForOneCourse(courseId)

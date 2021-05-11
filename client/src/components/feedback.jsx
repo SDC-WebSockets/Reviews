@@ -39,8 +39,6 @@ class Feedback extends React.Component {
     document.getElementById('select').value = '0';
   }
 
-
-
   // if a percentage is 0%, render it gray
   render() {
     if (this.props.ratings.totalRatings === 0) {
