@@ -79,7 +79,7 @@ class ReviewService extends React.Component {
         reviewsBySearch: filteredReviews,
         currentSearchTerm: term
       });
-      console.log(`Reviews with the word ${term}:`, filteredReviews);
+      // console.log(`Reviews with the word ${term}:`, filteredReviews);
       return filteredReviews;
     }
   }

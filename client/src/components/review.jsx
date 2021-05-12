@@ -24,14 +24,14 @@ const Review = (props) => {
 
   return (
     <div>
-      <div>
+      <div className="reviewerAvatar">
         {/* if the reviewer has no avatar, the default avatar consists of reviewer's initials */}
         {!props.review.reviewer.picture ? <div>{props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</div> : <img src={props.review.reviewer.picture}></img>}
       </div>
-      <div>{props.review.reviewer.name}</div>
-      <div>{props.review.rating}</div>
-      <div>{moment(props.review.createdAt).fromNow()}</div>
-      <div>{props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}</div>
+      <div className="reviewerName">{props.review.reviewer.name}</div>
+      <div className="reviewRating">{props.review.rating}</div>
+      <div className="reviewDate">{moment(props.review.createdAt).fromNow()}</div>
+      <div className="reviewComment">{props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}</div>
       <p>Was this review helpful?</p>
       <button className="thumbs-up">[thumbs-up]</button>
       <button className="thumbs-down">[thumbs-down]</button>
