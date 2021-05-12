@@ -10,7 +10,7 @@ import Search from '../../../client/src/components/search.jsx';
 
 describe ('Search component', () => {
 
-  const reviewServiceWrapper = mount(<ReviewService/>);
+  const reviewServiceWrapper = mount(<ReviewService courseId={9}/>);
 
   reviewServiceWrapper.setState({
     totalReviews: sampleDataForOneCourse.reviews

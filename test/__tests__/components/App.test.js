@@ -11,10 +11,6 @@ describe('App Component', () => {
 
   const wrapper = mount(<App/>);
 
-  it ('exists', () => {
-    expect(wrapper.containsMatchingElement(<App/>)).toBe(true);
-  });
-
   it ('calls setState in componentDidMount', () => {
     const instance = wrapper.instance();
     jest.spyOn(instance, 'setState');
@@ -24,6 +20,6 @@ describe('App Component', () => {
 
   it ('renders ReviewService if a courseId between 1 and 100 is selected', () => {
     wrapper.setState({courseId: 9});
-    expect(wrapper.containsMatchingElement(<ReviewService />)).toBe(true);
+    expect(wrapper.containsMatchingElement(<ReviewService/>)).toBe(true);
   });
 });

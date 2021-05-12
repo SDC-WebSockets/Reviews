@@ -10,7 +10,7 @@ import Review from '../../../client/src/components/Review.jsx';
 import SearchMessage from '../../../client/src/components/searchMessage.jsx';
 
 describe ('ReviewList component', () => {
-  const reviewServiceWrapper = mount(<ReviewService/>);
+  const reviewServiceWrapper = mount(<ReviewService courseId={9}/>);
   const instance = reviewServiceWrapper.instance();
 
   reviewServiceWrapper.setState({

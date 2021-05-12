@@ -4,7 +4,6 @@ import Feedback from './feedback.jsx';
 import ReviewList from './reviewList.jsx';
 import Search from './search.jsx';
 import fetch from 'node-fetch';
-// global.fetch = require('node-fetch');
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from '../filters.js';
 
 
