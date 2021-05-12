@@ -11,8 +11,8 @@ import Search from '../../../client/src/components/search.jsx';
 import ReviewList from '../../../client/src/components/ReviewList.jsx';
 
 describe('ReviewService Component', () => {
-  let wrapper = mount(<ReviewService courseId={9}/>);
-  let instance = wrapper.instance();
+  const wrapper = mount(<ReviewService courseId={9}/>);
+  const instance = wrapper.instance();
 
   it ('exists', () => {
     expect(wrapper.containsMatchingElement(<ReviewService/>)).toBe(true);

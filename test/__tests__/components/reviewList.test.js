@@ -6,7 +6,7 @@ import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js
 
 import ReviewList from '../../../client/src/components/ReviewList.jsx';
 
-describe ('ReviewList component', () => {
+xdescribe ('ReviewList component', () => {
   xit ('', ()=> {
 
   });

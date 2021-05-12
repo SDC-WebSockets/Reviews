@@ -7,14 +7,22 @@ import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js
 import Featured from '../../../client/src/components/featured.jsx';
 
 describe ('Featured component', () => {
-  xit ('shows the reviewer\'s initials if no avatar is present', () => {
 
+  const wrapper = mount(<Featured review={sampleDataForOneCourse.reviews[1]}/>);
+
+  it ('shows the reviewer\'s initials if no avatar is present', () => {
+    const value = wrapper.find('.reviewerAvatar').props().children.props.children;
+    expect(value).toBe('PP');
   });
 
-  xit ('shows how many courses the reviewer has taken and how many review they have written', () => {
-
+  const reviewParts = ['reviewerName', 'reviewerCoursesTaken', 'reviewerReviews', 'reviewRating', 'reviewDate', 'reviewComment'];
+  reviewParts.forEach((reviewPart) => {
+    it (`has a value for ${reviewPart}`, () => {
+      let value = wrapper.find(`.${reviewPart}`).props().children;
+      expect(value).toBeDefined();
+    });
   });
 
-  // thumbs
-  // report
+  // thumbs buttons when implemented
+  // report button when implemented
 });

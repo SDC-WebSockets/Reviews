@@ -16,7 +16,7 @@ describe('App Component', () => {
   });
 
   it ('calls setState in componentDidMount', () => {
-    let instance = wrapper.instance();
+    const instance = wrapper.instance();
     jest.spyOn(instance, 'setState');
     instance.componentDidMount();
     expect(instance.setState).toHaveBeenCalledTimes(1);

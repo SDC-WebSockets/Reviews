@@ -6,7 +6,7 @@ import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js
 
 import Search from '../../../client/src/components/search.jsx';
 
-describe ('Search component', () => {
+xdescribe ('Search component', () => {
   xit ('filters reviews by search term if a word is submitted in Search component and sets them to the state', () => {
 
   });

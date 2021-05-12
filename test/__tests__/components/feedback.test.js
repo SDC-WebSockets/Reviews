@@ -8,12 +8,25 @@ import ReviewService from '../../../client/src/components/reviewService.jsx';
 import Feedback from '../../../client/src/components/feedback.jsx';
 
 describe ('Feedback component', () => {
-  xit ('filters reviews by rating if a tier is clicked in Feedback component and sets them to the state', () => {
+  const reviewServiceWrapper = mount(<ReviewService/>);
+  reviewServiceWrapper.setState({
+    totalReviews: sampleDataForOneCourse.reviews,
+    ratings: sampleDataForOneCourse.ratings
+  });
+  const instance = reviewServiceWrapper.instance();
 
+  const feedbackWrapper = mount(<Feedback ratings={instance.state.ratings} setReviewsFilteredByTier={instance.setReviewsFilteredByTier}/>);
+
+  it ('filters reviews by rating if a tier is clicked in Feedback component and sets them to the ReviewService state', () => {
+    feedbackWrapper.find('.fiveStars').simulate('click');
+    expect(reviewServiceWrapper.state().currentTier).toBe(5);
+    expect(reviewServiceWrapper.state().reviewsByTier.length).toBe(2);
   });
 
-  xit ('filters reviews by rating if a tier is selected in the dropdown menu in Feedback component and sets them to the state', () => {
-
+  it ('filters reviews by rating if a tier is selected in the dropdown menu in Feedback component and sets them to the state', () => {
+    feedbackWrapper.find('select').simulate('change', { target: { value: '5'} });
+    expect(reviewServiceWrapper.state().currentTier).toBe(5);
+    expect(reviewServiceWrapper.state().reviewsByTier.length).toBe(2);
   });
 });
 

@@ -97,7 +97,7 @@ class ReviewService extends React.Component {
         reviewsByTier: filteredReviews,
         currentTier: tier
       });
-      console.log(`Reviews with ${tier} stars:`, filteredReviews);
+      // console.log(`Reviews with ${tier} stars:`, filteredReviews);
       return filteredReviews;
     }
   }

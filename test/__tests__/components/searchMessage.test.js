@@ -6,7 +6,7 @@ import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js
 
 import SearchMessage from '../../../client/src/components/searchMessage.jsx';
 
-describe ('SearchMessage component', () => {
+xdescribe ('SearchMessage component', () => {
   xit ('renders a different message if there are reviews that match the search or not', () => {
 
   });
