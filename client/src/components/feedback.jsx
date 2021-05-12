@@ -50,30 +50,28 @@ class Feedback extends React.Component {
         </div>
       );
     } else {
+      const tiers = [
+        ['5'], ['4 1/2', '4'], ['3 1/2', '3'], ['2 1/2', '2'], ['1 1/2', '1']
+      ];
       return (
         <div>
           <h2>Student feedback</h2>
           <div>{this.props.ratings.overallRating.toFixed(1)} Course Rating</div>
 
-          <div className="fiveStars" onClick={() => this.handleClick(5)}>
-            5 stars: {this.getPercentage(this.props.ratings['5'])}</div>
-          {this.props.currentTier === 5 ? <button onClick={this.removeFilter}>X</button> : null}
-
-          <div className="fourStars" onClick={() => this.handleClick(4)}>
-            4 stars: {this.getPercentage(this.props.ratings['4 1/2'], this.props.ratings['4'])}</div>
-          {this.props.currentTier === 4 ? <button onClick={this.removeFilter}>X</button> : null}
-
-          <div className="threeStars" onClick={() => this.handleClick(3)}>
-            3 stars: {this.getPercentage(this.props.ratings['3 1/2'], this.props.ratings['3'])}</div>
-          {this.props.currentTier === 3 ? <button onClick={this.removeFilter}>X</button> : null}
-
-          <div className="twoStars" onClick={() => this.handleClick(2)}>
-            2 stars: {this.getPercentage(this.props.ratings['2 1/2'], this.props.ratings['2'])}</div>
-          {this.props.currentTier === 2 ? <button onClick={this.removeFilter}>X</button> : null}
-
-          <div className="oneStar" onClick={() => this.handleClick(1)}>
-            1 star: {this.getPercentage(this.props.ratings['1 1/2'], this.props.ratings['1'])}</div>
-          {this.props.currentTier === 1 ? <button onClick={this.removeFilter}>X</button> : null}
+          {tiers.map((tier) =>
+            <div key={tier[tier.length - 1]}>
+              <div id={tier[tier.length - 1] + 'stars'} onClick={() => this.handleClick(Number(tier[tier.length - 1]))}>
+                {tier[tier.length - 1]} {tier[tier.length - 1] === '1' ? 'star' : 'stars'}
+                : {tier.length === 1 ?
+                  this.getPercentage(this.props.ratings[tier[0]]) :
+                  this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]])
+                }
+              </div>
+              <div>
+                {this.props.currentTier === Number(tier[tier.length - 1]) ? <button onClick={this.removeFilter}>X</button> : null}
+              </div>
+            </div>
+          )}
 
           <select ref={this.select} id="select" onChange={this.handleSelect}>
             <option value="0">All ratings</option>
