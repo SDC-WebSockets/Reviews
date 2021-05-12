@@ -18,7 +18,7 @@ app.get('/reviews', (req, res) => {
       mongoDb.getAllRatings()
         .then((allRatings) => {
           ratings = allRatings;
-          res.status(200).send(JSON.stringify({allReviews: reviews, allRatings: ratings}));
+          res.status(200).json({allReviews: reviews, allRatings: ratings});
         });
     });
 });
@@ -38,7 +38,7 @@ app.get('/reviews/item', (req, res) => {
             ratings: rating,
             reviews: reviews
           };
-          res.status(200).end(JSON.stringify(data));
+          res.status(200).json(data);
         });
     });
 });

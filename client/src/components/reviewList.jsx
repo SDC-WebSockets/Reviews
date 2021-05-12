@@ -1,12 +1,12 @@
 import React from 'react';
 import Review from './review.jsx';
-import Search from './search.jsx';
+import SearchMessage from './searchMessage.jsx';
 
-const ReviewList = (props) => { // shows all reviews (displayed 12 at a time)
+// note for later: only display 12 reviews ("See more reviews" displays 12 more)
+
+const ReviewList = (props) => {
   // console.log('Props in ReviewList:', props);
-  if (!props.reviews) {
-    return null;
-  } else if (props.reviews.length === 0) {
+  if (props.totalReviews.length === 0) {
     return (
       <div>
         <h2>Reviews</h2>
@@ -14,16 +14,25 @@ const ReviewList = (props) => { // shows all reviews (displayed 12 at a time)
       </div>
     );
   } else {
+    let currentReviews;
+    if (props.reviewsBySearchAndTier) {
+      currentReviews = props.reviewsBySearchAndTier;
+    } else if (props.reviewsBySearch && !props.reviewsByTier) {
+      currentReviews = props.reviewsBySearch;
+    } else if (props.reviewsByTier && !props.reviewsBySearch) {
+      currentReviews = props.reviewsByTier;
+    } else {
+      currentReviews = props.totalReviews;
+    }
     return (
       <div>
+        {props.reviewsBySearch ?
+          <SearchMessage currentReviews={currentReviews} term={props.currentSearchTerm}/> : null}
         <h2>Reviews</h2>
-        <Search />
-
-        {props.reviews.map((review) => <Review key={review._id} review={review}/>)}
+        {currentReviews.map((review) => <Review key={review._id} review={review} currentSearchTerm={props.currentSearchTerm}/>)}
       </div>
     );
   }
-
 };
 
 export default ReviewList;
