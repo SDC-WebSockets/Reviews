@@ -12,6 +12,7 @@ class ReviewService extends React.Component {
   constructor(props) {
     // console.log('Props in ReviewService:', props);
     super(props);
+    this.getReviews = this.getReviews.bind(this);
     this.setReviewsFilteredBySearch = this.setReviewsFilteredBySearch.bind(this);
     this.setReviewsFilteredByTier = this.setReviewsFilteredByTier.bind(this);
     this.setReviewsFilteredBySearchAndTier = this.setReviewsFilteredBySearchAndTier.bind(this);
