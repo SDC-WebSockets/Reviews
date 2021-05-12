@@ -5,20 +5,17 @@ import moment from 'moment';
 
 const Review = (props) => {
   // console.log('Props in Review:', props);
-
   const CommentWithBoldSearchTerm = () => {
-    // subcomponent: current search term should be bold in each filtered review (for now, only works for the first occurrence of that word in each review)
-
     let comment = props.review.comment;
-    let term = props.currentSearchTerm;
-    let occurrenceIndex = comment.toLowerCase().indexOf(term);
-    let isCapitalized = comment.charAt(occurrenceIndex) === comment.charAt(occurrenceIndex).toUpperCase();
-    isCapitalized ? term = term[0].toUpperCase() + term.slice(1) : term;
-
+    let searchTerm = props.currentSearchTerm;
+    const boldString = (string, term) => {
+      let regExp = new RegExp ('(' + term + ')', 'gi');
+      return string.replaceAll(regExp, '<strong>$1</strong>');
+    };
+    let newComment = boldString(comment, searchTerm);
+    
     return (
-      <div>
-        {comment.slice(0, occurrenceIndex)}<strong>{term}</strong>{comment.slice(occurrenceIndex + term.length)}
-      </div>
+      <div dangerouslySetInnerHTML={{ __html: newComment}}></div>
     );
   };
 

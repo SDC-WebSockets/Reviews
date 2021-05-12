@@ -18,7 +18,7 @@ class Search extends React.Component {
   }
 
   filterByTerm(term) {
-    term = term.toLowerCase().trim();
+    term = term.trim();
     if (!this.props.currentTier) {
       this.props.setReviewsFilteredBySearch(term);
     } else {
