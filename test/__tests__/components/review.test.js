@@ -28,7 +28,7 @@ describe ('Review component', () => {
       expect(value).toBeDefined();
     });
   });
-  
+
   // thumbs buttons when implemented
   // report button when implemented
 });
