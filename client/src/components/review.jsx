@@ -13,9 +13,9 @@ const Review = (props) => {
       return string.replaceAll(regExp, '<strong>$1</strong>');
     };
     let newComment = boldString(comment, searchTerm);
-    
+
     return (
-      <div dangerouslySetInnerHTML={{ __html: newComment}}></div>
+      <div className="commentWithBoldSearchTerm" dangerouslySetInnerHTML={{ __html: newComment}}></div>
     );
   };
 
