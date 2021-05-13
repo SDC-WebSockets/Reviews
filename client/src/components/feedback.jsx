@@ -40,13 +40,14 @@ class Feedback extends React.Component {
     this.select.current.value = '0';
   }
 
-  // if a percentage is 0%, render it gray
+  // TO DO
+  // if a percentage is 0%, render it gray and unclickable
   render() {
     if (this.props.ratings.totalRatings === 0) {
       return (
         <div>
           <h2>Student feedback</h2>
-          <div>This course does not have any ratings yet.</div>
+          <div>This course doesn't have any ratings yet.</div>
         </div>
       );
     } else {

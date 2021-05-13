@@ -1,8 +1,9 @@
 import React from 'react';
 import Featured from './featured.jsx';
 import Feedback from './feedback.jsx';
-import ReviewList from './reviewList.jsx';
 import Search from './search.jsx';
+import SearchMessage from './searchMessage.jsx';
+import ReviewList from './reviewList.jsx';
 import fetch from 'node-fetch';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from '../filters.js';
 
@@ -42,13 +43,13 @@ class ReviewService extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log('Data from server:', data);
+        console.log('Data from server:', data);
         this.updateReviews(data.reviews);
         this.updateRatings(data.ratings);
         this.updateFeaturedReview(data.reviews);
       })
       .catch((err) => {
-        // console.log('Error retrieving data from server:', err);
+        console.log('Error retrieving data from server:', err);
       });
   }
 
@@ -78,7 +79,7 @@ class ReviewService extends React.Component {
         reviewsBySearch: filteredReviews,
         currentSearchTerm: term
       });
-      // console.log(`Reviews with the word ${term}:`, filteredReviews);
+      console.log(`Reviews with the word ${term}:`, filteredReviews);
       return filteredReviews;
     }
   }
@@ -96,7 +97,7 @@ class ReviewService extends React.Component {
         reviewsByTier: filteredReviews,
         currentTier: tier
       });
-      // console.log(`Reviews with ${tier} stars:`, filteredReviews);
+      console.log(`Reviews with ${tier} stars:`, filteredReviews);
       return filteredReviews;
     }
   }
@@ -135,7 +136,15 @@ class ReviewService extends React.Component {
           setReviewsFilteredBySearchAndTier={this.setReviewsFilteredBySearchAndTier}
         />
         }
-        {this.state.totalReviews &&
+        {(this.state.reviewsBySearchAndTier || this.state.reviewsBySearch || this.state.reviewsByTier) &&
+        <SearchMessage
+          reviewsBySearchAndTier={this.state.reviewsBySearchAndTier}
+          reviewsBySearch={this.state.reviewsBySearch}
+          currentSearchTerm={this.state.currentSearchTerm}
+          reviewsByTier={this.state.reviewsByTier}
+        />
+        }
+        {this.state.totalReviews && this.state.totalReviews.length > 0 &&
         <ReviewList
           totalReviews={this.state.totalReviews}
           reviewsBySearch={this.state.reviewsBySearch}

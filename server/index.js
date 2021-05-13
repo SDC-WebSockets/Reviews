@@ -44,5 +44,5 @@ app.get('/reviews/item', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
+  console.log(`Server listening at http://localhost:${port}`);
 });
