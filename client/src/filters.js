@@ -1,5 +1,5 @@
 export const getBestReview = (reviews) => {
-  if (reviews.length === 0) {
+  if (!reviews || reviews.length === 0) {
     return;
   }
 
@@ -26,9 +26,16 @@ export const getBestReview = (reviews) => {
 
 export const filterReviewsByTerm = (reviews, term) => {
   let filteredReviews = [];
+  if (!reviews) {
+    return filteredReviews;
+  }
+  if (!term) {
+    return reviews;
+  }
+  term = term.toLowerCase();
   reviews.forEach((review) => {
-    let words = review.comment.toLowerCase().split(' ');
-    if (words.includes(term) || words.includes(term + 's')) {
+    let comment = review.comment.toLowerCase();
+    if (comment.indexOf(term) > - 1 || comment.indexOf(term + 's') > - 1) {
       filteredReviews.push(review);
     }
   });
@@ -37,6 +44,12 @@ export const filterReviewsByTerm = (reviews, term) => {
 
 export const filterReviewsByTier = (reviews, tier) => {
   let filteredReviews = [];
+  if (!reviews) {
+    return filteredReviews;
+  }
+  if (!tier) {
+    return reviews;
+  }
   reviews.forEach((review) => {
     if (Math.floor(review.rating) === tier) {
       filteredReviews.push(review);

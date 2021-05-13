@@ -20,10 +20,9 @@ module.exports = {
     ]
   },
   output: {
-    filename: 'bundle.js',
+    filename: 'reviewBundle.js',
     path: outputPath
   },
 
-  mode: 'development',
   watch: true
 };

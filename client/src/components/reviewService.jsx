@@ -3,6 +3,7 @@ import Featured from './featured.jsx';
 import Feedback from './feedback.jsx';
 import ReviewList from './reviewList.jsx';
 import Search from './search.jsx';
+import fetch from 'node-fetch';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from '../filters.js';
 
 
@@ -10,6 +11,7 @@ class ReviewService extends React.Component {
   constructor(props) {
     // console.log('Props in ReviewService:', props);
     super(props);
+    this.getReviews = this.getReviews.bind(this);
     this.setReviewsFilteredBySearch = this.setReviewsFilteredBySearch.bind(this);
     this.setReviewsFilteredByTier = this.setReviewsFilteredByTier.bind(this);
     this.setReviewsFilteredBySearchAndTier = this.setReviewsFilteredBySearchAndTier.bind(this);
@@ -38,12 +40,15 @@ class ReviewService extends React.Component {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Data from server:', data);
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log('Data from server:', data);
         this.updateReviews(data.reviews);
         this.updateRatings(data.ratings);
         this.updateFeaturedReview(data.reviews);
+      })
+      .catch((err) => {
+        // console.log('Error retrieving data from server:', err);
       });
   }
 
@@ -73,7 +78,7 @@ class ReviewService extends React.Component {
         reviewsBySearch: filteredReviews,
         currentSearchTerm: term
       });
-      console.log(`Reviews with the word ${term}:`, filteredReviews);
+      // console.log(`Reviews with the word ${term}:`, filteredReviews);
       return filteredReviews;
     }
   }
@@ -91,16 +96,16 @@ class ReviewService extends React.Component {
         reviewsByTier: filteredReviews,
         currentTier: tier
       });
-      console.log(`Reviews with ${tier} stars:`, filteredReviews);
+      // console.log(`Reviews with ${tier} stars:`, filteredReviews);
       return filteredReviews;
     }
   }
 
   setReviewsFilteredBySearchAndTier(term, tier) {
-    const reviews = this.state.totalReviews;
-    this.setReviewsFilteredBySearch(term, reviews);
-    this.setReviewsFilteredByTier(tier, reviews);
-    const filteredReviewsByTier = filterReviewsByTier(reviews, tier);
+    const totalReviews = this.state.totalReviews;
+    this.setReviewsFilteredBySearch(term, totalReviews);
+    this.setReviewsFilteredByTier(tier, totalReviews);
+    const filteredReviewsByTier = filterReviewsByTier(totalReviews, tier);
     const filterReviewsByTierAndTerm = filterReviewsByTerm(filteredReviewsByTier, term);
     this.setState({reviewsBySearchAndTier: filterReviewsByTierAndTerm});
   }
@@ -122,7 +127,7 @@ class ReviewService extends React.Component {
           setReviewsFilteredBySearchAndTier={this.setReviewsFilteredBySearchAndTier}
         />
         }
-        {this.state.totalReviews &&
+        {this.state.totalReviews && this.state.totalReviews.length > 0 &&
         <Search
           totalReviews={this.state.totalReviews}
           currentTier={this.state.currentTier}

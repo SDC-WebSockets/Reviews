@@ -27,7 +27,7 @@ const ReviewList = (props) => {
     return (
       <div>
         {props.reviewsBySearch ?
-          <SearchMessage currentReviews={currentReviews} term={props.currentSearchTerm}/> : null}
+          <SearchMessage currentReviewsLength={currentReviews.length} term={props.currentSearchTerm}/> : null}
         <h2>Reviews</h2>
         {currentReviews.map((review) => <Review key={review._id} review={review} currentSearchTerm={props.currentSearchTerm}/>)}
       </div>

@@ -1,12 +1,10 @@
-// function sum(a, b) {
-//   return a + b;
-// }
 
+// --- CLIENT ---
+// tests for each component
 
-// test('adds 1 + 2 to equal 3', () => {
-//   expect(sum(1, 2)).toBe(3);
-// });
+// --- SERVER ---
 
+// --- DATABASE ---
 
 // REVIEWS COLLECTION
 // multiples of 13 courseIds should not have reviews or ratings
