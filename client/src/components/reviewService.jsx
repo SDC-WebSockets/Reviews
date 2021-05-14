@@ -43,13 +43,13 @@ class ReviewService extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Data from server:', data);
+        // console.log('Data from server:', data);
         this.updateReviews(data.reviews);
         this.updateRatings(data.ratings);
         this.updateFeaturedReview(data.reviews);
       })
       .catch((err) => {
-        console.log('Error retrieving data from server:', err);
+        // console.log('Error retrieving data from server:', err);
       });
   }
 
@@ -79,7 +79,7 @@ class ReviewService extends React.Component {
         reviewsBySearch: filteredReviews,
         currentSearchTerm: term
       });
-      console.log(`Reviews with the word ${term}:`, filteredReviews);
+      // console.log(`Reviews with the word ${term}:`, filteredReviews);
       return filteredReviews;
     }
   }
@@ -97,7 +97,7 @@ class ReviewService extends React.Component {
         reviewsByTier: filteredReviews,
         currentTier: tier
       });
-      console.log(`Reviews with ${tier} stars:`, filteredReviews);
+      // console.log(`Reviews with ${tier} stars:`, filteredReviews);
       return filteredReviews;
     }
   }

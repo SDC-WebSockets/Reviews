@@ -1,13 +1,13 @@
 import React from 'react';
 
 const SearchMessage = (props) => {
-  console.log('Props in SearchMessage:', props);
+  // console.log('Props in SearchMessage:', props);
 
-  if (props.reviewsBySearchAndTier !== null) {
+  if (props.reviewsBySearchAndTier) {
 
     if (props.reviewsBySearchAndTier.length > 0) {
       return (
-        <div>{props.reviewsBySearchAndTier.length} reviews mentioning '<strong>{props.currentSearchTerm}</strong>'</div>
+        <div>{props.reviewsBySearchAndTier.length} {props.reviewsBySearchAndTier.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</div>
       );
     } else {
       return (
@@ -20,11 +20,11 @@ const SearchMessage = (props) => {
       );
     }
 
-  } else if (props.reviewsBySearchAndTier === null && props.reviewsBySearch !== null && props.reviewsByTier === null) {
+  } else if (!props.reviewsBySearchAndTier && props.reviewsBySearch && !props.reviewsByTier) {
 
     if (props.reviewsBySearch.length > 0) {
       return (
-        <div>{props.reviewsBySearch.length} reviews mentioning '<strong>{props.currentSearchTerm}</strong>'</div>
+        <div>{props.reviewsBySearch.length} {props.reviewsBySearch.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</div>
       );
     } else {
       return (
@@ -37,7 +37,7 @@ const SearchMessage = (props) => {
       );
     }
 
-  } else if (props.reviewsBySearchAndTier === null && props.reviewsBySearch === null && props.reviewsByTier !== null) {
+  } else if (!props.reviewsBySearchAndTier && !props.reviewsBySearch && props.reviewsByTier) {
     if (props.reviewsByTier.length === 0) {
       return (
         <div>

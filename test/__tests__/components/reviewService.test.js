@@ -10,6 +10,7 @@ import Featured from '../../../client/src/components/featured.jsx';
 import Feedback from '../../../client/src/components/feedback.jsx';
 import Search from '../../../client/src/components/search.jsx';
 import ReviewList from '../../../client/src/components/ReviewList.jsx';
+import SearchMessage from '../../../client/src/components/searchMessage.jsx';
 
 describe('ReviewService Component', () => {
 
@@ -41,4 +42,27 @@ describe('ReviewService Component', () => {
     expect(wrapper.containsMatchingElement(<Search/>)).toBe(true);
     expect(wrapper.containsMatchingElement(<ReviewList/>)).toBe(true);
   });
+
+  it ('renders SearchMessage if a search term has been entered', () => {
+    expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(false);
+    wrapper.setState({
+      reviewsBySearch: [sampleDataForOneCourse.reviews[0], sampleDataForOneCourse.reviews[1], sampleDataForOneCourse.reviews[4]],
+      currentSearchTerm: 'quas'
+    });
+    expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(true);
+    wrapper.setState({
+      reviewsBySearch: null,
+      currentSearchTerm: null
+    });
+  });
+
+  it ('renders SearchMessage if a requested tier has no reviews', () => {
+    expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(false);
+    wrapper.setState({
+      reviewsByTier: [],
+      currentTier: 2
+    });
+    expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(true);
+  });
+
 });

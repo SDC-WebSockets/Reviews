@@ -17,7 +17,6 @@ const ReviewList = (props) => {
   }
   return (
     <div>
-      <h2>Reviews</h2>
       {currentReviews.map((review) => <Review key={review._id} review={review} currentSearchTerm={props.currentSearchTerm}/>)}
     </div>
   );

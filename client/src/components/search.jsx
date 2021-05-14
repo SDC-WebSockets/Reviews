@@ -35,6 +35,7 @@ class Search extends React.Component {
   render() {
     return (
       <div>
+        <h2>Reviews</h2>
         <input id="search" type="text" placeholder="Search reviews" onChange={this.handleTermChange}></input>
         {this.state.term ? <button onClick={this.resetSearch}>X</button> : null}
         <input id="searchSubmit" type="submit" value="Search" onClick={() => { this.filterByTerm(this.state.term); }}></input>
