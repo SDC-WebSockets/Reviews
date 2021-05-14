@@ -114,7 +114,7 @@ class ReviewService extends React.Component {
   render() {
     return (
       <div>
-        {this.state.featuredReview &&
+        {this.state.featuredReview && this.state.totalReviews && this.state.totalReviews.length >= 10 &&
         <Featured
           review={this.state.featuredReview}
         />

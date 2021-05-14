@@ -23,10 +23,11 @@ describe('ReviewService Component', () => {
     expect(instance.getReviews).toHaveBeenCalledTimes(1);
   });
 
-  it ('only renders the Featured component if the state has a featured review', () => {
+  it ('only renders the Featured component if the state has a featured review and if the course has at least ten reviews', () => {
     expect(wrapper.containsMatchingElement(<Featured/>)).toBe(false);
-    wrapper.setState({featuredReview: sampleDataForOneCourse.reviews[1]});
-    expect(wrapper.containsMatchingElement(<Featured/>)).toBe(true);
+    const blankWrapper = shallow(<ReviewService />);
+    blankWrapper.setState({totalReviews: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}], featuredReview: sampleDataForOneCourse.reviews[1]});
+    expect(blankWrapper.containsMatchingElement(<Featured/>)).toBe(true);
   });
 
   it ('only renders the Feedback component if the state has ratings', () => {
