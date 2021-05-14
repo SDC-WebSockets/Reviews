@@ -68,8 +68,8 @@ class Feedback extends React.Component {
             return (
               <div key={tier[tier.length - 1]}>
                 <div id={tier[tier.length - 1] + 'stars'} onClick={
-                  () => percentage === '0%' ? null : this.handleClick(Number(tier[tier.length - 1]
-                  ))}>
+                  () => percentage === '0%' ? null : this.handleClick(Number(tier[tier.length - 1]))
+                }>
                   {tier[tier.length - 1]} {tier[tier.length - 1] === '1' ? 'star' : 'stars'}: {percentage}
                 </div>
                 <div>
