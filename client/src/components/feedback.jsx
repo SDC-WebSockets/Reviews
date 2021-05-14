@@ -54,25 +54,30 @@ class Feedback extends React.Component {
       const tiers = [
         ['5'], ['4 1/2', '4'], ['3 1/2', '3'], ['2 1/2', '2'], ['1 1/2', '1']
       ];
+
       return (
         <div>
           <h2>Student feedback</h2>
           <div>{this.props.ratings.overallRating.toFixed(1)} Course Rating</div>
 
-          {tiers.map((tier) =>
-            <div key={tier[tier.length - 1]}>
-              <div id={tier[tier.length - 1] + 'stars'} onClick={() => this.handleClick(Number(tier[tier.length - 1]))}>
-                {tier[tier.length - 1]} {tier[tier.length - 1] === '1' ? 'star' : 'stars'}
-                : {tier.length === 1 ?
-                  this.getPercentage(this.props.ratings[tier[0]]) :
-                  this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]])
-                }
+          {tiers.map((tier) => {
+            let percentage;
+            tier.length === 1 ?
+              percentage = this.getPercentage(this.props.ratings[tier[0]]) :
+              percentage = this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]]);
+            return (
+              <div key={tier[tier.length - 1]}>
+                <div id={tier[tier.length - 1] + 'stars'} onClick={
+                  () => percentage === '0%' ? null : this.handleClick(Number(tier[tier.length - 1]
+                  ))}>
+                  {tier[tier.length - 1]} {tier[tier.length - 1] === '1' ? 'star' : 'stars'}: {percentage}
+                </div>
+                <div>
+                  {this.props.currentTier === Number(tier[tier.length - 1]) ? <button onClick={this.removeFilter}>X</button> : null}
+                </div>
               </div>
-              <div>
-                {this.props.currentTier === Number(tier[tier.length - 1]) ? <button onClick={this.removeFilter}>X</button> : null}
-              </div>
-            </div>
-          )}
+            );
+          })}
 
           <select ref={this.select} id="select" onChange={this.handleSelect}>
             <option value="0">All ratings</option>
