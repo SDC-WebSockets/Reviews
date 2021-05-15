@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
 const cors = require('cors');
 const mongoDb = require('../database/mongoDb.js');
@@ -27,20 +28,24 @@ app.get('/reviews/item', (req, res) => {
   let courseId = req.query.courseId;
   let reviews;
   let rating;
-  mongoDb.getReviewsForOneCourse(courseId)
-    .then((results) => {
-      reviews = results;
-      mongoDb.getRatingForOneCourse(courseId)
-        .then((result) => {
-          rating = result;
-          let data = {
-            courseId: courseId,
-            ratings: rating,
-            reviews: reviews
-          };
-          res.status(200).json(data);
-        });
-    });
+  if (!isNaN(courseId)) {
+    mongoDb.getReviewsForOneCourse(courseId)
+      .then((results) => {
+        reviews = results;
+        mongoDb.getRatingForOneCourse(courseId)
+          .then((result) => {
+            rating = result;
+            let data = {
+              courseId: courseId,
+              ratings: rating,
+              reviews: reviews
+            };
+            res.status(200).json(data);
+          });
+      });
+  } else {
+    res.status(404).send();
+  }
 });
 
 app.listen(port, () => {

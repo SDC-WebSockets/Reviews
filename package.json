@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon server/index.js",
-    "build": "webpack --config webpack.config.js --mode development",
+    "build": "webpack --config webpack.config.js --mode development --watch",
     "prod": "webpack --config webpack.config.js --mode production",
     "seedMongo": "node database/dataGenerators.js",
     "mongoToS3": "node database/s3.js"
