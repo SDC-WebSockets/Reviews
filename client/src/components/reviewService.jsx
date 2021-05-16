@@ -1,8 +1,9 @@
 import React from 'react';
 import Featured from './featured.jsx';
 import Feedback from './feedback.jsx';
-import ReviewList from './reviewList.jsx';
 import Search from './search.jsx';
+import SearchMessage from './searchMessage.jsx';
+import ReviewList from './reviewList.jsx';
 import fetch from 'node-fetch';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from '../filters.js';
 
@@ -113,7 +114,7 @@ class ReviewService extends React.Component {
   render() {
     return (
       <div>
-        {this.state.featuredReview &&
+        {this.state.featuredReview && this.state.totalReviews && this.state.totalReviews.length >= 10 &&
         <Featured
           review={this.state.featuredReview}
         />
@@ -135,7 +136,15 @@ class ReviewService extends React.Component {
           setReviewsFilteredBySearchAndTier={this.setReviewsFilteredBySearchAndTier}
         />
         }
-        {this.state.totalReviews &&
+        {(this.state.reviewsBySearchAndTier || this.state.reviewsBySearch || this.state.reviewsByTier) &&
+        <SearchMessage
+          reviewsBySearchAndTier={this.state.reviewsBySearchAndTier}
+          reviewsBySearch={this.state.reviewsBySearch}
+          currentSearchTerm={this.state.currentSearchTerm}
+          reviewsByTier={this.state.reviewsByTier}
+        />
+        }
+        {this.state.totalReviews && this.state.totalReviews.length > 0 &&
         <ReviewList
           totalReviews={this.state.totalReviews}
           reviewsBySearch={this.state.reviewsBySearch}

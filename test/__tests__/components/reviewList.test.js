@@ -7,7 +7,6 @@ import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js
 import ReviewList from '../../../client/src/components/ReviewList.jsx';
 import ReviewService from '../../../client/src/components/reviewService.jsx';
 import Review from '../../../client/src/components/Review.jsx';
-import SearchMessage from '../../../client/src/components/searchMessage.jsx';
 
 describe ('ReviewList component', () => {
   const reviewServiceWrapper = mount(<ReviewService courseId={9}/>);
@@ -25,7 +24,4 @@ describe ('ReviewList component', () => {
     expect(wrapper.containsMatchingElement(<Review/>)).toBe(true);
   });
 
-  it ('only renders SearchMessage if a search term has been entered', () => {
-    expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(true);
-  });
 });

@@ -10,6 +10,7 @@ import Featured from '../../../client/src/components/featured.jsx';
 import Feedback from '../../../client/src/components/feedback.jsx';
 import Search from '../../../client/src/components/search.jsx';
 import ReviewList from '../../../client/src/components/ReviewList.jsx';
+import SearchMessage from '../../../client/src/components/searchMessage.jsx';
 
 describe('ReviewService Component', () => {
 
@@ -22,10 +23,11 @@ describe('ReviewService Component', () => {
     expect(instance.getReviews).toHaveBeenCalledTimes(1);
   });
 
-  it ('only renders the Featured component if the state has a featured review', () => {
+  it ('only renders the Featured component if the state has a featured review and if the course has at least ten reviews', () => {
     expect(wrapper.containsMatchingElement(<Featured/>)).toBe(false);
-    wrapper.setState({featuredReview: sampleDataForOneCourse.reviews[1]});
-    expect(wrapper.containsMatchingElement(<Featured/>)).toBe(true);
+    const blankWrapper = shallow(<ReviewService />);
+    blankWrapper.setState({totalReviews: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}], featuredReview: sampleDataForOneCourse.reviews[1]});
+    expect(blankWrapper.containsMatchingElement(<Featured/>)).toBe(true);
   });
 
   it ('only renders the Feedback component if the state has ratings', () => {
@@ -41,4 +43,27 @@ describe('ReviewService Component', () => {
     expect(wrapper.containsMatchingElement(<Search/>)).toBe(true);
     expect(wrapper.containsMatchingElement(<ReviewList/>)).toBe(true);
   });
+
+  it ('renders SearchMessage if a search term has been entered', () => {
+    expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(false);
+    wrapper.setState({
+      reviewsBySearch: [sampleDataForOneCourse.reviews[0], sampleDataForOneCourse.reviews[1], sampleDataForOneCourse.reviews[4]],
+      currentSearchTerm: 'quas'
+    });
+    expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(true);
+    wrapper.setState({
+      reviewsBySearch: null,
+      currentSearchTerm: null
+    });
+  });
+
+  it ('renders SearchMessage if a requested tier has no reviews', () => {
+    expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(false);
+    wrapper.setState({
+      reviewsByTier: [],
+      currentTier: 2
+    });
+    expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(true);
+  });
+
 });
