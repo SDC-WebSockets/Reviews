@@ -5,7 +5,7 @@ configure({ adapter: new Adapter() });
 import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js';
 
 import ReviewList from '../../../client/src/components/ReviewList.jsx';
-import ReviewService from '../../../client/src/components/reviewService.jsx';
+import ReviewService from '../../../client/src/reviewService.jsx';
 import Review from '../../../client/src/components/Review.jsx';
 
 describe ('ReviewList component', () => {

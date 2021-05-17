@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReviewService from './components/ReviewService.jsx';
+import ReviewService from './ReviewService.jsx';
 
 ReactDOM.render(<ReviewService />, document.getElementById('reviews'));

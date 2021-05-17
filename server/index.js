@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 2712;
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
-// app.use('/*', express.static(path.join(__dirname, '..', 'client', 'public')));
 
 app.get('/reviews', (req, res) => {
   let reviews;
@@ -27,7 +26,7 @@ app.get('/reviews/item', (req, res) => {
   let courseId;
   let reviews;
   let rating;
-  isNaN(req.query.courseId) ? courseId = 1 : courseId = req.query.courseId;
+  !req.query.courseId || isNaN(req.query.courseId) ? courseId = 1 : courseId = req.query.courseId;
   mongoDb.getReviewsForOneCourse(courseId)
     .then((results) => {
       reviews = results;

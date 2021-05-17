@@ -3,9 +3,8 @@ import { configure, shallow, mount, render } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 configure({ adapter: new Adapter() });
 import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js';
-// import regeneratorRuntime from 'regenerator-runtime';
 
-import ReviewService from '../../../client/src/components/reviewService.jsx';
+import ReviewService from '../../../client/src/reviewService.jsx';
 import Featured from '../../../client/src/components/featured.jsx';
 import Feedback from '../../../client/src/components/feedback.jsx';
 import Search from '../../../client/src/components/search.jsx';

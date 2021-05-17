@@ -4,7 +4,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 configure({ adapter: new Adapter() });
 import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js';
 
-import ReviewService from '../../../client/src/components/reviewService.jsx';
+import ReviewService from '../../../client/src/reviewService.jsx';
 import Search from '../../../client/src/components/search.jsx';
 
 
