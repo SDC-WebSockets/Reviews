@@ -23,24 +23,27 @@ app.get('/reviews', (req, res) => {
 });
 
 app.get('/reviews/item', (req, res) => {
-  let courseId;
+  let courseId = Number(req.query.courseId);
   let reviews;
   let rating;
-  !req.query.courseId || isNaN(req.query.courseId) ? courseId = 1 : courseId = req.query.courseId;
-  mongoDb.getReviewsForOneCourse(courseId)
-    .then((results) => {
-      reviews = results;
-      mongoDb.getRatingForOneCourse(courseId)
-        .then((result) => {
-          rating = result;
-          let data = {
-            courseId: courseId,
-            ratings: rating,
-            reviews: reviews
-          };
-          res.status(200).json(data);
-        });
-    });
+  if (Number.isInteger(courseId) && courseId >= 1 && courseId <= 100) {
+    mongoDb.getReviewsForOneCourse(courseId)
+      .then((results) => {
+        reviews = results;
+        mongoDb.getRatingForOneCourse(courseId)
+          .then((result) => {
+            rating = result;
+            let data = {
+              courseId: courseId,
+              ratings: rating,
+              reviews: reviews
+            };
+            res.status(200).json(data);
+          });
+      });
+  } else {
+    res.json('No course selected');
+  }
 });
 
 // app.get('/reviewBundle.js', (req, res) => {
