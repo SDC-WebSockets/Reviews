@@ -22,7 +22,5 @@ module.exports = {
   output: {
     filename: 'reviewBundle.js',
     path: outputPath
-  },
-
-  watch: true
+  }
 };

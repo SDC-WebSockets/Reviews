@@ -3,10 +3,12 @@ node_modules
 package-lock.json
 
 reviewBundle.js
+reviewBundle.js.LICENSE.txt
 
 AWSconfig.js
 
 scribbles.js
+
 .DS_Store
 
 WebSequence.png

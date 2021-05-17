@@ -7,7 +7,7 @@ import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js
 import App from '../../../client/src/App.jsx';
 import ReviewService from '../../../client/src/components/reviewService.jsx';
 
-describe('App Component', () => {
+xdescribe('App Component', () => {
 
   const wrapper = mount(<App/>);
 
