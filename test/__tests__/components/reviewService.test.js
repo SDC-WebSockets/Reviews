@@ -1,7 +1,5 @@
 import React from 'react';
-import { configure, shallow, mount, render } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-configure({ adapter: new Adapter() });
+import { shallow, mount, render } from 'enzyme';
 import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js';
 
 import ReviewService from '../../../client/src/reviewService.jsx';
@@ -13,7 +11,7 @@ import SearchMessage from '../../../client/src/components/searchMessage.jsx';
 
 describe('ReviewService Component', () => {
 
-  const wrapper = mount(<ReviewService courseId={9}/>);
+  const wrapper = mount(<ReviewService />);
   const instance = wrapper.instance();
 
   it ('calls the getReviews method in componentDidMount', () => {
@@ -25,20 +23,24 @@ describe('ReviewService Component', () => {
   it ('only renders the Featured component if the state has a featured review and if the course has at least ten reviews', () => {
     expect(wrapper.containsMatchingElement(<Featured/>)).toBe(false);
     const blankWrapper = shallow(<ReviewService />);
-    blankWrapper.setState({totalReviews: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}], featuredReview: sampleDataForOneCourse.reviews[1]});
+    blankWrapper.setState({
+      courseId: 9,
+      totalReviews: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+      featuredReview: sampleDataForOneCourse.reviews[1]
+    });
     expect(blankWrapper.containsMatchingElement(<Featured/>)).toBe(true);
   });
 
   it ('only renders the Feedback component if the state has ratings', () => {
     expect(wrapper.containsMatchingElement(<Feedback/>)).toBe(false);
-    wrapper.setState({ratings: sampleDataForOneCourse.ratings});
+    wrapper.setState({courseId: 9, ratings: sampleDataForOneCourse.ratings});
     expect(wrapper.containsMatchingElement(<Feedback/>)).toBe(true);
   });
 
   it ('only renders the Search and ReviewList components if the state has reviews', () => {
     expect(wrapper.containsMatchingElement(<Search/>)).toBe(false);
     expect(wrapper.containsMatchingElement(<ReviewList/>)).toBe(false);
-    wrapper.setState({totalReviews: sampleDataForOneCourse.reviews});
+    wrapper.setState({courseId: 9, totalReviews: sampleDataForOneCourse.reviews});
     expect(wrapper.containsMatchingElement(<Search/>)).toBe(true);
     expect(wrapper.containsMatchingElement(<ReviewList/>)).toBe(true);
   });
@@ -46,6 +48,7 @@ describe('ReviewService Component', () => {
   it ('renders SearchMessage if a search term has been entered', () => {
     expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(false);
     wrapper.setState({
+      courseId: 9,
       reviewsBySearch: [sampleDataForOneCourse.reviews[0], sampleDataForOneCourse.reviews[1], sampleDataForOneCourse.reviews[4]],
       currentSearchTerm: 'quas'
     });
@@ -59,6 +62,7 @@ describe('ReviewService Component', () => {
   it ('renders SearchMessage if a requested tier has no reviews', () => {
     expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(false);
     wrapper.setState({
+      courseId: 9,
       reviewsByTier: [],
       currentTier: 2
     });

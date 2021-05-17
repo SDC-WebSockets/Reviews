@@ -1,7 +1,5 @@
 import React from 'react';
-import { configure, shallow, mount, render } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-configure({ adapter: new Adapter() });
+import { shallow, mount, render } from 'enzyme';
 import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js';
 
 import SearchMessage from '../../../client/src/components/searchMessage.jsx';
@@ -37,7 +35,7 @@ describe ('SearchMessage component', () => {
 
   it ('renders a different message if there are no reviews that match the selected tier and search term combined', () => {
     const wrapper = mount(<SearchMessage
-      reviewsByTier={[sampleDataForOneCourse.reviews[1], sampleDataForOneCourse.reviews[4]]} 
+      reviewsByTier={[sampleDataForOneCourse.reviews[1], sampleDataForOneCourse.reviews[4]]}
       currentTier={5}
       reviewsBySearch={[sampleDataForOneCourse.reviews[0]]}
       currentSearchTerm='similique'
