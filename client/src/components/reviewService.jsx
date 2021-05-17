@@ -6,6 +6,7 @@ import SearchMessage from './searchMessage.jsx';
 import ReviewList from './reviewList.jsx';
 import fetch from 'node-fetch';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from '../filters.js';
+import querystring from 'querystring';
 
 
 class ReviewService extends React.Component {
@@ -18,6 +19,7 @@ class ReviewService extends React.Component {
     this.setReviewsFilteredBySearchAndTier = this.setReviewsFilteredBySearchAndTier.bind(this);
 
     this.state = {
+      courseId: null,
       totalReviews: null,
       currentSearchTerm: null,
       reviewsBySearch: null,
@@ -30,7 +32,9 @@ class ReviewService extends React.Component {
   }
 
   componentDidMount() {
-    this.getReviews(this.props.courseId);
+    let courseId = Number(querystring.parse(window.location.search)['?courseId']);
+    this.setState({courseId: courseId});
+    this.getReviews(courseId);
   }
 
   getReviews(id) {

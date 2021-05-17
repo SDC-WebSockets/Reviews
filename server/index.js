@@ -1,14 +1,13 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
-
 const cors = require('cors');
 const mongoDb = require('../database/mongoDb.js');
 const app = express();
-const port = 2712;
+const PORT = process.env.PORT || 2712;
 
-app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 app.use(cors());
+app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
+// app.use('/*', express.static(path.join(__dirname, '..', 'client', 'public')));
 
 app.get('/reviews', (req, res) => {
   let reviews;
@@ -25,29 +24,32 @@ app.get('/reviews', (req, res) => {
 });
 
 app.get('/reviews/item', (req, res) => {
-  let courseId = req.query.courseId;
+  let courseId;
   let reviews;
   let rating;
-  if (!isNaN(courseId)) {
-    mongoDb.getReviewsForOneCourse(courseId)
-      .then((results) => {
-        reviews = results;
-        mongoDb.getRatingForOneCourse(courseId)
-          .then((result) => {
-            rating = result;
-            let data = {
-              courseId: courseId,
-              ratings: rating,
-              reviews: reviews
-            };
-            res.status(200).json(data);
-          });
-      });
-  } else {
-    res.status(404).send();
-  }
+  isNaN(req.query.courseId) ? courseId = 1 : courseId = req.query.courseId;
+  mongoDb.getReviewsForOneCourse(courseId)
+    .then((results) => {
+      reviews = results;
+      mongoDb.getRatingForOneCourse(courseId)
+        .then((result) => {
+          rating = result;
+          let data = {
+            courseId: courseId,
+            ratings: rating,
+            reviews: reviews
+          };
+          res.status(200).json(data);
+        });
+    });
 });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+// app.get('/reviewBundle.js', (req, res) => {
+//   let bundlePath = path.join(__dirname, '..', 'client', 'public', 'reviewBundle.js');
+//   console.log(bundlePath);
+//   res.sendFile(path.join(__dirname, '..', 'client', 'public', 'reviewBundle.js'));
+// });
+
+app.listen(PORT, () => {
+  console.log(`Server listening at http://localhost:${PORT}`);
 });
