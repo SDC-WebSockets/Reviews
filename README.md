@@ -14,11 +14,13 @@ https://github.com/Charlotte-Badger/udemy-proxy-fredrosselet
 ## Table of Contents
 
 1. [Requirements](#requirements)
+2. [Installation](#installation)
 
 
 ## Requirements
 - Node 6.13.0
 
+## Installation
 ### Installing dependencies
 From within the Reviews directory:
 ```sh
