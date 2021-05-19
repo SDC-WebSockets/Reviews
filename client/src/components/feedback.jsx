@@ -1,4 +1,6 @@
 import React from 'react';
+import Search from './search.jsx';
+
 import { Title } from '../styles.js';
 
 class Feedback extends React.Component {
@@ -79,7 +81,13 @@ class Feedback extends React.Component {
               </div>
             );
           })}
-
+          {this.props.totalReviews && this.props.totalReviews.length > 0 &&
+          <Search
+            totalReviews={this.props.totalReviews}
+            currentTier={this.props.currentTier}
+            setReviewsFilteredBySearch={this.props.setReviewsFilteredBySearch}
+            setReviewsFilteredBySearchAndTier={this.props.setReviewsFilteredBySearchAndTier}
+          />}
           <select ref={this.select} id="select" onChange={this.handleSelect}>
             <option value="0">All ratings</option>
             <option value="5">Five stars</option>

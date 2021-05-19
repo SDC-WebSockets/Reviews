@@ -136,17 +136,11 @@ class ReviewService extends React.Component {
           }
           {this.state.ratings &&
           <Feedback
+            totalReviews={this.state.totalReviews}
             ratings={this.state.ratings}
             currentSearchTerm={this.state.currentSearchTerm}
             currentTier={this.state.currentTier}
             setReviewsFilteredByTier={this.setReviewsFilteredByTier}
-            setReviewsFilteredBySearchAndTier={this.setReviewsFilteredBySearchAndTier}
-          />
-          }
-          {this.state.totalReviews && this.state.totalReviews.length > 0 &&
-          <Search
-            totalReviews={this.state.totalReviews}
-            currentTier={this.state.currentTier}
             setReviewsFilteredBySearch={this.setReviewsFilteredBySearch}
             setReviewsFilteredBySearchAndTier={this.setReviewsFilteredBySearchAndTier}
           />
