@@ -1,4 +1,5 @@
 import React from 'react';
+import { Title } from '../styles.js';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class Feedback extends React.Component {
 
       return (
         <div>
-          <h2>Student feedback</h2>
+          <Title>Student feedback</Title>
           <div>{this.props.ratings.overallRating.toFixed(1)} Course Rating</div>
 
           {tiers.map((tier) => {
