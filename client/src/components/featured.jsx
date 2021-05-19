@@ -17,6 +17,7 @@ import {
   Helpful,
   Report
 } from '../styles.js';
+import {randomColor} from '../randomColor.js';
 
 const Featured = (props) => (
   <div>
@@ -27,7 +28,7 @@ const Featured = (props) => (
           <FeaturedReviewerAvatar>
             {/* if the reviewer has no avatar, the default avatar consists of reviewer's initials */}
             {props.review.reviewer.picture === null ?
-              <FeaturedReviewerInitials>{props.review.reviewer.name.split(' ').map((n)=>n[0]).join('').slice(0, 2)}</FeaturedReviewerInitials> :
+              <FeaturedReviewerInitials style={{backgroundColor: randomColor()}}>{props.review.reviewer.name.split(' ').map((n)=>n[0]).join('').slice(0, 2)}</FeaturedReviewerInitials> :
               <FeaturedReviewerPicture src={props.review.reviewer.picture}/>}
           </FeaturedReviewerAvatar>
           <FeaturedReviewerMetadata>

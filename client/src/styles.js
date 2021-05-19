@@ -113,11 +113,14 @@ export const ReviewerAvatar = styled.div`
 `;
 
 export const ReviewerInitials = styled.div`
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  object-fit: cover;
   font-size: 16px;
   font-weight: 700;
   color: rgb(255, 255, 255);
-  border-radius: 50%;
   width: 48px;
   height: 48px;
   aspect-ratio: auto 48 / 48;
@@ -167,11 +170,14 @@ export const FeaturedReviewerAvatar = styled.div`
 `;
 
 export const FeaturedReviewerInitials = styled.div`
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  object-fit: cover;
   font-size: 16px;
   font-weight: 700;
   color: rgb(255, 255, 255);
-  border-radius: 50%;
   width: 64px;
   height: 64px;
   aspect-ratio: auto 64 / 64;

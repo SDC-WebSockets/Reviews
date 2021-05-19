@@ -14,6 +14,7 @@ import {
   Helpful,
   Report
 } from '../styles.js';
+import {randomColor} from '../randomColor.js';
 
 // note for later: if a comment is more than 5 lines long, hide the rest use a 'Show more' button
 
@@ -33,20 +34,12 @@ const Review = (props) => {
     );
   };
 
-  const initialsColors = ['rgb(77, 171, 101)', 'rgb(156, 70, 127)', 'rgb(240, 189, 79)', 'rgb(115, 114, 108)', 'rgb(40, 150, 169)'];
-
-  const getRandomIntInclusive = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  };
-
   return (
     <ReviewStyle>
       <ReviewerAvatar>
         {/* if the reviewer has no avatar, the default avatar consists of reviewer's initials */}
         {!props.review.reviewer.picture ?
-          <ReviewerInitials style={{backgroundColor: initialsColors[getRandomIntInclusive(0, 3)]}}>{props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</ReviewerInitials> :
+          <ReviewerInitials style={{backgroundColor: randomColor()}}>{props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</ReviewerInitials> :
           <ReviewerPicture src={props.review.reviewer.picture}/>}
       </ReviewerAvatar>
       <ReviewContent>
