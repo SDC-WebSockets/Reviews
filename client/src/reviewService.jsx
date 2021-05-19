@@ -7,6 +7,7 @@ import ReviewList from './components/reviewList.jsx';
 import fetch from 'node-fetch';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from './filters.js';
 import querystring from 'querystring';
+import { Main } from './styles.js';
 
 
 class ReviewService extends React.Component {
@@ -126,7 +127,7 @@ class ReviewService extends React.Component {
       );
     } else {
       return (
-        <div>
+        <Main>
           {this.state.featuredReview && this.state.totalReviews && this.state.totalReviews.length >= 10 &&
           <Featured
             review={this.state.featuredReview}
@@ -166,7 +167,7 @@ class ReviewService extends React.Component {
             currentSearchTerm={this.state.currentSearchTerm}
           />
           }
-        </div>
+        </Main>
       );
     }
   }

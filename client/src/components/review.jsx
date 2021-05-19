@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 
+import { ReviewStyle, ReviewerName, Initials, Avatar, Report} from '../styles.js';
+
 // note for later: if a comment is more than 5 lines long, hide the rest use a 'Show more' button
 
 const Review = (props) => {
@@ -20,20 +22,22 @@ const Review = (props) => {
   };
 
   return (
-    <div>
+    <ReviewStyle>
       <div className="reviewerAvatar">
         {/* if the reviewer has no avatar, the default avatar consists of reviewer's initials */}
-        {!props.review.reviewer.picture ? <div>{props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</div> : <img src={props.review.reviewer.picture}></img>}
+        {!props.review.reviewer.picture ?
+          <Initials>{props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</Initials> :
+          <Avatar src={props.review.reviewer.picture}/>}
       </div>
-      <div className="reviewerName">{props.review.reviewer.name}</div>
+      <ReviewerName className="reviewerName">{props.review.reviewer.name}</ReviewerName>
       <div className="reviewRating">{props.review.rating}</div>
       <div className="reviewDate">{moment(props.review.createdAt).fromNow()}</div>
       <div className="reviewComment">{props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}</div>
       <p>Was this review helpful?</p>
       <button className="thumbs-up">[thumbs-up]</button>
       <button className="thumbs-down">[thumbs-down]</button>
-      <button className="report">Report</button>
-    </div>
+      <Report className="report">Report</Report>
+    </ReviewStyle>
   );
 };
 
