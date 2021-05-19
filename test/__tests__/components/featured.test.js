@@ -9,14 +9,14 @@ describe ('Featured component', () => {
   const wrapper = mount(<Featured review={sampleDataForOneCourse.reviews[1]}/>);
 
   it ('shows the reviewer\'s initials if no avatar is present', () => {
-    const value = wrapper.find('.reviewerAvatar').props().children.props.children;
+    const value = wrapper.find('.featuredReviewerAvatar').first().props().children.props.children;
     expect(value).toBe('PP');
   });
 
   const reviewParts = ['reviewerName', 'reviewerCoursesTaken', 'reviewerReviews', 'reviewRating', 'reviewDate', 'reviewComment'];
   reviewParts.forEach((reviewPart) => {
     it (`has a value for ${reviewPart}`, () => {
-      let value = wrapper.find(`.${reviewPart}`).props().children;
+      let value = wrapper.find(`.${reviewPart}`).first().props().children;
       expect(value).toBeDefined();
     });
   });

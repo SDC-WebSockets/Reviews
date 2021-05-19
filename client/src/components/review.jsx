@@ -36,17 +36,17 @@ const Review = (props) => {
 
   return (
     <ReviewStyle>
-      <ReviewerAvatar>
+      <ReviewerAvatar className="reviewerAvatar">
         {/* if the reviewer has no avatar, the default avatar consists of reviewer's initials */}
         {!props.review.reviewer.picture ?
-          <ReviewerInitials style={{backgroundColor: randomColor()}}>{props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</ReviewerInitials> :
-          <ReviewerPicture src={props.review.reviewer.picture}/>}
+          <ReviewerInitials className="reviewerInitials" style={{backgroundColor: randomColor()}}>{props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</ReviewerInitials> :
+          <ReviewerPicture className="reviewerPicture" src={props.review.reviewer.picture}/>}
       </ReviewerAvatar>
       <ReviewContent>
         <Name className="reviewerName">{props.review.reviewer.name}</Name>
         <Rating>
           <div className="reviewRating">{props.review.rating}</div>
-          <Moment>{moment(props.review.createdAt).fromNow()}</Moment>
+          <Moment className="reviewDate">{moment(props.review.createdAt).fromNow()}</Moment>
         </Rating>
         <Comment>
           <div className="reviewComment">{props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}</div>
