@@ -1,5 +1,5 @@
 import React from 'react';
-import { Title } from '../styles.js';
+import { Title, Inputs, SearchBar, SearchButton } from '../styles.js';
 
 class Search extends React.Component {
   constructor(props) {
@@ -35,15 +35,11 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <Title>Reviews</Title>
-          <input id="search" type="text" placeholder="Search reviews" onChange={this.handleTermChange}></input>
-          {this.state.term ? <button onClick={this.resetSearch}>X</button> : null}
-          <input id="searchSubmit" type="submit" value="Search" onClick={() => { this.filterByTerm(this.state.term); }}></input>
-        </div>
-        <div id="tierMenu"></div>
-      </div>
+      <Inputs>
+        <SearchBar className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange}></SearchBar>
+        {this.state.term ? <button onClick={this.resetSearch}>X</button> : null}
+        <SearchButton className="searchButton" type="submit" value="" onClick={() => { this.filterByTerm(this.state.term); }}></SearchButton>
+      </Inputs>
     );
   }
 }

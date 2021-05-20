@@ -19,6 +19,18 @@ const randomDate = (date1, date2) => {
   return new Date(date1.getTime() + Math.random() * (date2.getTime() - date1.getTime()));
 };
 
+const colors = [
+  'rgb(77, 171, 101)',
+  'rgb(156, 70, 127)',
+  'rgb(240, 189, 79)',
+  'rgb(115, 114, 108)',
+  'rgb(40, 150, 169)'
+];
+
+const randomColor = () => {
+  return colors[randomInclusiveInteger(0, colors.length - 1)];
+};
+
 let usedReviewerIds = [];
 
 // create a random review for a given course ID
@@ -27,7 +39,7 @@ const generateRandomReview = (courseId) => {
   usedReviewerIds.push(randomReviewerId);
   const randomName = faker.name.findName();
   const randomAvatar = faker.image.avatar();
-  const avatars = [null, null, null, randomAvatar];
+  const avatars = [randomColor(), randomColor(), randomColor(), randomAvatar];
   const avatarOrNoAvatar = avatars[randomInclusiveInteger(0, 3)];
   const randomNoOfCourses = randomInclusiveInteger(1, 50);
   const randomNoOfReviews = randomInclusiveInteger(1, randomNoOfCourses);

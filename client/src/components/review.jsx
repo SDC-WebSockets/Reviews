@@ -37,9 +37,9 @@ const Review = (props) => {
   return (
     <ReviewStyle>
       <ReviewerAvatar className="reviewerAvatar">
-        {/* if the reviewer has no avatar, the default avatar consists of reviewer's initials */}
-        {!props.review.reviewer.picture ?
-          <ReviewerInitials className="reviewerInitials" style={{backgroundColor: randomColor()}}>{props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</ReviewerInitials> :
+        {/* if the reviewer has no avatar, the default avatar consists of a saved color background and the reviewer's initials */}
+        {props.review.reviewer.picture.slice(0, 3) === 'rgb' ?
+          <ReviewerInitials className="reviewerInitials" style={{backgroundColor: props.review.reviewer.picture}}>{props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</ReviewerInitials> :
           <ReviewerPicture className="reviewerPicture" src={props.review.reviewer.picture}/>}
       </ReviewerAvatar>
       <ReviewContent>

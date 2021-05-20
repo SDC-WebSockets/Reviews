@@ -1,7 +1,7 @@
 import React from 'react';
 import Search from './search.jsx';
 
-import { Title } from '../styles.js';
+import { Title, ReviewControls, TierSelect } from '../styles.js';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -62,7 +62,6 @@ class Feedback extends React.Component {
         <div>
           <Title>Student feedback</Title>
           <div>{this.props.ratings.overallRating.toFixed(1)} Course Rating</div>
-
           {tiers.map((tier) => {
             let percentage;
             tier.length === 1 ?
@@ -81,21 +80,28 @@ class Feedback extends React.Component {
               </div>
             );
           })}
-          {this.props.totalReviews && this.props.totalReviews.length > 0 &&
-          <Search
-            totalReviews={this.props.totalReviews}
-            currentTier={this.props.currentTier}
-            setReviewsFilteredBySearch={this.props.setReviewsFilteredBySearch}
-            setReviewsFilteredBySearchAndTier={this.props.setReviewsFilteredBySearchAndTier}
-          />}
-          <select ref={this.select} id="select" onChange={this.handleSelect}>
-            <option value="0">All ratings</option>
-            <option value="5">Five stars</option>
-            <option value="4">Four stars</option>
-            <option value="3">Three stars</option>
-            <option value="2">Two stars</option>
-            <option value="1">One star</option>
-          </select>
+
+          <div>
+            <Title>Reviews</Title>
+            <ReviewControls>
+              {this.props.totalReviews && this.props.totalReviews.length > 0 &&
+              <Search
+                totalReviews={this.props.totalReviews}
+                currentTier={this.props.currentTier}
+                setReviewsFilteredBySearch={this.props.setReviewsFilteredBySearch}
+                setReviewsFilteredBySearchAndTier={this.props.setReviewsFilteredBySearchAndTier}
+              />
+              }
+              <TierSelect className="tierSelect" ref={this.select} onChange={this.handleSelect}>
+                <option value="0">All ratings</option>
+                <option value="5">Five stars</option>
+                <option value="4">Four stars</option>
+                <option value="3">Three stars</option>
+                <option value="2">Two stars</option>
+                <option value="1">One star</option>
+              </TierSelect>
+            </ReviewControls>
+          </div>
         </div>
       );
     }

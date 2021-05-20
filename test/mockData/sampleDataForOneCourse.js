@@ -39,7 +39,7 @@ export const sampleDataForOneCourse = {
       "reviewer": {
         "reviewerId": 969489,
         "name": "Percy Pacocha",
-        "picture": null,
+        "picture": "rgb(77, 171, 101)",
         "coursesTaken": 8,
         "reviews": 6
       },
@@ -55,7 +55,7 @@ export const sampleDataForOneCourse = {
       "reviewer": {
         "reviewerId": 498469,
         "name": "Rudy D'Amore",
-        "picture": null,
+        "picture": "rgb(77, 171, 101)",
         "coursesTaken": 18,
         "reviews": 5
       },
@@ -71,7 +71,7 @@ export const sampleDataForOneCourse = {
       "reviewer": {
         "reviewerId": 232093,
         "name": "Harvey Romaguera",
-        "picture": null,
+        "picture": "rgb(240, 189, 79)",
         "coursesTaken": 18,
         "reviews": 2
       },
@@ -86,7 +86,7 @@ export const sampleDataForOneCourse = {
       "reviewer": {
         "reviewerId": 665764,
         "name": "Ms. Marion Carter",
-        "picture": null,
+        "picture": "rgb(40, 150, 169)",
         "coursesTaken": 28,
         "reviews": 17
       },

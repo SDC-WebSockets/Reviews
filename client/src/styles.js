@@ -29,7 +29,7 @@ export const MainStyle = styled.div`
   padding-right: 0px;
   padding-top: 32px;
   text-size-adjust: 100%;
-  width: 652px;
+  width: auto;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 `;
@@ -59,7 +59,7 @@ export const Name = styled.div`
   padding-left: 0px;
   padding-right: 0px;
   padding-top: 0px;
-  width: 200px;
+  width: auto;
 `;
 
 export const Rating = styled.div`
@@ -75,6 +75,7 @@ export const Moment = styled.span`
 `;
 
 export const Comment = styled.div`
+  max-width: 600px;
 `;
 
 export const Helpful = styled.p`
@@ -104,11 +105,12 @@ export const ReviewStyle = styled.div`
   height: auto;
   padding-bottom: 24px;
   padding-top: 16px;
-  width: 633px;
+  min-width 600px;
+  max-width: 1084px;
+  width: auto;
 `;
 
 export const ReviewerAvatar = styled.div`
-  padding-right: 24px;
   width: 72px;
 `;
 
@@ -158,7 +160,9 @@ export const FeaturedStyle = styled.div`
   line-height: 19.6px;
   margin: 0px;
   padding: 24px;
-  width 633px;
+  min-width 600px;
+  max-width: 1084px;
+  width: auto;
 `;
 
 export const FeaturedReviewer = styled.div`
@@ -198,4 +202,54 @@ export const FeaturedReviewerMetadata = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
+
+// Feedback and Search
+export const ReviewControls = styled.div`
+  display: flex;
+  justify-content: space-between;
+  min-width 600px;
+  max-width: 1084px;
+  width: auto;
+  padding-top: 16px;
+`;
+
+export const Inputs = styled.div`
+  display: flex;
+`;
+
+export const SearchBar = styled.input`
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border: 1px solid #989586;
+  min-width: 400px;
+  max-width: 500px;
+  height: 44px;
+  padding-left: 12px;
+  line-height: 22.4px;
+  font-size: 16px;
+`;
+
+export const SearchButton = styled.input`
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background-color: rgb(15, 124, 144);
+  height: 48px;
+  width: 48px;
+  border: 0;
+  justify-content: center;
+`;
+
+export const TierSelect = styled.select`
+  color: rgb(115, 114, 108);
+  border-radius: 4px;
+  border: 1px solid #989586;
+  margin-left: 16px;
+  width: 180px;
+  height: 48px;
+  line-height: 22.4px;
+  font-size: 16px;
+  padding-left: 12px;
+  padding-right: 40px;
+`;
+
 
