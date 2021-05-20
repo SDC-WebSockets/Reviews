@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { thumbsUp, thumbsDown } from '../svg.js';
 
 import {
   ReviewStyle,
@@ -12,6 +13,8 @@ import {
   Moment,
   Comment,
   Helpful,
+  Buttons,
+  Thumbs,
   Report
 } from '../styles.js';
 
@@ -50,9 +53,13 @@ const Review = (props) => {
         <Comment>
           <div className="reviewComment">{props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}</div>
           <Helpful>Was this review helpful?</Helpful>
-          <button className="thumbs-up">[thumbs-up]</button>
-          <button className="thumbs-down">[thumbs-down]</button>
-          <Report>Report</Report>
+          <Buttons>
+            <Thumbs className="thumbs-up" value="yes">
+              <span dangerouslySetInnerHTML={{ __html: thumbsUp }}></span>
+            </Thumbs>
+            <Thumbs className="thumbs-down" value="no"><span dangerouslySetInnerHTML={{ __html: thumbsDown }}></span></Thumbs>
+            <Report>Report</Report>
+          </Buttons>
         </Comment>
       </ReviewContent>
     </ReviewStyle>

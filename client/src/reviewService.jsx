@@ -124,7 +124,7 @@ class ReviewService extends React.Component {
   render() {
     if (!this.state.courseId) {
       return (
-        <div>Loading...</div>
+        <MainStyle>Loading...</MainStyle>
       );
     } else {
       return (

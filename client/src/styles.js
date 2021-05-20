@@ -82,6 +82,28 @@ export const Helpful = styled.p`
   font-size: 12px;
 `;
 
+export const Buttons = styled.div`
+  display: flex;
+`;
+
+export const Thumbs = styled.button`
+  align-items: center;
+  background-color: transparent;
+  border-color: rgb(40, 150, 169);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 50%;
+  color: gb(15, 124, 144);
+  cursor: pointer;
+  margin-right: 8px;
+  padding: 10px;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+`;
+
 export const Report = styled.button`
   color: #0f7c90;
   align-items: center;
@@ -89,10 +111,14 @@ export const Report = styled.button`
   border-radius: 4px;
   border: none;
   cursor: pointer;
+  font-family: Arial;
+  letter-spacing: -0.2px;
+  line-height: 19.6px;
   min-width: auto;
   text-align: center;
   text-rendering: auto;
   white-space: nowrap;
+  writing-mode horizontal-tb;
 `;
 
 // regular reviews
@@ -223,18 +249,18 @@ export const SearchBar = styled.input`
   border: 1px solid #989586;
   min-width: 420px;
   max-width: 500px;
-  height: 48px;
+  height: 44px;
   padding-left: 12px;
   line-height: 22.4px;
   font-size: 16px;
   overflow: scroll;
-  -webkit-search-cancel-button: none;
 `;
 
-export const SearchButton = styled.input`
+export const SearchButton = styled.button`
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   background-color: rgb(15, 124, 144);
+  cursor: pointer;
   height: 48px;
   width: 48px;
   border: 0;
@@ -243,6 +269,7 @@ export const SearchButton = styled.input`
 
 export const TierSelect = styled.select`
   color: rgb(115, 114, 108);
+  cursor: pointer;
   border-radius: 4px;
   border: 1px solid #989586;
   margin-left: 16px;

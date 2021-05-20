@@ -1,6 +1,7 @@
 import React from 'react';
 import Review from './review.jsx';
 import moment from 'moment';
+import { thumbsUp, thumbsDown } from '../svg.js';
 
 import {
   FeaturedStyle,
@@ -15,6 +16,8 @@ import {
   Moment,
   Comment,
   Helpful,
+  Buttons,
+  Thumbs,
   Report
 } from '../styles.js';
 
@@ -28,7 +31,7 @@ const Featured = (props) => (
             {/* if the reviewer has no avatar, the default avatar consists of a saved color background and the reviewer's initials */}
             {props.review.reviewer.picture.slice(0, 3) === 'rgb' ?
               <FeaturedReviewerInitials className="featuredReviewerInitials"style={{backgroundColor: props.review.reviewer.picture}}>{props.review.reviewer.name.split(' ').map((n)=>n[0]).join('').slice(0, 2)}</FeaturedReviewerInitials> :
-              <FeaturedReviewerPicture className="featuredReviewerPicture"src={props.review.reviewer.picture}/>}
+              <FeaturedReviewerPicture className="featuredReviewerPicture" src={props.review.reviewer.picture}/>}
           </FeaturedReviewerAvatar>
           <FeaturedReviewerMetadata className="featuredReviewerMetadata">
             <Name className="reviewerName">{props.review.reviewer.name}</Name>
@@ -43,10 +46,13 @@ const Featured = (props) => (
         <Comment>
           <div className="reviewComment">{props.review.comment}</div>
           <Helpful>Was this review helpful?</Helpful>
-          <button className="thumbs-up" value="yes">[thumbs-up]
-          </button>
-          <button className="thumbs-down" value="no">[thumbs-down]</button>
-          <Report>Report</Report>
+          <Buttons>
+            <Thumbs className="thumbs-up" value="yes">
+              <span dangerouslySetInnerHTML={{ __html: thumbsUp }}></span>
+            </Thumbs>
+            <Thumbs className="thumbs-down" value="no"><span dangerouslySetInnerHTML={{ __html: thumbsDown }}></span></Thumbs>
+            <Report>Report</Report>
+          </Buttons>
         </Comment>
       </FeaturedStyle>
     }

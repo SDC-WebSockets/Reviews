@@ -1,4 +1,5 @@
 import React from 'react';
+import { magnifyingGlass } from '../svg.js';
 import {
   Title,
   Inputs,
@@ -38,14 +39,17 @@ class Search extends React.Component {
   resetSearch() {
     this.setState({term: ''});
     this.props.setReviewsFilteredBySearch(null);
-    document.getElementById('search').value = '';
+    document.getElementById('reviewSearch').value = '';
   }
 
   render() {
     return (
       <Inputs>
-        <SearchBar className="searchBar" type="search" placeholder="Search reviews" onChange={this.handleTermChange}></SearchBar>
-        <SearchButton className="searchButton" type="submit" value="" onClick={() => { this.filterByTerm(this.state.term); }}></SearchButton>
+        <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange}></SearchBar>
+        {this.state.term ? <button onClick={this.resetSearch}>X</button> : null}
+        <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
+          <span dangerouslySetInnerHTML={{ __html: magnifyingGlass }}></span>
+        </SearchButton>
       </Inputs>
     );
   }
