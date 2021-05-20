@@ -14,7 +14,6 @@ import {
   Helpful,
   Report
 } from '../styles.js';
-import {randomColor} from '../randomColor.js';
 
 // note for later: if a comment is more than 5 lines long, hide the rest use a 'Show more' button
 

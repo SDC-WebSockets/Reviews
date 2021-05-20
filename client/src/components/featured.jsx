@@ -17,7 +17,6 @@ import {
   Helpful,
   Report
 } from '../styles.js';
-import {randomColor} from '../randomColor.js';
 
 const Featured = (props) => (
   <div>

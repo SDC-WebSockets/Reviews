@@ -221,12 +221,14 @@ export const SearchBar = styled.input`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   border: 1px solid #989586;
-  min-width: 400px;
+  min-width: 420px;
   max-width: 500px;
-  height: 44px;
+  height: 48px;
   padding-left: 12px;
   line-height: 22.4px;
   font-size: 16px;
+  overflow: scroll;
+  -webkit-search-cancel-button: none;
 `;
 
 export const SearchButton = styled.input`
@@ -250,6 +252,7 @@ export const TierSelect = styled.select`
   font-size: 16px;
   padding-left: 12px;
   padding-right: 40px;
+  background-position: 100% 100%;
 `;
 
 

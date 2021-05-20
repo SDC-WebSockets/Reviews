@@ -1,5 +1,10 @@
 import React from 'react';
-import { Title, Inputs, SearchBar, SearchButton } from '../styles.js';
+import {
+  Title,
+  Inputs,
+  SearchBar,
+  SearchButton
+} from '../styles.js';
 
 class Search extends React.Component {
   constructor(props) {
@@ -20,6 +25,9 @@ class Search extends React.Component {
 
   filterByTerm(term) {
     term = term.trim();
+    if (term === '') {
+      return;
+    }
     if (!this.props.currentTier) {
       this.props.setReviewsFilteredBySearch(term);
     } else {
@@ -36,8 +44,7 @@ class Search extends React.Component {
   render() {
     return (
       <Inputs>
-        <SearchBar className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange}></SearchBar>
-        {this.state.term ? <button onClick={this.resetSearch}>X</button> : null}
+        <SearchBar className="searchBar" type="search" placeholder="Search reviews" onChange={this.handleTermChange}></SearchBar>
         <SearchButton className="searchButton" type="submit" value="" onClick={() => { this.filterByTerm(this.state.term); }}></SearchButton>
       </Inputs>
     );
