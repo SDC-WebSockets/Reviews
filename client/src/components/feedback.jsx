@@ -1,7 +1,8 @@
 import React from 'react';
 import Search from './search.jsx';
+import { tierX } from '../svg.js';
 
-import { Title, ReviewControls, TierSelect } from '../styles.js';
+import { Title, Tier, TierX, ReviewControls, TierSelect } from '../styles.js';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -68,19 +69,20 @@ class Feedback extends React.Component {
               percentage = this.getPercentage(this.props.ratings[tier[0]]) :
               percentage = this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]]);
             return (
-              <div key={tier[tier.length - 1]}>
+              <Tier key={tier[tier.length - 1]}>
                 <div id={tier[tier.length - 1] + 'stars'} onClick={
                   () => percentage === '0%' ? null : this.handleClick(Number(tier[tier.length - 1]))
                 }>
                   {tier[tier.length - 1]} {tier[tier.length - 1] === '1' ? 'star' : 'stars'}: {percentage}
                 </div>
                 <div>
-                  {this.props.currentTier === Number(tier[tier.length - 1]) ? <button onClick={this.removeFilter}>X</button> : null}
+                  {this.props.currentTier === Number(tier[tier.length - 1]) ? <TierX onClick={this.removeFilter}>
+                    <span dangerouslySetInnerHTML={{ __html: tierX }}></span>
+                  </TierX> : null}
                 </div>
-              </div>
+              </Tier>
             );
           })}
-
           <div>
             <Title>Reviews</Title>
             <ReviewControls>

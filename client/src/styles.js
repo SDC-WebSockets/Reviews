@@ -282,4 +282,19 @@ export const TierSelect = styled.select`
   background-position: 100% 100%;
 `;
 
+// Feedback
+export const Tier = styled.div`
+  display: flex;
+  color: rgb(15, 124, 144);
+  height: 20px;
+`;
+
+export const TierX = styled.button`
+  justify-content: center;
+  height: 16px;
+  width: 16px;
+  background-color: transparent;
+  border: none;
+  padding: 2px;
+`;
 

@@ -57,7 +57,9 @@ const Review = (props) => {
             <Thumbs className="thumbs-up" value="yes">
               <span dangerouslySetInnerHTML={{ __html: thumbsUp }}></span>
             </Thumbs>
-            <Thumbs className="thumbs-down" value="no"><span dangerouslySetInnerHTML={{ __html: thumbsDown }}></span></Thumbs>
+            <Thumbs className="thumbs-down" value="no">
+              <span dangerouslySetInnerHTML={{ __html: thumbsDown }}></span>
+            </Thumbs>
             <Report>Report</Report>
           </Buttons>
         </Comment>
