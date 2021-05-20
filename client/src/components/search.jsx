@@ -1,9 +1,11 @@
 import React from 'react';
-import { magnifyingGlass } from '../svg.js';
+import { magnifyingGlass, x } from '../svg.js';
 import {
   Title,
   Inputs,
   SearchBar,
+  ButtonContainer,
+  ClearSearchBar,
   SearchButton
 } from '../styles.js';
 
@@ -45,11 +47,19 @@ class Search extends React.Component {
   render() {
     return (
       <Inputs>
-        <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange}></SearchBar>
-        {this.state.term ? <button onClick={this.resetSearch}>X</button> : null}
-        <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
-          <span dangerouslySetInnerHTML={{ __html: magnifyingGlass }}></span>
-        </SearchButton>
+        <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange}>
+        </SearchBar>
+        {this.state.term ?
+          <ClearSearchBar id="clearSearch" onClick={this.resetSearch}>
+            <span dangerouslySetInnerHTML={{ __html: x }}></span>
+          </ClearSearchBar>
+          :
+          null}
+        <ButtonContainer>
+          <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
+            <span dangerouslySetInnerHTML={{ __html: magnifyingGlass }}></span>
+          </SearchButton>
+        </ButtonContainer>
       </Inputs>
     );
   }

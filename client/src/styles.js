@@ -84,6 +84,7 @@ export const Helpful = styled.p`
 
 export const Buttons = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export const Thumbs = styled.button`
@@ -98,10 +99,10 @@ export const Thumbs = styled.button`
   margin-right: 8px;
   padding: 10px;
   padding: 10px;
-  position: relative;
-  text-align: center;
   width: 40px;
   height: 40px;
+  display: block;
+  fill: rgb(15, 124, 144);
 `;
 
 export const Report = styled.button`
@@ -236,7 +237,6 @@ export const ReviewControls = styled.div`
   min-width 600px;
   max-width: 1084px;
   width: auto;
-  padding-top: 16px;
 `;
 
 export const Inputs = styled.div`
@@ -247,13 +247,28 @@ export const SearchBar = styled.input`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   border: 1px solid #989586;
-  min-width: 420px;
-  max-width: 500px;
+  width: 500px;
   height: 44px;
   padding-left: 12px;
+  padding-right: 40px;
   line-height: 22.4px;
   font-size: 16px;
   overflow: scroll;
+  outline: none;
+`;
+
+export const ClearSearchBar = styled.button`
+  height: 30px;
+  width: 30px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: block;
+  margin-top: 9px;
+  margin-bottom: 5px;
+  position: absolute;
+  left: 554px;
 `;
 
 export const SearchButton = styled.button`
@@ -264,7 +279,8 @@ export const SearchButton = styled.button`
   height: 48px;
   width: 48px;
   border: 0;
-  justify-content: center;
+  display: block;
+  margin: auto;
 `;
 
 export const TierSelect = styled.select`
@@ -280,21 +296,52 @@ export const TierSelect = styled.select`
   padding-left: 12px;
   padding-right: 40px;
   background-position: 100% 100%;
+  outline: none !important;
 `;
 
 // Feedback
 export const Tier = styled.div`
-  display: flex;
   color: rgb(15, 124, 144);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
   height: 20px;
 `;
 
 export const TierX = styled.button`
-  justify-content: center;
-  height: 16px;
-  width: 16px;
+  height: 20px;
+  width: 20px;
   background-color: transparent;
   border: none;
+  cursor: pointer;
   padding: 2px;
+  display: block;
+  margin: auto;
 `;
+
+// change color of buttons
+export const ButtonContainer = styled.div`
+  &:hover {
+    ${SearchButton} {
+      background-color: rgb(9, 76, 89);
+    }
+    ${Thumbs} {
+      border-color: rgb(9, 76, 89);
+    }
+    ${Report} {
+      color: rgb(9, 76, 89);
+    }
+  }
+  &:active {
+    ${Thumbs} {
+      border-color: rgb(15, 124, 144);
+      background-color: rgb(15, 124, 144);
+      fill: rgb(255, 255, 255);
+    }
+    ${Report} {
+      color: rgb(9, 76, 89);
+    }
+  }
+`;
+
 

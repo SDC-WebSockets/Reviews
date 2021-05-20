@@ -14,6 +14,7 @@ import {
   Comment,
   Helpful,
   Buttons,
+  ButtonContainer,
   Thumbs,
   Report
 } from '../styles.js';
@@ -54,13 +55,19 @@ const Review = (props) => {
           <div className="reviewComment">{props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}</div>
           <Helpful>Was this review helpful?</Helpful>
           <Buttons>
-            <Thumbs className="thumbs-up" value="yes">
-              <span dangerouslySetInnerHTML={{ __html: thumbsUp }}></span>
-            </Thumbs>
-            <Thumbs className="thumbs-down" value="no">
-              <span dangerouslySetInnerHTML={{ __html: thumbsDown }}></span>
-            </Thumbs>
-            <Report>Report</Report>
+            <ButtonContainer>
+              <Thumbs className="thumbs-up" value="yes">
+                <span dangerouslySetInnerHTML={{ __html: thumbsUp }}></span>
+              </Thumbs>
+            </ButtonContainer>
+            <ButtonContainer>
+              <Thumbs className="thumbs-down" value="no">
+                <span dangerouslySetInnerHTML={{ __html: thumbsDown }}></span>
+              </Thumbs>
+            </ButtonContainer>
+            <ButtonContainer>
+              <Report>Report</Report>
+            </ButtonContainer>
           </Buttons>
         </Comment>
       </ReviewContent>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Search from './search.jsx';
-import { tierX } from '../svg.js';
+import { x } from '../svg.js';
 
 import { Title, Tier, TierX, ReviewControls, TierSelect } from '../styles.js';
 
@@ -77,7 +77,7 @@ class Feedback extends React.Component {
                 </div>
                 <div>
                   {this.props.currentTier === Number(tier[tier.length - 1]) ? <TierX onClick={this.removeFilter}>
-                    <span dangerouslySetInnerHTML={{ __html: tierX }}></span>
+                    <span dangerouslySetInnerHTML={{ __html: x }}></span>
                   </TierX> : null}
                 </div>
               </Tier>
