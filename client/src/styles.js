@@ -273,7 +273,7 @@ export const ClearSearchBar = styled.button`
   margin-top: 9px;
   margin-bottom: 5px;
   position: absolute;
-  left: 554px;
+  left: 410px;
 `;
 
 export const SearchButton = styled.button`
@@ -344,6 +344,17 @@ export const Tier = styled.span`
 export const ReviewData = styled.span`
   color: rgb(15, 124, 144);
   cursor: pointer;
+  display: flex;
+  width: 468px;
+  height: 20px;
+  margin-bottom: 8px;
+  align-items: center;
+`;
+
+export const ZeroReviewData = styled.span`
+  color: rgb(15, 124, 144);
+  opacity: .25;
+  cursor: no-drop;
   display: flex;
   width: 468px;
   height: 20px;

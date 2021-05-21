@@ -11,6 +11,7 @@ import {
   Tiers,
   Tier,
   ReviewData,
+  ZeroReviewData,
   Percentage,
   TierX,
   ReviewControls,
@@ -24,6 +25,7 @@ class Feedback extends React.Component {
     this.filterByTier = this.filterByTier.bind(this);
     this.removeFilter = this.removeFilter.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.renderTransparent = this.renderTransparent.bind(this);
     this.select = React.createRef();
   }
 
@@ -38,10 +40,12 @@ class Feedback extends React.Component {
   handleClick(tier) {
     this.filterByTier(tier);
     this.select.current.value = tier.toString();
+    this.renderTransparent(tier);
   }
 
   handleSelect(e) {
     this.filterByTier(Number(e.target.value));
+    this.renderTransparent(e.target.value);
   }
 
   filterByTier(tier) {
@@ -55,10 +59,28 @@ class Feedback extends React.Component {
   removeFilter() {
     this.props.setReviewsFilteredByTier(0);
     this.select.current.value = '0';
+    const tiers = document.getElementsByClassName('tier');
+    this.renderTransparent(0);
   }
 
-  // TO DO
-  // if a percentage is 0%, render it gray and unclickable
+  renderTransparent(tier) {
+    tier = Number(tier);
+    const tiers = document.getElementsByClassName('tier');
+    if (tier === 0) {
+      for (let i = 0; i < tiers.length; i++) {
+        tiers[i].style.opacity = '1';
+      }
+    } else {
+      for (let i = 0; i < tiers.length; i++) {
+        if (Number(tiers[i].id[4]) === tier) {
+          tiers[i].style.opacity = '1';
+        } else {
+          tiers[i].style.opacity = '0.25';
+        }
+      }
+    }
+  }
+
   render() {
     if (this.props.ratings.totalRatings === 0) {
       return (
@@ -86,19 +108,29 @@ class Feedback extends React.Component {
             <Tiers>
               {tiers.map((tier) => {
                 let percentage;
+                let currentTier = Number(tier[tier.length - 1]);
                 tier.length === 1 ?
                   percentage = this.getPercentage(this.props.ratings[tier[0]]) :
                   percentage = this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]]);
+                let portion = Number(percentage.slice(0, percentage.length - 1));
                 return (
-                  <Tier key={tier[tier.length - 1]} >
-                    <ReviewData onClick={() => this.handleClick(Number(tier[tier.length - 1]))}>
-                      <Gauge percentage={percentage}/>
-                      <Stars rating={tier[tier.length - 1]}/>
-                      <Percentage>{percentage}</Percentage>
-                    </ReviewData>
-                    {this.props.currentTier === Number(tier[tier.length - 1]) ? <TierX onClick={this.removeFilter}>
-                      <span dangerouslySetInnerHTML={{ __html: xRating }}></span>
-                    </TierX> : null}
+                  <Tier className="tier" id={`tier${currentTier}`} key={currentTier} >
+                    {portion > 0 ?
+                      <ReviewData onClick={() => this.handleClick(Number(currentTier))}>
+                        <Gauge portion={portion}/>
+                        <Stars rating={currentTier}/>
+                        <Percentage>{percentage}</Percentage>
+                      </ReviewData> :
+                      <ZeroReviewData>
+                        <Gauge portion={portion}/>
+                        <Stars rating={currentTier}/>
+                        <Percentage>{percentage}</Percentage>
+                      </ZeroReviewData>
+                    }
+                    {this.props.currentTier === currentTier ?
+                      <TierX onClick={this.removeFilter}>
+                        <span dangerouslySetInnerHTML={{ __html: xRating }}></span>
+                      </TierX> : null}
                   </Tier>
                 );
               })}
