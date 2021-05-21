@@ -11,7 +11,6 @@ import {
   Tiers,
   Tier,
   ReviewData,
-  ZeroReviewData,
   Percentage,
   TierX,
   ReviewControls,
@@ -59,24 +58,17 @@ class Feedback extends React.Component {
   removeFilter() {
     this.props.setReviewsFilteredByTier(0);
     this.select.current.value = '0';
-    const tiers = document.getElementsByClassName('tier');
     this.renderTransparent(0);
   }
 
   renderTransparent(tier) {
     tier = Number(tier);
-    const tiers = document.getElementsByClassName('tier');
-    if (tier === 0) {
-      for (let i = 0; i < tiers.length; i++) {
+    const tiers = document.getElementsByClassName('tierWithData');
+    for (let i = 0; i < tiers.length; i++) {
+      if (tier === 0 || tier === Number(tiers[i].id[4])) {
         tiers[i].style.opacity = '1';
-      }
-    } else {
-      for (let i = 0; i < tiers.length; i++) {
-        if (Number(tiers[i].id[4]) === tier) {
-          tiers[i].style.opacity = '1';
-        } else {
-          tiers[i].style.opacity = '0.25';
-        }
+      } else {
+        tiers[i].style.opacity = '0.25';
       }
     }
   }
@@ -114,21 +106,17 @@ class Feedback extends React.Component {
                   percentage = this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]]);
                 let portion = Number(percentage.slice(0, percentage.length - 1));
                 return (
-                  <Tier className="tier" id={`tier${currentTier}`} key={currentTier} >
-                    {portion > 0 ?
-                      <ReviewData onClick={() => this.handleClick(Number(currentTier))}>
-                        <Gauge portion={portion}/>
-                        <Stars rating={currentTier}/>
-                        <Percentage>{percentage}</Percentage>
-                      </ReviewData> :
-                      <ZeroReviewData>
-                        <Gauge portion={portion}/>
-                        <Stars rating={currentTier}/>
-                        <Percentage>{percentage}</Percentage>
-                      </ZeroReviewData>
-                    }
+                  <Tier key={currentTier} style={portion === 0 ?
+                    {cursor: 'no-drop', opacity: '.25'} : {cursor: 'pointer'}}>
+
+                    <ReviewData className="tierWithData" id={`tier${currentTier}`} onClick={portion > 0 ? () => this.handleClick(Number(currentTier)) : null }>
+                      <Gauge portion={portion}/>
+                      <Stars rating={currentTier}/>
+                      <Percentage>{percentage}</Percentage>
+                    </ReviewData>
+
                     {this.props.currentTier === currentTier ?
-                      <TierX onClick={this.removeFilter}>
+                      <TierX onClick={portion > 0 ? this.removeFilter : null} style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
                         <span dangerouslySetInnerHTML={{ __html: xRating }}></span>
                       </TierX> : null}
                   </Tier>

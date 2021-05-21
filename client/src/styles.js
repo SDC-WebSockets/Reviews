@@ -343,18 +343,6 @@ export const Tier = styled.span`
 
 export const ReviewData = styled.span`
   color: rgb(15, 124, 144);
-  cursor: pointer;
-  display: flex;
-  width: 468px;
-  height: 20px;
-  margin-bottom: 8px;
-  align-items: center;
-`;
-
-export const ZeroReviewData = styled.span`
-  color: rgb(15, 124, 144);
-  opacity: .25;
-  cursor: no-drop;
   display: flex;
   width: 468px;
   height: 20px;
@@ -392,7 +380,6 @@ export const TierX = styled.button`
   width: 22px;
   background-color: transparent;
   border: none;
-  cursor: pointer;
   margin-bottom: 6px;
   position: absolute;
   left: 620px;
