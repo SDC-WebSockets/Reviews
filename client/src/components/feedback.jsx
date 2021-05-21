@@ -1,8 +1,18 @@
 import React from 'react';
 import Search from './search.jsx';
-import { x } from '../svg.js';
+import Stars from './stars.jsx';
 
-import { Title, Tier, TierX, ReviewControls, TierSelect } from '../styles.js';
+import {
+  Title,
+  FeedbackStyle,
+  OverallRating,
+  Grade,
+  Tiers,
+  Tier,
+  TierX,
+  ReviewControls,
+  TierSelect
+} from '../styles.js';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -58,32 +68,42 @@ class Feedback extends React.Component {
       const tiers = [
         ['5'], ['4 1/2', '4'], ['3 1/2', '3'], ['2 1/2', '2'], ['1 1/2', '1']
       ];
-
       return (
         <div>
           <Title>Student feedback</Title>
-          <div>{this.props.ratings.overallRating.toFixed(1)} Course Rating</div>
-          {tiers.map((tier) => {
-            let percentage;
-            tier.length === 1 ?
-              percentage = this.getPercentage(this.props.ratings[tier[0]]) :
-              percentage = this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]]);
-            return (
-              <Tier key={tier[tier.length - 1]}>
-                <div id={tier[tier.length - 1] + 'stars'} onClick={
-                  () => percentage === '0%' ? null : this.handleClick(Number(tier[tier.length - 1]))
-                }>
-                  {tier[tier.length - 1]} {tier[tier.length - 1] === '1' ? 'star' : 'stars'}: {percentage}
-                </div>
-                <div>
-                  {this.props.currentTier === Number(tier[tier.length - 1]) ? <TierX onClick={this.removeFilter}>
-                    <span dangerouslySetInnerHTML={{ __html: x }}></span>
-                  </TierX> : null}
-                </div>
-              </Tier>
-            );
-          })}
+          <FeedbackStyle>
+            <OverallRating>
+              <Grade>{this.props.ratings.overallRating.toFixed(1)}
+              </Grade>
+              <div>
+                <Stars rating={this.props.ratings.overallRating}/>
+              </div>
+              <div>Course Rating</div>
+            </OverallRating>
+            <Tiers>
+              {tiers.map((tier) => {
+                let percentage;
+                tier.length === 1 ?
+                  percentage = this.getPercentage(this.props.ratings[tier[0]]) :
+                  percentage = this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]]);
+                return (
+                  <Tier key={tier[tier.length - 1]} >
+                    <div onClick={() => percentage === '0%' ? null : this.handleClick(Number(tier[tier.length - 1]))}>
+                      <Stars rating={tier[tier.length - 1]}/>
+                      <div>{percentage}</div>
+                    </div>
+                    <div>
+                      {this.props.currentTier === Number(tier[tier.length - 1]) ? <TierX onClick={this.removeFilter}>
+                        <span dangerouslySetInnerHTML={{ __html: x }}></span>
+                      </TierX> : null}
+                    </div>
+                  </Tier>
+                );
+              })}
+            </Tiers>
+          </FeedbackStyle>
           <div>
+
             <Title>Reviews</Title>
             <ReviewControls>
               {this.props.totalReviews && this.props.totalReviews.length > 0 &&

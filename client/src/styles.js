@@ -300,11 +300,47 @@ export const TierSelect = styled.select`
 `;
 
 // Feedback
+export const FeedbackStyle = styled.div`
+  display: flex;
+`;
+
+export const OverallRating = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(190, 90, 14);
+  font-weight: 700;
+  height: 132px;
+  width: 100px;
+`;
+
+export const Grade = styled.div`
+  line-height: 64px;
+  font-size: 64px;
+`;
+
+export const Tiers = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 32px;
+  width: 468px;
+`;
+
 export const Tier = styled.div`
   color: rgb(15, 124, 144);
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
+  width: 468px;
+  height: 20px;
+`;
+
+export const StarStyle = styled.span`
+  
+`;
+
+export const StarsStyle = styled.div`
+  width: 100px;
   height: 20px;
 `;
 

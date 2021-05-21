@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import Stars from './stars.jsx';
 import { thumbsUp, thumbsDown } from '../svg.js';
 
 import {
@@ -48,7 +49,7 @@ const Review = (props) => {
       <ReviewContent>
         <Name className="reviewerName">{props.review.reviewer.name}</Name>
         <Rating>
-          <div className="reviewRating">{props.review.rating}</div>
+          <Stars className="reviewRating" rating={props.review.rating}/>
           <Moment className="reviewDate">{moment(props.review.createdAt).fromNow()}</Moment>
         </Rating>
         <Comment>
