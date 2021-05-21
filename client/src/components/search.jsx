@@ -1,5 +1,5 @@
 import React from 'react';
-import { magnifyingGlass, x } from '../svg.js';
+import { magnifyingGlass, xSearch } from '../svg.js';
 import {
   Title,
   Inputs,
@@ -51,7 +51,7 @@ class Search extends React.Component {
         </SearchBar>
         {this.state.term ?
           <ClearSearchBar id="clearSearch" onClick={this.resetSearch}>
-            <span dangerouslySetInnerHTML={{ __html: x }}></span>
+            <span dangerouslySetInnerHTML={{ __html: xSearch }}></span>
           </ClearSearchBar>
           :
           null}

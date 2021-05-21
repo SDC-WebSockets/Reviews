@@ -44,6 +44,11 @@ export const Title = styled.h2`
   margin-inline-end: 0px;
 `;
 
+export const StarsStyle = styled.div`
+  width: 100px;
+  height: 20px;
+`;
+
 // Review / Featured components
 export const Name = styled.div`
   box-sizing: border-box;
@@ -89,6 +94,7 @@ export const Buttons = styled.div`
 
 export const Thumbs = styled.button`
   align-items: center;
+  display: block;
   background-color: transparent;
   border-color: rgb(40, 150, 169);
   border-width: 1px;
@@ -101,7 +107,6 @@ export const Thumbs = styled.button`
   padding: 10px;
   width: 40px;
   height: 40px;
-  display: block;
   fill: rgb(15, 124, 144);
 `;
 
@@ -185,7 +190,7 @@ export const FeaturedStyle = styled.div`
   border-width: 1px;
   height: auto;
   line-height: 19.6px;
-  margin: 0px;
+  margin-bottom: 24px;
   padding: 24px;
   min-width 600px;
   max-width: 1084px;
@@ -201,7 +206,7 @@ export const FeaturedReviewerAvatar = styled.div`
 `;
 
 export const FeaturedReviewerInitials = styled.div`
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
@@ -283,6 +288,12 @@ export const SearchButton = styled.button`
   margin: auto;
 `;
 
+export const Message = styled.div`
+  font-size: 16px;
+  margin: 16px;
+  line-height: 22.4px;
+`;
+
 export const TierSelect = styled.select`
   color: rgb(115, 114, 108);
   cursor: pointer;
@@ -327,32 +338,41 @@ export const Tiers = styled.div`
   width: 468px;
 `;
 
-export const Tier = styled.div`
+export const Tier = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+export const ReviewData = styled.span`
   color: rgb(15, 124, 144);
   cursor: pointer;
   display: flex;
   width: 468px;
   height: 20px;
+  margin-bottom: 8px;
+  align-items: center;
 `;
 
-export const StarStyle = styled.span`
-  
+export const Gauge = styled.span`
+  width: 280px;
+  height: 8px;
 `;
 
-export const StarsStyle = styled.div`
-  width: 100px;
-  height: 20px;
+export const Percentage = styled.span`
+  margin-left: 8px;
 `;
 
 export const TierX = styled.button`
+  align-items: center;
+  display: block;
   height: 20px;
   width: 20px;
   background-color: transparent;
+  margin-right: 10px;
   border: none;
+  padding: 4px;
   cursor: pointer;
-  padding: 2px;
-  display: block;
-  margin: auto;
+  margin-bottom: 5px;
 `;
 
 // change color of buttons

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Message } from '../styles.js';
 
 const SearchMessage = (props) => {
   // console.log('Props in SearchMessage:', props);
@@ -7,16 +8,16 @@ const SearchMessage = (props) => {
 
     if (props.reviewsBySearchAndTier.length > 0) {
       return (
-        <div>{props.reviewsBySearchAndTier.length} {props.reviewsBySearchAndTier.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</div>
+        <Message>{props.reviewsBySearchAndTier.length} {props.reviewsBySearchAndTier.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</Message>
       );
     } else {
       return (
-        <div>
+        <Message>
           No reviews mentioning '<strong>{props.currentSearchTerm}</strong>'
           <br></br>
           <br></br>
           Your search returned no results with the selected rating. Try clearing your selection to see reviews matching your search.
-        </div>
+        </Message>
       );
     }
 
@@ -24,25 +25,25 @@ const SearchMessage = (props) => {
 
     if (props.reviewsBySearch.length > 0) {
       return (
-        <div>{props.reviewsBySearch.length} {props.reviewsBySearch.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</div>
+        <Message>{props.reviewsBySearch.length} {props.reviewsBySearch.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</Message>
       );
     } else {
       return (
-        <div>
+        <Message>
           No reviews mentioning '<strong>{props.currentSearchTerm}</strong>'
           <br></br>
           <br></br>
           No reviews matched your search. Try searching with another term.
-        </div>
+        </Message>
       );
     }
 
   } else if (!props.reviewsBySearchAndTier && !props.reviewsBySearch && props.reviewsByTier) {
     if (props.reviewsByTier.length === 0) {
       return (
-        <div>
+        <Message>
           There are no written comments for the rating you've selected. Please select another rating or clear your selection to view all written comments for this course.
-        </div>
+        </Message>
       );
     } else {
       return null;
