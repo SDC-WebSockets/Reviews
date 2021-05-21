@@ -3,9 +3,7 @@ import { Message } from '../styles.js';
 
 const SearchMessage = (props) => {
   // console.log('Props in SearchMessage:', props);
-
   if (props.reviewsBySearchAndTier) {
-
     if (props.reviewsBySearchAndTier.length > 0) {
       return (
         <Message>{props.reviewsBySearchAndTier.length} {props.reviewsBySearchAndTier.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</Message>
@@ -20,9 +18,7 @@ const SearchMessage = (props) => {
         </Message>
       );
     }
-
   } else if (!props.reviewsBySearchAndTier && props.reviewsBySearch && !props.reviewsByTier) {
-
     if (props.reviewsBySearch.length > 0) {
       return (
         <Message>{props.reviewsBySearch.length} {props.reviewsBySearch.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</Message>
@@ -37,7 +33,6 @@ const SearchMessage = (props) => {
         </Message>
       );
     }
-
   } else if (!props.reviewsBySearchAndTier && !props.reviewsBySearch && props.reviewsByTier) {
     if (props.reviewsByTier.length === 0) {
       return (
