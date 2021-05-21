@@ -1,6 +1,6 @@
 export const xSearch = '<svg class="svg-icon" viewBox="0 0 24 24"><path id="tierXPath" fill="rgb(115, 114, 108)" d=" M 19 6.41 L 17.59 5 L 12 10.59 L 6.41 5 L 5 6.41 L 10.59 12 L 5 17.59 L 6.41 19 L 12 13.41 L 17.59 19 L 19 17.59 L 13.41 12 L 19 6.41 Z"></path>';
 
-export const xRating = '<svg class="svg-icon" viewBox="5 5 18 18"><path id="tierXPath" fill="rgb(115, 114, 108)" d=" M 19 6.41 L 17.59 5 L 12 10.59 L 6.41 5 L 5 6.41 L 10.59 12 L 5 17.59 L 6.41 19 L 12 13.41 L 17.59 19 L 19 17.59 L 13.41 12 L 19 6.41 Z"></path>';
+export const xRating = '<svg class="svg-icon" viewBox="4 4 16 16"><path id="tierXPath" fill="rgb(115, 114, 108)" d=" M 19 6.41 L 17.59 5 L 12 10.59 L 6.41 5 L 5 6.41 L 10.59 12 L 5 17.59 L 6.41 19 L 12 13.41 L 17.59 19 L 19 17.59 L 13.41 12 L 19 6.41 Z"></path>';
 
 export const thumbsUp = '<svg class="svg-icon" viewBox="0 0 24 24"><path id="thumbsUpPath" d="M9 21h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.58 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2zM9 9l4.34-4.34L12 10h9v2l-3 7H9V9zM1 9h4v12H1V9z"></path>';
 

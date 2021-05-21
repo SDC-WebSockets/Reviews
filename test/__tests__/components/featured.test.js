@@ -13,14 +13,11 @@ describe ('Featured component', () => {
     expect(value).toBe('PP');
   });
 
-  const reviewParts = ['reviewerName', 'reviewerCoursesTaken', 'reviewerReviews', 'reviewRating', 'reviewDate', 'reviewComment'];
+  const reviewParts = ['reviewerName', 'reviewerCoursesTaken', 'reviewerReviews', 'reviewDate', 'reviewComment'];
   reviewParts.forEach((reviewPart) => {
     it (`has a value for ${reviewPart}`, () => {
       let value = wrapper.find(`.${reviewPart}`).first().props().children;
       expect(value).toBeDefined();
     });
   });
-
-  // thumbs buttons when implemented
-  // report button when implemented
 });

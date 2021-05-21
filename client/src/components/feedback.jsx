@@ -1,8 +1,8 @@
 import React from 'react';
 import Search from './search.jsx';
 import Stars from './stars.jsx';
+import Gauge from './gauge.jsx';
 import { xRating } from '../svg.js';
-
 import {
   Title,
   FeedbackStyle,
@@ -11,7 +11,6 @@ import {
   Tiers,
   Tier,
   ReviewData,
-  Gauge,
   Percentage,
   TierX,
   ReviewControls,
@@ -93,15 +92,13 @@ class Feedback extends React.Component {
                 return (
                   <Tier key={tier[tier.length - 1]} >
                     <ReviewData onClick={() => this.handleClick(Number(tier[tier.length - 1]))}>
-                      <Gauge></Gauge>
+                      <Gauge percentage={percentage}/>
                       <Stars rating={tier[tier.length - 1]}/>
                       <Percentage>{percentage}</Percentage>
                     </ReviewData>
-
                     {this.props.currentTier === Number(tier[tier.length - 1]) ? <TierX onClick={this.removeFilter}>
                       <span dangerouslySetInnerHTML={{ __html: xRating }}></span>
                     </TierX> : null}
-
                   </Tier>
                 );
               })}

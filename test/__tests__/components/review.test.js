@@ -18,7 +18,7 @@ describe ('Review component', () => {
     expect(value).toBe('PP');
   });
 
-  const reviewParts = ['reviewerName', 'reviewRating', 'reviewDate', 'reviewComment'];
+  const reviewParts = ['reviewerName', 'reviewDate', 'reviewComment'];
   reviewParts.forEach((reviewPart) => {
     it (`has a value for ${reviewPart}`, () => {
       let value = wrapper.find(`.${reviewPart}`).first().props().children;
@@ -36,7 +36,4 @@ describe ('Review component', () => {
     wrapper = render(<Review review={sampleDataForOneCourse.reviews[2]} currentSearchTerm='quas'/>);
     expect(wrapper.find('.commentWithBoldSearchTerm').html()).not.toContain('<strong>');
   });
-
-  // thumbs buttons when implemented
-  // report button when implemented
 });

@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import Stars from './stars.jsx';
 import { thumbsUp, thumbsDown } from '../svg.js';
-
 import {
   ReviewStyle,
   ReviewerAvatar,

@@ -22,14 +22,14 @@ export const MainStyle = styled.div`
   margin-right: 0px;
   margin-top: 0px;
   min-height 701px;
-  min-width 600px;
+  width: auto;
+  min-width: 600px;
   max-width: 1084px;
   padding-bottom: 0px;
   padding-left: 32px;
   padding-right: 0px;
   padding-top: 32px;
   text-size-adjust: 100%;
-  width: auto;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 `;
@@ -42,6 +42,12 @@ export const Title = styled.h2`
   margin-block-end: 16px;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+`;
+
+export const StarStyle = styled.svg`
+  width: 16px;
+  height: 16px;
+  margin: 2px;
 `;
 
 export const StarsStyle = styled.div`
@@ -80,6 +86,7 @@ export const Moment = styled.span`
 `;
 
 export const Comment = styled.div`
+  width: auto;
   max-width: 600px;
 `;
 
@@ -120,11 +127,11 @@ export const Report = styled.button`
   font-family: Arial;
   letter-spacing: -0.2px;
   line-height: 19.6px;
-  min-width: auto;
+  width: auto;
   text-align: center;
   text-rendering: auto;
   white-space: nowrap;
-  writing-mode horizontal-tb;
+  writing-mode: horizontal-tb;
 `;
 
 // regular reviews
@@ -137,9 +144,7 @@ export const ReviewStyle = styled.div`
   height: auto;
   padding-bottom: 24px;
   padding-top: 16px;
-  min-width 600px;
-  max-width: 1084px;
-  width: auto;
+  width: 600px;
 `;
 
 export const ReviewerAvatar = styled.div`
@@ -192,9 +197,7 @@ export const FeaturedStyle = styled.div`
   line-height: 19.6px;
   margin-bottom: 24px;
   padding: 24px;
-  min-width 600px;
-  max-width: 1084px;
-  width: auto;
+  width: 550px;
 `;
 
 export const FeaturedReviewer = styled.div`
@@ -236,15 +239,12 @@ export const FeaturedReviewerMetadata = styled.div`
 `;
 
 // Feedback and Search
-export const ReviewControls = styled.div`
+export const ReviewControls = styled.span`
   display: flex;
-  justify-content: space-between;
-  min-width 600px;
-  max-width: 1084px;
-  width: auto;
+  width: 600px;
 `;
 
-export const Inputs = styled.div`
+export const Inputs = styled.span`
   display: flex;
 `;
 
@@ -252,7 +252,7 @@ export const SearchBar = styled.input`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   border: 1px solid #989586;
-  width: 500px;
+  width: 356px;
   height: 44px;
   padding-left: 12px;
   padding-right: 40px;
@@ -285,13 +285,7 @@ export const SearchButton = styled.button`
   width: 48px;
   border: 0;
   display: block;
-  margin: auto;
-`;
-
-export const Message = styled.div`
-  font-size: 16px;
-  margin: 16px;
-  line-height: 22.4px;
+  margin-right: 18px;
 `;
 
 export const TierSelect = styled.select`
@@ -299,15 +293,19 @@ export const TierSelect = styled.select`
   cursor: pointer;
   border-radius: 4px;
   border: 1px solid #989586;
-  margin-left: 16px;
   width: 180px;
   height: 48px;
   line-height: 22.4px;
   font-size: 16px;
   padding-left: 12px;
-  padding-right: 40px;
   background-position: 100% 100%;
-  outline: none !important;
+  outline: none;
+`;
+
+export const Message = styled.div`
+  font-size: 16px;
+  margin: 16px;
+  line-height: 22.4px;
 `;
 
 // Feedback
@@ -353,26 +351,40 @@ export const ReviewData = styled.span`
   align-items: center;
 `;
 
-export const Gauge = styled.span`
+export const BlackBar = styled.div`
+  height: 8px;
+  background-color: rgb(115, 114, 108);
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 2;
+`;
+
+export const GreyBar = styled.div`
   width: 280px;
   height: 8px;
+  background-color: rgb(220, 218, 203);
+  margin-right: 16px;
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 1;
 `;
 
 export const Percentage = styled.span`
   margin-left: 8px;
+  margin-right: 10px;
 `;
 
 export const TierX = styled.button`
   align-items: center;
   display: block;
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
   background-color: transparent;
-  margin-right: 10px;
   border: none;
-  padding: 4px;
   cursor: pointer;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  position: absolute;
+  left: 620px;
 `;
 
 // change color of buttons

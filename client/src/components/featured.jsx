@@ -3,7 +3,6 @@ import Review from './review.jsx';
 import moment from 'moment';
 import Stars from './stars.jsx';
 import { thumbsUp, thumbsDown } from '../svg.js';
-
 import {
   FeaturedStyle,
   Title,
