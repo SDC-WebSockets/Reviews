@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlackBar, GreyBar } from '../styles.js';
+import { BlackBar, GreyBar } from '../styles/gauge.style.js';
 
 const Gauge = (props) => (
   <div style={{ display: 'grid'}}>

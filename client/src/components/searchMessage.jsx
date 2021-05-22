@@ -1,5 +1,5 @@
 import React from 'react';
-import { Message } from '../styles.js';
+import { Message } from '../styles/searchMessage.style.js';
 
 const SearchMessage = (props) => {
   // console.log('Props in SearchMessage:', props);

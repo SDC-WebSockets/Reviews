@@ -1,6 +1,6 @@
 import React from 'react';
 import { fullStar, halfStar, emptyStar, x } from '../svg.js';
-import { StarStyle, StarsStyle } from '../styles.js';
+import { StarStyle, StarsStyle } from '../styles/stars.style.js';
 
 const makeStar = (starFill) => {
   const empty = 'rgb(255, 255, 255)';

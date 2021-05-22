@@ -1,13 +1,12 @@
 import React from 'react';
 import { magnifyingGlass, xSearch } from '../svg.js';
 import {
-  Title,
   Inputs,
   SearchBar,
-  ButtonContainer,
   ClearSearchBar,
+  SearchButtonContainer,
   SearchButton
-} from '../styles.js';
+} from '../styles/search.style.js';
 
 class Search extends React.Component {
   constructor(props) {
@@ -55,11 +54,11 @@ class Search extends React.Component {
           </ClearSearchBar>
           :
           null}
-        <ButtonContainer>
+        <SearchButtonContainer>
           <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
             <span dangerouslySetInnerHTML={{ __html: magnifyingGlass }}></span>
           </SearchButton>
-        </ButtonContainer>
+        </SearchButtonContainer>
       </Inputs>
     );
   }

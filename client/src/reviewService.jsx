@@ -8,7 +8,7 @@ import fetch from 'node-fetch';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from './filters.js';
 import querystring from 'querystring';
 
-import { MainStyle } from './styles.js';
+import { MainStyle } from './styles/main.style.js';
 
 
 class ReviewService extends React.Component {

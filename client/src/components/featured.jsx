@@ -1,29 +1,21 @@
 import React from 'react';
-import Review from './review.jsx';
-import moment from 'moment';
-import Stars from './stars.jsx';
-import { thumbsUp, thumbsDown } from '../svg.js';
+import Rating from './rating.jsx';
+import Comment from './comment.jsx';
+import Buttons from './buttons.jsx';
+import { Title } from '../styles/main.style.js';
 import {
   FeaturedStyle,
-  Title,
   FeaturedReviewer,
   FeaturedReviewerAvatar,
   FeaturedReviewerInitials,
   FeaturedReviewerPicture,
-  FeaturedReviewerMetadata,
-  Name,
-  Rating,
-  Moment,
-  Comment,
-  Helpful,
-  Buttons,
-  ButtonContainer,
-  Thumbs,
-  Report
-} from '../styles.js';
+  FeaturedReviewerMetadata
+} from '../styles/featured.style.js';
+import {Name} from '../styles/review.style.js';
 
 const Featured = (props) => (
   <div>
+    {/* {console.log('Props in Featured:', props)} */}
     {props.review && props.review.reviewer &&
       <FeaturedStyle>
         <Title>Featured review</Title>
@@ -40,28 +32,9 @@ const Featured = (props) => (
             <div className="reviewerReviews">{props.review.reviewer.reviews} {props.review.reviewer.reviews === 1 ? 'review' : 'reviews'}</div>
           </FeaturedReviewerMetadata>
         </FeaturedReviewer>
-        <Rating>
-          <Stars className="reviewRating" rating={props.review.rating}/>
-          <Moment className="reviewDate">{moment(props.review.createdAt).fromNow()}</Moment>
-        </Rating>
-        <Comment>
-          <div className="reviewComment">{props.review.comment}</div>
-          <Helpful>Was this review helpful?</Helpful>
-          <Buttons>
-            <ButtonContainer>
-              <Thumbs className="thumbs-up" value="yes">
-                <span dangerouslySetInnerHTML={{ __html: thumbsUp }}></span>
-              </Thumbs>
-            </ButtonContainer>
-            <ButtonContainer>
-              <Thumbs className="thumbs-down" value="no"><span dangerouslySetInnerHTML={{ __html: thumbsDown }}></span>
-              </Thumbs>
-            </ButtonContainer>
-            <ButtonContainer>
-              <Report>Report</Report>
-            </ButtonContainer>
-          </Buttons>
-        </Comment>
+        <Rating rating={props.review.rating} createdAt={props.review.createdAt}/>
+        <Comment review={props.review} currentSearchTerm={props.currentSearchTerm}/>
+        <Buttons/>
       </FeaturedStyle>
     }
   </div>

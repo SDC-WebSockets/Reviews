@@ -1,5 +1,6 @@
 import React from 'react';
 import Review from './review.jsx';
+import { ReviewListStyle } from '../styles/reviewList.style.js';
 
 // note for later: only display 12 reviews ("See more reviews" displays 12 more)
 
@@ -16,9 +17,9 @@ const ReviewList = (props) => {
     currentReviews = props.totalReviews;
   }
   return (
-    <div>
+    <ReviewListStyle>
       {currentReviews.map((review) => <Review key={review._id} review={review} currentSearchTerm={props.currentSearchTerm}/>)}
-    </div>
+    </ReviewListStyle>
   );
 
 };

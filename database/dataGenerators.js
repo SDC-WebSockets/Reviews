@@ -87,6 +87,7 @@ const addRandomReviews = async (noOfCourses) => {
       for (let j = 0; j < randomNumberOfReviews; j++) {
         let randomReview = generateRandomReview(i);
         await addReviewAndUpdateRating(randomReview);
+        console.log('Review added to database:', randomReview);
       }
     }
   }

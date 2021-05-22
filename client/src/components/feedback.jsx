@@ -3,8 +3,8 @@ import Search from './search.jsx';
 import Stars from './stars.jsx';
 import Gauge from './gauge.jsx';
 import { xRating } from '../svg.js';
+import { Title } from '../styles/main.style.js';
 import {
-  Title,
   FeedbackStyle,
   OverallRating,
   Grade,
@@ -15,7 +15,7 @@ import {
   TierX,
   ReviewControls,
   TierSelect
-} from '../styles.js';
+} from '../styles/feedback.style.js';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -65,6 +65,7 @@ class Feedback extends React.Component {
     tier = Number(tier);
     const tiers = document.getElementsByClassName('tierWithData');
     for (let i = 0; i < tiers.length; i++) {
+      console.log(tiers[i].id);
       if (tier === 0 || tier === Number(tiers[i].id[4])) {
         tiers[i].style.opacity = '1';
       } else {
@@ -109,7 +110,7 @@ class Feedback extends React.Component {
                   <Tier key={currentTier} style={portion === 0 ?
                     {cursor: 'no-drop', opacity: '.25'} : {cursor: 'pointer'}}>
 
-                    <ReviewData className="tierWithData" id={`tier${currentTier}`} onClick={portion > 0 ? () => this.handleClick(Number(currentTier)) : null }>
+                    <ReviewData className={portion > 0 ? 'tierWithData' : null} id={`tier${currentTier}`} onClick={portion > 0 ? () => this.handleClick(Number(currentTier)) : null}>
                       <Gauge portion={portion}/>
                       <Stars rating={currentTier}/>
                       <Percentage>{percentage}</Percentage>
