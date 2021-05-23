@@ -1,28 +1,41 @@
 import React from 'react';
-import Review from './review.jsx';
-import moment from 'moment';
+import Rating from './rating.jsx';
+import Comment from './comment.jsx';
+import Buttons from './buttons.jsx';
+import { Title } from '../styles/main.style.js';
+import {
+  FeaturedStyle,
+  FeaturedReviewer,
+  FeaturedReviewerAvatar,
+  FeaturedReviewerInitials,
+  FeaturedReviewerPicture,
+  FeaturedReviewerMetadata
+} from '../styles/featured.style.js';
+import {Name} from '../styles/review.style.js';
 
 const Featured = (props) => (
   <div>
     {/* {console.log('Props in Featured:', props)} */}
     {props.review && props.review.reviewer &&
-      <div>
-        <h2>Featured review</h2>
-        <div className="reviewerAvatar">
-          {/* if the reviewer has no avatar, the default avatar consists of reviewer's initials */}
-          {props.review.reviewer.picture === null ? <div>{props.review.reviewer.name.split(' ').map((n)=>n[0]).join('').slice(0, 2)}</div> : <img src={props.review.reviewer.picture}></img>}
-        </div>
-        <div className="reviewerName">{props.review.reviewer.name}</div>
-        <div className="reviewerCoursesTaken">{props.review.reviewer.coursesTaken} courses</div>
-        <div className="reviewerReviews">{props.review.reviewer.reviews} reviews</div>
-        <div className="reviewRating">{props.review.rating}</div>
-        <div className="reviewDate">{moment(props.review.createdAt).fromNow()}</div>
-        <div className="reviewComment">{props.review.comment}</div>
-        <p>Was this review helpful?</p>
-        <button className="thumbs-up">[thumbs-up]</button>
-        <button className="thumbs-down">[thumbs-down]</button>
-        <button className="report">Report</button>
-      </div>
+      <FeaturedStyle>
+        <Title>Featured review</Title>
+        <FeaturedReviewer>
+          <FeaturedReviewerAvatar className="featuredReviewerAvatar">
+            {/* if the reviewer has no avatar, the default avatar consists of a saved color background and the reviewer's initials */}
+            {props.review.reviewer.picture.slice(0, 3) === 'rgb' ?
+              <FeaturedReviewerInitials className="featuredReviewerInitials"style={{backgroundColor: props.review.reviewer.picture}}>{props.review.reviewer.name.split(' ').map((n)=>n[0]).join('').slice(0, 2)}</FeaturedReviewerInitials> :
+              <FeaturedReviewerPicture className="featuredReviewerPicture" src={props.review.reviewer.picture}/>}
+          </FeaturedReviewerAvatar>
+          <FeaturedReviewerMetadata className="featuredReviewerMetadata">
+            <Name className="reviewerName">{props.review.reviewer.name}</Name>
+            <div className="reviewerCoursesTaken">{props.review.reviewer.coursesTaken} {props.review.reviewer.reviews === 1 ? 'course' : 'courses'}</div>
+            <div className="reviewerReviews">{props.review.reviewer.reviews} {props.review.reviewer.reviews === 1 ? 'review' : 'reviews'}</div>
+          </FeaturedReviewerMetadata>
+        </FeaturedReviewer>
+        <Rating rating={props.review.rating} createdAt={props.review.createdAt}/>
+        <Comment review={props.review} currentSearchTerm={props.currentSearchTerm}/>
+        <Buttons/>
+      </FeaturedStyle>
     }
   </div>
 );

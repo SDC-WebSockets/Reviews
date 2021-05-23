@@ -7,21 +7,21 @@ import Review from '../../../client/src/components/Review.jsx';
 describe ('Review component', () => {
   let wrapper = mount(<Review review={sampleDataForOneCourse.reviews[0]} currentSearchTerm='quas'/>);
 
-  it ('shows the reviewer\'s avatar is present', () => {
-    const value = wrapper.find('.reviewerAvatar').props().children.props.src;
+  it ('shows the reviewer\'s avatar if present', () => {
+    const value = wrapper.find('.reviewerPicture').first().props().src;
     expect(value).toContain('https://');
   });
 
   it ('shows the reviewer\'s initials if no avatar is present', () => {
     wrapper = mount(<Review review={sampleDataForOneCourse.reviews[1]}/>);
-    const value = wrapper.find('.reviewerAvatar').props().children.props.children;
+    const value = wrapper.find('.reviewerInitials').first().props().children;
     expect(value).toBe('PP');
   });
 
-  const reviewParts = ['reviewerName', 'reviewRating', 'reviewDate', 'reviewComment'];
+  const reviewParts = ['reviewerName', 'reviewDate', 'reviewComment'];
   reviewParts.forEach((reviewPart) => {
     it (`has a value for ${reviewPart}`, () => {
-      let value = wrapper.find(`.${reviewPart}`).props().children;
+      let value = wrapper.find(`.${reviewPart}`).first().props().children;
       expect(value).toBeDefined();
     });
   });
@@ -36,7 +36,4 @@ describe ('Review component', () => {
     wrapper = render(<Review review={sampleDataForOneCourse.reviews[2]} currentSearchTerm='quas'/>);
     expect(wrapper.find('.commentWithBoldSearchTerm').html()).not.toContain('<strong>');
   });
-
-  // thumbs buttons when implemented
-  // report button when implemented
 });

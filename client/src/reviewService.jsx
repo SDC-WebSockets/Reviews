@@ -8,6 +8,8 @@ import fetch from 'node-fetch';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from './filters.js';
 import querystring from 'querystring';
 
+import { MainStyle } from './styles/main.style.js';
+
 
 class ReviewService extends React.Component {
   constructor(props) {
@@ -46,7 +48,7 @@ class ReviewService extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Data from server:', data);
+        // console.log('Data from server:', data);
         if (data === 'No course selected') {
           this.setState({courseId: null});
         } else {
@@ -57,7 +59,7 @@ class ReviewService extends React.Component {
         }
       })
       .catch((err) => {
-        console.log('Error retrieving data from server:', err);
+        // console.log('Error retrieving data from server:', err);
       });
   }
 
@@ -122,11 +124,11 @@ class ReviewService extends React.Component {
   render() {
     if (!this.state.courseId) {
       return (
-        <div>Loading...</div>
+        <MainStyle>Loading...</MainStyle>
       );
     } else {
       return (
-        <div>
+        <MainStyle>
           {this.state.featuredReview && this.state.totalReviews && this.state.totalReviews.length >= 10 &&
           <Featured
             review={this.state.featuredReview}
@@ -134,17 +136,11 @@ class ReviewService extends React.Component {
           }
           {this.state.ratings &&
           <Feedback
+            totalReviews={this.state.totalReviews}
             ratings={this.state.ratings}
             currentSearchTerm={this.state.currentSearchTerm}
             currentTier={this.state.currentTier}
             setReviewsFilteredByTier={this.setReviewsFilteredByTier}
-            setReviewsFilteredBySearchAndTier={this.setReviewsFilteredBySearchAndTier}
-          />
-          }
-          {this.state.totalReviews && this.state.totalReviews.length > 0 &&
-          <Search
-            totalReviews={this.state.totalReviews}
-            currentTier={this.state.currentTier}
             setReviewsFilteredBySearch={this.setReviewsFilteredBySearch}
             setReviewsFilteredBySearchAndTier={this.setReviewsFilteredBySearchAndTier}
           />
@@ -166,7 +162,7 @@ class ReviewService extends React.Component {
             currentSearchTerm={this.state.currentSearchTerm}
           />
           }
-        </div>
+        </MainStyle>
       );
     }
   }

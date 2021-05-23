@@ -1,4 +1,12 @@
 import React from 'react';
+import { magnifyingGlass, xSearch } from '../svg.js';
+import {
+  Inputs,
+  SearchBar,
+  ClearSearchBar,
+  SearchButtonContainer,
+  SearchButton
+} from '../styles/search.style.js';
 
 class Search extends React.Component {
   constructor(props) {
@@ -19,6 +27,9 @@ class Search extends React.Component {
 
   filterByTerm(term) {
     term = term.trim();
+    if (term === '') {
+      return;
+    }
     if (!this.props.currentTier) {
       this.props.setReviewsFilteredBySearch(term);
     } else {
@@ -29,17 +40,26 @@ class Search extends React.Component {
   resetSearch() {
     this.setState({term: ''});
     this.props.setReviewsFilteredBySearch(null);
-    document.getElementById('search').value = '';
+    document.getElementById('reviewSearch').value = '';
   }
 
   render() {
     return (
-      <div>
-        <h2>Reviews</h2>
-        <input id="search" type="text" placeholder="Search reviews" onChange={this.handleTermChange}></input>
-        {this.state.term ? <button onClick={this.resetSearch}>X</button> : null}
-        <input id="searchSubmit" type="submit" value="Search" onClick={() => { this.filterByTerm(this.state.term); }}></input>
-      </div>
+      <Inputs>
+        <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange}>
+        </SearchBar>
+        {this.state.term ?
+          <ClearSearchBar id="clearSearch" onClick={this.resetSearch}>
+            <span dangerouslySetInnerHTML={{ __html: xSearch }}></span>
+          </ClearSearchBar>
+          :
+          null}
+        <SearchButtonContainer>
+          <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
+            <span dangerouslySetInnerHTML={{ __html: magnifyingGlass }}></span>
+          </SearchButton>
+        </SearchButtonContainer>
+      </Inputs>
     );
   }
 }
