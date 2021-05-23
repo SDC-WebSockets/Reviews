@@ -30,15 +30,15 @@ const ReviewList = (props) => {
       </ReviewListStyle>
     );
   };
-  
+
   return (
     <div>
       {showTwelveReviews(0)}
-      {/* {currentReviews.length > 12 && */}
+      {currentReviews.length > 12 &&
       <SeeMoreReviewsContainer>
         <SeeMoreReviews onClick={() => { /* showTwelveReviews(13, 24); */ }}>See more reviews</SeeMoreReviews>
       </SeeMoreReviewsContainer>
-      {/* } */}
+      }
     </div>
   );
 };
