@@ -17,7 +17,7 @@ const ReviewList = (props) => {
     currentReviews = props.totalReviews;
   }
 
-  const showTwelveReviews = (startIndex, endIndex) => {
+  const showReviews = (startIndex, endIndex) => {
     if (!endIndex) {
       endIndex = currentReviews.length;
     }
@@ -33,10 +33,10 @@ const ReviewList = (props) => {
 
   return (
     <div>
-      {showTwelveReviews(0)}
+      {showReviews(0, 12)}
       {currentReviews.length > 12 &&
       <SeeMoreReviewsContainer>
-        <SeeMoreReviews onClick={() => { /* showTwelveReviews(13, 24); */ }}>See more reviews</SeeMoreReviews>
+        <SeeMoreReviews onClick={() => { console.log('this will show the next 12 reviews'); }}>See more reviews</SeeMoreReviews>
       </SeeMoreReviewsContainer>
       }
     </div>
