@@ -65,7 +65,6 @@ class Feedback extends React.Component {
     tier = Number(tier);
     const tiers = document.getElementsByClassName('tierWithData');
     for (let i = 0; i < tiers.length; i++) {
-      console.log(tiers[i].id);
       if (tier === 0 || tier === Number(tiers[i].id[4])) {
         tiers[i].style.opacity = '1';
       } else {

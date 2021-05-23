@@ -16,7 +16,8 @@ import {
 const Review = (props) => {
   // console.log('Props in Review:', props);
   return (
-    <ReviewStyle>
+    <ReviewStyle
+      style={props.reviewNumber === props.currentReviews.length || props.reviewNumber % 12 === 0 ? {borderBottomWidth: '0'} : null}>
       <ReviewerAvatar className="reviewerAvatar">
         {/* if the reviewer has no avatar, the default avatar consists of a saved color background and the reviewer's initials */}
         {props.review.reviewer.picture.slice(0, 3) === 'rgb' ?
