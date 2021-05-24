@@ -8,6 +8,12 @@ export const thumbsDown = '<svg class="svg-icon" viewBox="0 0 24 24"><path id="t
 
 export const magnifyingGlass = '<svg class="svg-icon" viewBox="-7 -7 35 35"><path id="magnifyingGlassPath" fill="rgb(255,255,255)" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>';
 
+export const starPath = 'M 12 17.27 L 18.18 21 l -1.64 -7.03 L 22 9.24 l -7.19 -0.61 L 12 2 L 9.19 8.63 L 2 9.24 l 5.46 4.73 L 5.82 21 L 12 17.27 Z';
+
+export const arrowDownPath = 'M 16.59 8.59 L 12 13.17 L 7.41 8.59 L 6 10 l 6 6 l 6 -6 l -1.41 -1.41 Z';
+
+export const arrowUpPath = 'M 7.41 15.41 L 12 10.83 l 4.59 4.58 L 18 14 l -6 -6 l -6 6 l 1.41 1.41 Z';
+
 // export const fullStar = '<svg class="svg-icon" viewBox="0 0 24 24"><path fill="rgb(235, 138, 47)" d="M 12 17.27 L 18.18 21 l -1.64 -7.03 L 22 9.24 l -7.19 -0.61 L 12 2 L 9.19 8.63 L 2 9.24 l 5.46 4.73 L 5.82 21 L 12 17.27 Z"></path>';
 
 // export const emptyStar = '<svg class="svg-icon" viewBox="0 0 24 24"><path stroke="rgb(235, 138, 47)" fill="rgb(255,255,255)" d="M 12 17.27 L 18.18 21 l -1.64 -7.03 L 22 9.24 l -7.19 -0.61 L 12 2 L 9.19 8.63 L 2 9.24 l 5.46 4.73 L 5.82 21 L 12 17.27 Z"></path>';

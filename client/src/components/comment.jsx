@@ -1,12 +1,15 @@
 import React from 'react';
+import { arrowDownPath, arrowUpPath } from '../svg.js';
 import {
   CommentStyle,
   ShowMoreContainer,
-  ShowMore
+  ShowMore,
+  Arrow,
+  ArrowPath
 } from '../styles/comment.style.js';
 
 const Comment = (props) => {
-  console.log('Props in Comment:', props);
+  // console.log('Props in Comment:', props);
   const CommentWithBoldSearchTerm = () => {
     const comment = props.review.comment;
     const searchTerm = props.currentSearchTerm;
@@ -28,7 +31,20 @@ const Comment = (props) => {
       </CommentStyle>
       {props.review.comment.length > 300 &&
       <ShowMoreContainer>
-        <ShowMore onClick={() => { props.handleClick('showMore'); } }>{props.wholeView === false ? 'Show more' : 'Show less'}</ShowMore>
+        <ShowMore onClick={() => { props.handleClick('showMore'); } }>{props.wholeView === false ?
+
+          <span style={{display: 'flex', alignItems: 'center'}}>Show more
+            <Arrow viewBox="0 0 24 24">
+              <ArrowPath strokeWidth="0.1" d={arrowDownPath}/>
+            </Arrow>
+          </span> :
+          <span style={{display: 'flex', alignItems: 'center'}}>Show less
+            <Arrow viewBox="0 0 24 24">
+              <ArrowPath strokeWidth="0.1" d={arrowUpPath}/>
+            </Arrow>
+          </span>
+        }
+        </ShowMore>
       </ShowMoreContainer>
       }
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fullStar, halfStar, emptyStar, x } from '../svg.js';
+import { starPath } from '../svg.js';
 import { StarStyle, StarsStyle } from '../styles/stars.style.js';
 
 const makeStar = (starFill) => {
@@ -15,7 +15,7 @@ const makeStar = (starFill) => {
           <stop offset="50%" stopColor="rgb(255, 255, 255)" stopOpacity="1"/>
         </linearGradient>
       </defs>
-      <path d="M 12 17.27 L 18.18 21 l -1.64 -7.03 L 22 9.24 l -7.19 -0.61 L 12 2 L 9.19 8.63 L 2 9.24 l 5.46 4.73 L 5.82 21 L 12 17.27 Z" strokeWidth="2" stroke="rgb(235, 138, 47)" fill={starTypes[starFill * 2]}></path>
+      <path d={starPath} strokeWidth="2px" stroke="rgb(235, 138, 47)" fill={starTypes[starFill * 2]}></path>
     </StarStyle>
   );
 };
