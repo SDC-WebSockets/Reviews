@@ -1,8 +1,12 @@
 import React from 'react';
-import { CommentStyle } from '../styles/comment.style.js';
+import {
+  CommentStyle,
+  ShowMoreContainer,
+  ShowMore
+} from '../styles/comment.style.js';
 
 const Comment = (props) => {
-  // console.log('Props in Comment:', props);
+  console.log('Props in Comment:', props);
   const CommentWithBoldSearchTerm = () => {
     const comment = props.review.comment;
     const searchTerm = props.currentSearchTerm;
@@ -18,9 +22,16 @@ const Comment = (props) => {
   };
 
   return (
-    <CommentStyle className="reviewComment">
-      {props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}
-    </CommentStyle>
+    <div>
+      <CommentStyle className="reviewComment">
+        {props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}
+      </CommentStyle>
+      {props.review.comment.length > 300 &&
+      <ShowMoreContainer>
+        <ShowMore onClick={() => { props.handleClick('showMore'); } }>{props.wholeView === false ? 'Show more' : 'Show less'}</ShowMore>
+      </ShowMoreContainer>
+      }
+    </div>
   );
 
 };

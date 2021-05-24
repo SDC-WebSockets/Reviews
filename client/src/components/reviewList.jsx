@@ -1,3 +1,4 @@
+import React from 'react';
 import Review from './review.jsx';
 import { ReviewListStyle, SeeMoreReviews, SeeMoreReviewsContainer } from '../styles/reviewList.style.js';
 

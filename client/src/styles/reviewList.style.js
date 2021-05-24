@@ -17,6 +17,7 @@ export const SeeMoreReviews = styled.button`
   border-style: solid;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
   font-weight: 700;
   padding-left: 12px;
   padding-right: 12px;
