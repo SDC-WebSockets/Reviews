@@ -2,6 +2,8 @@ import React from 'react';
 import { arrowDownPath, arrowUpPath } from '../svg.js';
 import {
   CommentStyle,
+  gradientStyle,
+  defaultStyle,
   ShowMoreContainer,
   ShowMore,
   Arrow,
@@ -24,26 +26,29 @@ const Comment = (props) => {
     );
   };
 
+
+
   return (
     <div>
-      <CommentStyle className="reviewComment">
+      <CommentStyle className="reviewComment" id={`commentId${props.review._id}`}
+        style={props.review.comment.length > 300 && props.commentHeight === '100px' ? gradientStyle : {height: 'auto'}}>
         {props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}
       </CommentStyle>
       {props.review.comment.length > 300 &&
       <ShowMoreContainer>
-        <ShowMore onClick={() => { props.handleClick('showMore'); } }>{props.wholeView === false ?
-
-          <span style={{display: 'flex', alignItems: 'center'}}>Show more
-            <Arrow viewBox="0 0 24 24">
-              <ArrowPath strokeWidth="0.1" d={arrowDownPath}/>
-            </Arrow>
-          </span> :
-          <span style={{display: 'flex', alignItems: 'center'}}>Show less
-            <Arrow viewBox="0 0 24 24">
-              <ArrowPath strokeWidth="0.1" d={arrowUpPath}/>
-            </Arrow>
-          </span>
-        }
+        <ShowMore onClick={() => { props.handleClick('showMore'); } }>
+          {props.commentHeight === '100px' ?
+            <span style={{display: 'flex', alignItems: 'center'}}>Show more
+              <Arrow viewBox="0 0 24 24">
+                <ArrowPath strokeWidth="0.1" d={arrowDownPath}/>
+              </Arrow>
+            </span> :
+            <span style={{display: 'flex', alignItems: 'center'}}>Show less
+              <Arrow viewBox="0 0 24 24">
+                <ArrowPath strokeWidth="0.1" d={arrowUpPath}/>
+              </Arrow>
+            </span>
+          }
         </ShowMore>
       </ShowMoreContainer>
       }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const CommentStyle = styled.div`
   width: auto;
   max-width: 600px;
+  overflow: hidden;
 `;
 
 export const ShowMore = styled.button`
@@ -31,6 +32,28 @@ export const ArrowPath = styled.path`
   stroke: rgb(15, 124, 144);
   fill: rgb(15, 124, 144);
 `;
+
+export const gradientStyle = {
+  height: '100px',
+  backgroundColor: 'rgb(60, 59, 55)',
+  backgroundImage: 'linear-gradient(180deg, rgb(60, 59, 55), rgb(60, 59, 55) 60px, rgb(255,255,255))',
+  backgroundSize: '100%',
+  WebkitBackgroundClip: 'text',
+  MozBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  MozTextFillColor: 'transparent'
+};
+
+export const defaultStyle = {
+  height: 'auto',
+  backgroundColor: 'rgb(60, 59, 55)',
+  backgroundImage: 'none',
+  backgroundSize: '100%',
+  WebkitBackgroundClip: 'none',
+  MozBackgroundClip: 'none',
+  WebkitTextFillColor: 'rgb(60, 59, 55)',
+  MozTextFillColor: 'rgb(60, 59, 55)'
+};
 
 export const ShowMoreContainer = styled.div`
   &:hover {

@@ -11,6 +11,10 @@ import {
   FeaturedReviewerPicture,
   FeaturedReviewerMetadata
 } from '../styles/featured.style.js';
+import {
+  gradientStyle,
+  defaultStyle
+} from '../styles/comment.style.js';
 import {Name} from '../styles/review.style.js';
 
 class Featured extends React.Component {
@@ -22,7 +26,7 @@ class Featured extends React.Component {
       thumbsUp: false,
       thumbsDown: false,
       reported: false,
-      wholeView: false
+      commentHeight: '100px'
     };
   }
 
@@ -37,7 +41,14 @@ class Featured extends React.Component {
       this.state.reported === false ? this.setState({ reported: true }) : this.setState({ reported: false });
     }
     if (button === 'showMore') {
-      this.state.wholeView === false ? this.setState({ wholeView: true }) : this.setState({ wholeView: false });
+      let currentComment = document.getElementById(`commentId${this.props.review._id}`);
+      if (this.state.commentHeight === '100px') {
+        this.setState({ commentHeight: 'auto' });
+        currentComment.style = defaultStyle;
+      } else {
+        this.setState({ commentHeight: '100px' });
+        currentComment.style = gradientStyle;
+      }
     }
   }
 
@@ -61,7 +72,7 @@ class Featured extends React.Component {
               </FeaturedReviewerMetadata>
             </FeaturedReviewer>
             <Rating rating={this.props.review.rating} createdAt={this.props.review.createdAt}/>
-            <Comment review={this.props.review} currentSearchTerm={this.props.currentSearchTerm} wholeView={this.state.wholeView} handleClick={this.handleClick}/>
+            <Comment review={this.props.review} currentSearchTerm={this.props.currentSearchTerm} commentHeight={this.state.commentHeight} handleClick={this.handleClick}/>
             <Buttons reviewState={this.state} handleClick={this.handleClick}/>
           </FeaturedStyle>
         }

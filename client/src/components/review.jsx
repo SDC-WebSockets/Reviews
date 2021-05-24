@@ -10,6 +10,10 @@ import {
   ReviewContent,
   Name
 } from '../styles/review.style.js';
+import {
+  gradientStyle,
+  defaultStyle
+} from '../styles/comment.style.js';
 
 // note for later: if a comment is more than 5 lines long, hide the rest use a 'Show more' button
 
@@ -22,7 +26,7 @@ class Review extends React.Component {
       thumbsUp: false,
       thumbsDown: false,
       reported: false,
-      wholeView: false
+      commentHeight: '100px',
     };
   }
 
@@ -37,7 +41,14 @@ class Review extends React.Component {
       this.state.reported === false ? this.setState({ reported: true }) : this.setState({ reported: false });
     }
     if (button === 'showMore') {
-      this.state.wholeView === false ? this.setState({ wholeView: true }) : this.setState({ wholeView: false });
+      let currentComment = document.getElementById(`commentId${this.props.review._id}`);
+      if (this.state.commentHeight === '100px') {
+        this.setState({ commentHeight: 'auto' });
+        currentComment.style = defaultStyle;
+      } else {
+        this.setState({ commentHeight: '100px' });
+        currentComment.style = gradientStyle;
+      }
     }
   }
 
@@ -58,7 +69,7 @@ class Review extends React.Component {
               this.props.review.reviewer.name}
           </Name>
           <Rating rating={this.props.review.rating} createdAt={this.props.review.createdAt}/>
-          <Comment review={this.props.review} currentSearchTerm={this.props.currentSearchTerm} wholeView={this.state.wholeView} handleClick={this.handleClick}/>
+          <Comment review={this.props.review} currentSearchTerm={this.props.currentSearchTerm} commentHeight={this.state.commentHeight} handleClick={this.handleClick}/>
           <Buttons reviewState={this.state} handleClick={this.handleClick}/>
         </ReviewContent>
       </ReviewStyle>
