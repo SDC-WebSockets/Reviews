@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import Review from './review.jsx';
 import { ReviewListStyle, SeeMoreReviews, SeeMoreReviewsContainer } from '../styles/reviewList.style.js';
 
