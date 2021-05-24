@@ -50,7 +50,7 @@ class ReviewService extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Data from server:', data);
+        // console.log('Data from server:', data);
         if (data === 'No course selected') {
           this.setState({courseId: null});
         } else {
@@ -61,7 +61,7 @@ class ReviewService extends React.Component {
         }
       })
       .catch((err) => {
-        console.log('Error retrieving data from server:', err);
+        // console.log('Error retrieving data from server:', err);
       });
   }
 
@@ -96,7 +96,7 @@ class ReviewService extends React.Component {
         currentSearchTerm: term,
         displayedReviews: filteredReviews.slice(0, 12)
       });
-      console.log(`Reviews with the word ${term}:`, filteredReviews);
+      // console.log(`Reviews with the word ${term}:`, filteredReviews);
       return filteredReviews;
     }
   }
@@ -116,7 +116,7 @@ class ReviewService extends React.Component {
         currentTier: tier,
         displayedReviews: filteredReviews.slice(0, 12)
       });
-      console.log(`Reviews with ${tier} stars:`, filteredReviews);
+      // console.log(`Reviews with ${tier} stars:`, filteredReviews);
       return filteredReviews;
     }
   }

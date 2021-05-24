@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
-import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js';
+import { sampleDataForOneCourse } from '../../fixtures/sampleDataForOneCourse.js';
 
 import SearchMessage from '../../../client/src/components/searchMessage.jsx';
 

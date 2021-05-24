@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
-import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js';
+import { sampleDataForOneCourse } from '../../fixtures/sampleDataForOneCourse.js';
 
 import ReviewService from '../../../client/src/reviewService.jsx';
 import Feedback from '../../../client/src/components/feedback.jsx';

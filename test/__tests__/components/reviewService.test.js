@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
-import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js';
+import { sampleDataForOneCourse } from '../../fixtures/sampleDataForOneCourse.js';
 
 import ReviewService from '../../../client/src/reviewService.jsx';
 import Featured from '../../../client/src/components/featured.jsx';
@@ -13,6 +13,7 @@ describe('ReviewService Component', () => {
 
   const wrapper = mount(<ReviewService />);
   const instance = wrapper.instance();
+  instance.setState({displayedReviews: sampleDataForOneCourse.reviews});
 
   it ('calls the getReviews method in componentDidMount', () => {
     jest.spyOn(instance, 'getReviews');
@@ -50,12 +51,14 @@ describe('ReviewService Component', () => {
     wrapper.setState({
       courseId: 9,
       reviewsBySearch: [sampleDataForOneCourse.reviews[0], sampleDataForOneCourse.reviews[1], sampleDataForOneCourse.reviews[4]],
+      displayedReviews: [sampleDataForOneCourse.reviews[0], sampleDataForOneCourse.reviews[1], sampleDataForOneCourse.reviews[4]],
       currentSearchTerm: 'quas'
     });
     expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(true);
     wrapper.setState({
       reviewsBySearch: null,
-      currentSearchTerm: null
+      currentSearchTerm: null,
+      displayedReviews: []
     });
   });
 
@@ -64,6 +67,7 @@ describe('ReviewService Component', () => {
     wrapper.setState({
       courseId: 9,
       reviewsByTier: [],
+      displayedReviews: [],
       currentTier: 2
     });
     expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(true);
