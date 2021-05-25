@@ -20,9 +20,8 @@ class ReviewService extends React.Component {
     this.setReviewsFilteredByTier = this.setReviewsFilteredByTier.bind(this);
     this.setReviewsFilteredBySearchAndTier = this.setReviewsFilteredBySearchAndTier.bind(this);
     this.showTwelveMoreReviews = this.showTwelveMoreReviews.bind(this);
-
     this.state = {
-      courseId: null,
+      courseId: Number(querystring.parse(window.location.search)['?courseId']),
       totalReviews: null,
       currentSearchTerm: null,
       reviewsBySearch: null,
@@ -33,12 +32,13 @@ class ReviewService extends React.Component {
       ratings: null,
       displayedReviews: null
     };
+    this.getReviews(this.state.courseId);
   }
 
-  componentDidMount() {
-    let courseId = Number(querystring.parse(window.location.search)['?courseId']);
-    this.getReviews(courseId);
-  }
+  // componentDidMount() {
+  //   let courseId = Number(querystring.parse(window.location.search)['?courseId']);
+  //   this.getReviews(courseId);
+  // }
 
   getReviews(id) {
     fetch(`http://localhost:2712/reviews/item?courseId=${id}`, {
@@ -61,7 +61,7 @@ class ReviewService extends React.Component {
         }
       })
       .catch((err) => {
-        // console.log('Error retrieving data from server:', err);
+        console.log('Error retrieving data from server:', err);
       });
   }
 
