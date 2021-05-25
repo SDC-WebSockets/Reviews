@@ -1,5 +1,5 @@
 import React from 'react';
-import { thumbsUp, thumbsDown } from '../svg.js';
+import { thumbsUpPath, thumbsDownPath } from '../svg.js';
 import { Helpful, ButtonStyle, ButtonContainer, Thumbs, Report } from '../styles/buttons.style.js';
 
 const Buttons = (props) => (
@@ -16,7 +16,9 @@ const Buttons = (props) => (
             { borderColor: 'rgb(15, 124, 144)', backgroundColor: 'rgb(15, 124, 144)', fill: 'rgb(255, 255, 255)' }
             : null
           }>
-          <span dangerouslySetInnerHTML={{ __html: thumbsUp }}></span>
+          <svg viewBox="0 0 24 24">
+            <path d={thumbsUpPath}/>
+          </svg>
         </Thumbs>
       </ButtonContainer>
       <ButtonContainer>
@@ -25,7 +27,9 @@ const Buttons = (props) => (
             { borderColor: 'rgb(15, 124, 144)', backgroundColor: 'rgb(15, 124, 144)', fill: 'rgb(255, 255, 255)' }
             : null
           }>
-          <span dangerouslySetInnerHTML={{ __html: thumbsDown }}></span>
+          <svg viewBox="0 0 24 24">
+            <path d={thumbsDownPath}/>
+          </svg>
         </Thumbs>
       </ButtonContainer>
       <ButtonContainer>

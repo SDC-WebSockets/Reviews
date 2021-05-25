@@ -15,7 +15,7 @@ import {
   gradientStyle,
   defaultStyle
 } from '../styles/comment.style.js';
-import {Name} from '../styles/review.style.js';
+import { Name } from '../styles/review.style.js';
 
 class Featured extends React.Component {
   constructor(props) {

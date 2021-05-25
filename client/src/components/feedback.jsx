@@ -2,7 +2,7 @@ import React from 'react';
 import Search from './search.jsx';
 import Stars from './stars.jsx';
 import Gauge from './gauge.jsx';
-import { xRating } from '../svg.js';
+import { xPath } from '../svg.js';
 import { Title } from '../styles/main.style.js';
 import {
   FeedbackStyle,
@@ -114,11 +114,16 @@ class Feedback extends React.Component {
                       <Stars rating={currentTier}/>
                       <Percentage>{percentage}</Percentage>
                     </ReviewData>
-
                     {this.props.currentTier === currentTier ?
-                      <TierX onClick={portion > 0 ? this.removeFilter : null} style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
-                        <span dangerouslySetInnerHTML={{ __html: xRating }}></span>
-                      </TierX> : null}
+                      <TierX
+                        onClick={portion > 0 ? this.removeFilter : null}
+                        style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
+                        <svg viewBox="4 4 16 16">
+                          <path fill="rgb(115, 114, 108)" d={xPath}/>
+                        </svg>
+                      </TierX>
+                      : null
+                    }
                   </Tier>
                 );
               })}

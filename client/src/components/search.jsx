@@ -1,5 +1,5 @@
 import React from 'react';
-import { magnifyingGlass, xSearch } from '../svg.js';
+import { magnifyingGlassPath, xPath } from '../svg.js';
 import {
   Inputs,
   SearchBar,
@@ -50,13 +50,17 @@ class Search extends React.Component {
         </SearchBar>
         {this.state.term ?
           <ClearSearchBar id="clearSearch" onClick={this.resetSearch}>
-            <span dangerouslySetInnerHTML={{ __html: xSearch }}></span>
+            <svg viewBox="0 0 24 24">
+              <path fill="rgb(115, 114, 108)" d={xPath}/>
+            </svg>
           </ClearSearchBar>
           :
           null}
         <SearchButtonContainer>
           <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
-            <span dangerouslySetInnerHTML={{ __html: magnifyingGlass }}></span>
+            <svg viewBox="-7 -7 35 35">
+              <path fill="rgb(255, 255, 255)" d={magnifyingGlassPath}/>
+            </svg>
           </SearchButton>
         </SearchButtonContainer>
       </Inputs>

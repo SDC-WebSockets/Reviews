@@ -15,7 +15,7 @@ const makeStar = (starFill) => {
           <stop offset="50%" stopColor="rgb(255, 255, 255)" stopOpacity="1"/>
         </linearGradient>
       </defs>
-      <path d={starPath} strokeWidth="2px" stroke="rgb(235, 138, 47)" fill={starTypes[starFill * 2]}></path>
+      <path d={starPath} strokeWidth="2px" stroke="rgb(235, 138, 47)" fill={starTypes[starFill * 2]}/>
     </StarStyle>
   );
 };

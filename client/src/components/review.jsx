@@ -15,7 +15,6 @@ import {
   defaultStyle
 } from '../styles/comment.style.js';
 
-// note for later: if a comment is more than 5 lines long, hide the rest use a 'Show more' button
 
 class Review extends React.Component {
   constructor(props) {
