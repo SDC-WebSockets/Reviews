@@ -19,7 +19,7 @@ import {
 
 class Feedback extends React.Component {
   constructor(props) {
-    // console.log('Props in Feedback:', props);
+    console.log('Props in Feedback:', props);
     super(props);
     this.filterByTier = this.filterByTier.bind(this);
     this.removeFilter = this.removeFilter.bind(this);
@@ -37,9 +37,13 @@ class Feedback extends React.Component {
   }
 
   handleClick(tier) {
-    this.filterByTier(tier);
-    this.select.current.value = tier.toString();
-    this.renderTransparent(tier);
+    if (this.props.currentTier !== null) {
+      this.removeFilter();
+    } else {
+      this.filterByTier(tier);
+      this.select.current.value = tier.toString();
+      this.renderTransparent(tier);
+    }
   }
 
   handleSelect(e) {
@@ -109,7 +113,9 @@ class Feedback extends React.Component {
                   <Tier key={currentTier} style={portion === 0 ?
                     {cursor: 'no-drop', opacity: '.25'} : {cursor: 'pointer'}}>
 
-                    <ReviewData className={portion > 0 ? 'tierWithData' : null} id={`tier${currentTier}`} onClick={portion > 0 ? () => this.handleClick(Number(currentTier)) : null}>
+                    <ReviewData className={portion > 0 ? 'tierWithData' : null} id={`tier${currentTier}`}
+                      onClick={portion > 0 ? () => this.handleClick(Number(currentTier)) : null}
+                    >
                       <Gauge portion={portion}/>
                       <Stars rating={currentTier}/>
                       <Percentage>{percentage}</Percentage>

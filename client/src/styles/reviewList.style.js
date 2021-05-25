@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ReviewListStyle = styled.div`
   margin-top: 12px;
+  min-height: 600px;
 `;
 
 export const SeeMoreReviews = styled.button`
