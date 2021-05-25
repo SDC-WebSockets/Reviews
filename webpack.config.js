@@ -20,7 +20,8 @@ module.exports = {
     ]
   },
   output: {
-    filename: 'reviewBundle.js',
-    path: outputPath
-  }
+    path: outputPath,
+    filename: 'reviewBundle.js'
+  },
+  devtool: 'eval-cheap-source-map'
 };

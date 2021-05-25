@@ -61,7 +61,7 @@ class ReviewService extends React.Component {
         }
       })
       .catch((err) => {
-        console.log('Error retrieving data from server:', err);
+        // console.log('Error retrieving data from server:', err);
       });
   }
 
@@ -151,7 +151,7 @@ class ReviewService extends React.Component {
   render() {
     if (!this.state.courseId) {
       return (
-        <MainStyle>Loading...</MainStyle>
+        <MainStyle>Course not found</MainStyle>
       );
     } else {
       return (

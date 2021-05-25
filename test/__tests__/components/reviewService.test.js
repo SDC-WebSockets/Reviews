@@ -12,14 +12,7 @@ import SearchMessage from '../../../client/src/components/searchMessage.jsx';
 describe('ReviewService Component', () => {
 
   const wrapper = mount(<ReviewService />);
-  const instance = wrapper.instance();
-  instance.setState({displayedReviews: sampleDataForOneCourse.reviews});
-
-  it ('calls the getReviews method in componentDidMount', () => {
-    jest.spyOn(instance, 'getReviews');
-    instance.componentDidMount();
-    expect(instance.getReviews).toHaveBeenCalledTimes(1);
-  });
+  wrapper.setState({displayedReviews: sampleDataForOneCourse.reviews});
 
   it ('only renders the Featured component if the state has a featured review and if the course has at least ten reviews', () => {
     expect(wrapper.containsMatchingElement(<Featured/>)).toBe(false);
@@ -72,5 +65,4 @@ describe('ReviewService Component', () => {
     });
     expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(true);
   });
-
 });
