@@ -25,10 +25,18 @@ export const Thumbs = styled.button`
   width: 40px;
   height: 40px;
   fill: rgb(15, 124, 144);
+  &:hover {
+    border-color: rgb(9, 76, 89);
+  }
+  &:active {
+    border-color: rgb(15, 124, 144);
+    background-color: rgb(15, 124, 144);
+    fill: rgb(255, 255, 255);
+  }
 `;
 
 export const Report = styled.button`
-  color: #0f7c90;
+  color: rgb(15, 124, 144);
   align-items: center;
   background-color: transparent;
   border-radius: 4px;
@@ -42,25 +50,10 @@ export const Report = styled.button`
   text-rendering: auto;
   white-space: nowrap;
   writing-mode: horizontal-tb;
-`;
-
-export const ButtonContainer = styled.div`
   &:hover {
-    ${Thumbs} {
-      border-color: rgb(9, 76, 89);
-    }
-    ${Report} {
-      color: rgb(9, 76, 89);
-    }
+    color: rgb(9, 76, 89);
   }
   &:active {
-    ${Thumbs} {
-      border-color: rgb(15, 124, 144);
-      background-color: rgb(15, 124, 144);
-      fill: rgb(255, 255, 255);
-    }
-    ${Report} {
-      color: rgb(9, 76, 89);
-    }
+    color: rgb(9, 76, 89);
   }
 `;

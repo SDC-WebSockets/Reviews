@@ -66,7 +66,11 @@ class Featured extends React.Component {
                   <FeaturedReviewerPicture className="featuredReviewerPicture" src={this.props.review.reviewer.picture}/>}
               </FeaturedReviewerAvatar>
               <FeaturedReviewerMetadata className="featuredReviewerMetadata">
-                <Name className="reviewerName">{this.props.review.reviewer.name}</Name>
+                <Name className="reviewerName" style={this.state.reported ? {color: 'rgb(210, 0, 0)'} : null}>
+                  {this.state.reported ?
+                    this.props.review.reviewer.name + ' USER REPORTED' :
+                    this.props.review.reviewer.name}
+                </Name>
                 <div className="reviewerCoursesTaken">{this.props.review.reviewer.coursesTaken} {this.props.review.reviewer.reviews === 1 ? 'course' : 'courses'}</div>
                 <div className="reviewerReviews">{this.props.review.reviewer.reviews} {this.props.review.reviewer.reviews === 1 ? 'review' : 'reviews'}</div>
               </FeaturedReviewerMetadata>

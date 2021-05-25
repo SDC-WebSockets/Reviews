@@ -42,12 +42,10 @@ export const SearchButton = styled.button`
   border: 0;
   display: block;
   margin-right: 18px;
-`;
-
-export const SearchButtonContainer = styled.div`
   &:hover {
-    ${SearchButton} {
-      background-color: rgb(9, 76, 89);
-    }
+    background-color: rgb(9, 76, 89);
+  }
+  &:active {
+    background-color: rgb(9, 76, 89);
   }
 `;

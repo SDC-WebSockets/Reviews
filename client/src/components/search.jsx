@@ -4,7 +4,6 @@ import {
   Inputs,
   SearchBar,
   ClearSearchBar,
-  SearchButtonContainer,
   SearchButton
 } from '../styles/search.style.js';
 
@@ -56,13 +55,11 @@ class Search extends React.Component {
           </ClearSearchBar>
           :
           null}
-        <SearchButtonContainer>
-          <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
-            <svg viewBox="-7 -7 35 35">
-              <path fill="rgb(255, 255, 255)" d={magnifyingGlassPath}/>
-            </svg>
-          </SearchButton>
-        </SearchButtonContainer>
+        <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
+          <svg viewBox="-7 -7 35 35">
+            <path fill="rgb(255, 255, 255)" d={magnifyingGlassPath}/>
+          </svg>
+        </SearchButton>
       </Inputs>
     );
   }

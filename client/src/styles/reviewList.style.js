@@ -21,6 +21,14 @@ export const SeeMoreReviews = styled.button`
   font-weight: 700;
   padding-left: 12px;
   padding-right: 12px;
+  &:hover {
+    color: rgb(9, 76, 89);
+    border-color: rgb(28, 106, 120);
+  }
+  &:active {
+    color: rgb(9, 76, 89);
+    border-color: rgb(28, 106, 120);
+  }
 `;
 
 export const SeeMoreReviewsContainer = styled.div`

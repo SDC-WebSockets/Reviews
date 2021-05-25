@@ -21,9 +21,7 @@ const ReviewList = (props) => {
       {props.displayedReviews.map((review, index) => <Review displayedReviews={props.displayedReviews} key={index} reviewNumber={index + 1} review={review} currentSearchTerm={props.currentSearchTerm} />)}
       {props.totalReviews.length > 12 &&
       props.displayedReviews.length !== currentReviews.length &&
-      <SeeMoreReviewsContainer>
-        <SeeMoreReviews onClick={ props.showTwelveMoreReviews }>See more reviews</SeeMoreReviews>
-      </SeeMoreReviewsContainer>
+      <SeeMoreReviews onClick={ props.showTwelveMoreReviews }>See more reviews</SeeMoreReviews>
       }
     </ReviewListStyle>
   );
