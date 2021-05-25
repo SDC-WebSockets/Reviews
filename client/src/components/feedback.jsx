@@ -130,7 +130,6 @@ class Feedback extends React.Component {
             </Tiers>
           </FeedbackStyle>
           <div>
-
             <Title>Reviews</Title>
             <ReviewControls>
               {this.props.totalReviews && this.props.totalReviews.length > 0 &&
@@ -141,13 +140,15 @@ class Feedback extends React.Component {
                 setReviewsFilteredBySearchAndTier={this.props.setReviewsFilteredBySearchAndTier}
               />
               }
-              <TierSelect className="tierSelect" ref={this.select} onChange={this.handleSelect}>
-                <option value="0">All ratings</option>
-                <option value="5">Five stars</option>
-                <option value="4">Four stars</option>
-                <option value="3">Three stars</option>
-                <option value="2">Two stars</option>
-                <option value="1">One star</option>
+              <TierSelect>
+                <select className="tierSelect" ref={this.select} onChange={this.handleSelect}>
+                  <option value="0">All ratings</option>
+                  <option value="5">Five stars</option>
+                  <option value="4">Four stars</option>
+                  <option value="3">Three stars</option>
+                  <option value="2">Two stars</option>
+                  <option value="1">One star</option>
+                </select>
               </TierSelect>
             </ReviewControls>
           </div>

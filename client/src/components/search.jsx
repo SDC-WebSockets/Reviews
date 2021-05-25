@@ -14,6 +14,7 @@ class Search extends React.Component {
     this.handleTermChange = this.handleTermChange.bind(this);
     this.filterByTerm = this.filterByTerm.bind(this);
     this.resetSearch = this.resetSearch.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
 
     this.state = {
       term: '',
@@ -36,6 +37,12 @@ class Search extends React.Component {
     }
   }
 
+  handleKeyPress (e) {
+    if (e.key === 'Enter') {
+      this.filterByTerm(this.state.term);
+    }
+  }
+
   resetSearch() {
     this.setState({term: ''});
     this.props.setReviewsFilteredBySearch(null);
@@ -45,7 +52,7 @@ class Search extends React.Component {
   render() {
     return (
       <Inputs>
-        <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange}>
+        <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress}>
         </SearchBar>
         {this.state.term ?
           <ClearSearchBar id="clearSearch" onClick={this.resetSearch}>
