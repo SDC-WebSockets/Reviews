@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const ReviewStyle = styled.div`
   display: flex;
-  space-between: 72px;
   border-bottom-color: rgb(220, 218, 203);
   border-bottom-style: solid;
   border-bottom-width: 1px;
@@ -13,11 +12,11 @@ export const ReviewStyle = styled.div`
 `;
 
 export const ReviewerAvatar = styled.div`
-  width: 72px;
+  min-width: 72px;
 `;
 
 export const ReviewerInitials = styled.div`
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
