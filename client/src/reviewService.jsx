@@ -19,6 +19,7 @@ class ReviewService extends React.Component {
     this.setReviewsFilteredBySearch = this.setReviewsFilteredBySearch.bind(this);
     this.setReviewsFilteredByTier = this.setReviewsFilteredByTier.bind(this);
     this.setReviewsFilteredBySearchAndTier = this.setReviewsFilteredBySearchAndTier.bind(this);
+    this.showTwelveMoreReviews = this.showTwelveMoreReviews.bind(this);
 
     this.state = {
       courseId: null,
@@ -29,7 +30,8 @@ class ReviewService extends React.Component {
       reviewsByTier: null,
       reviewsBySearchAndTier: null,
       featuredReview: null,
-      ratings: null
+      ratings: null,
+      displayedReviews: null
     };
   }
 
@@ -48,7 +50,7 @@ class ReviewService extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log('Data from server:', data);
+        console.log('Data from server:', data);
         if (data === 'No course selected') {
           this.setState({courseId: null});
         } else {
@@ -59,12 +61,15 @@ class ReviewService extends React.Component {
         }
       })
       .catch((err) => {
-        // console.log('Error retrieving data from server:', err);
+        console.log('Error retrieving data from server:', err);
       });
   }
 
   updateReviews(reviews) {
-    this.setState({totalReviews: reviews});
+    this.setState({
+      totalReviews: reviews,
+      displayedReviews: reviews.slice(0, 12)
+    });
   }
 
   updateRatings(ratings) {
@@ -81,15 +86,17 @@ class ReviewService extends React.Component {
       this.setState({
         reviewsBySearch: null,
         reviewsBySearchAndTier: null,
-        currentSearchTerm: null
+        currentSearchTerm: null,
+        displayedReviews: this.state.reviewsByTier ? this.state.reviewsByTier.slice(0, 12) : this.state.totalReviews.slice(0, 12)
       });
     } else {
       let filteredReviews = filterReviewsByTerm(reviews, term);
       this.setState({
         reviewsBySearch: filteredReviews,
-        currentSearchTerm: term
+        currentSearchTerm: term,
+        displayedReviews: filteredReviews.slice(0, 12)
       });
-      // console.log(`Reviews with the word ${term}:`, filteredReviews);
+      console.log(`Reviews with the word ${term}:`, filteredReviews);
       return filteredReviews;
     }
   }
@@ -99,15 +106,17 @@ class ReviewService extends React.Component {
       this.setState({
         reviewsByTier: null,
         reviewsBySearchAndTier: null,
-        currentTier: null
+        currentTier: null,
+        displayedReviews: this.state.reviewsBySearch ? this.state.reviewsBySearch.slice(0, 12) : this.state.totalReviews.slice(0, 12)
       });
     } else {
       let filteredReviews = filterReviewsByTier(reviews, tier);
       this.setState({
         reviewsByTier: filteredReviews,
-        currentTier: tier
+        currentTier: tier,
+        displayedReviews: filteredReviews.slice(0, 12)
       });
-      // console.log(`Reviews with ${tier} stars:`, filteredReviews);
+      console.log(`Reviews with ${tier} stars:`, filteredReviews);
       return filteredReviews;
     }
   }
@@ -117,8 +126,26 @@ class ReviewService extends React.Component {
     this.setReviewsFilteredBySearch(term, totalReviews);
     this.setReviewsFilteredByTier(tier, totalReviews);
     const filteredReviewsByTier = filterReviewsByTier(totalReviews, tier);
-    const filterReviewsByTierAndTerm = filterReviewsByTerm(filteredReviewsByTier, term);
-    this.setState({reviewsBySearchAndTier: filterReviewsByTierAndTerm});
+    const filteredReviewsByTierAndTerm = filterReviewsByTerm(filteredReviewsByTier, term);
+    this.setState({
+      reviewsBySearchAndTier: filteredReviewsByTierAndTerm,
+      displayedReviews: filteredReviewsByTierAndTerm.slice(0, 12)
+    });
+  }
+
+  showTwelveMoreReviews () {
+    let currentReviews;
+    let currentlyDisplayed = this.state.displayedReviews.length;
+    if (this.state.reviewsBySearchAndTier) {
+      currentReviews = this.state.reviewsBySearchAndTier;
+    } else if (this.state.reviewsBySearch && !this.state.reviewsByTier) {
+      currentReviews = this.state.reviewsBySearch;
+    } else if (this.state.reviewsByTier && !this.state.reviewsBySearch) {
+      currentReviews = this.state.reviewsByTier;
+    } else {
+      currentReviews = this.state.totalReviews;
+    }
+    this.setState({displayedReviews: currentReviews.slice(0, currentlyDisplayed + 12)});
   }
 
   render() {
@@ -155,11 +182,13 @@ class ReviewService extends React.Component {
           }
           {this.state.totalReviews && this.state.totalReviews.length > 0 &&
           <ReviewList
+            displayedReviews={this.state.displayedReviews}
             totalReviews={this.state.totalReviews}
             reviewsBySearch={this.state.reviewsBySearch}
             reviewsByTier={this.state.reviewsByTier}
             reviewsBySearchAndTier={this.state.reviewsBySearchAndTier}
             currentSearchTerm={this.state.currentSearchTerm}
+            showTwelveMoreReviews={this.showTwelveMoreReviews}
           />
           }
         </MainStyle>
