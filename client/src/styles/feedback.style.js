@@ -58,21 +58,29 @@ export const TierX = styled.button`
   left: 620px;
 `;
 
-export const ReviewControls = styled.span`
+export const ReviewControls = styled.div`
   display: flex;
-  width: 600px;
+  justify-content: center;
 `;
 
-export const TierSelect = styled.select`
-  color: rgb(115, 114, 108);
+export const TierSelect = styled.div`
+  display: flex;
+  align-items: center;
   cursor: pointer;
   border-radius: 4px;
   border: 1px solid #989586;
-  width: 180px;
-  height: 48px;
-  line-height: 22.4px;
-  font-size: 16px;
-  padding-left: 12px;
-  background-position: 100% 100%;
-  outline: none;
+  width: 178px;
+  height: 46px;
+
+  & select {
+    cursor: pointer;
+    padding: 12px;
+    margin-right: 12px;
+    width: 180px;
+    color: rgb(115, 114, 108);
+    font-size: 16px;
+    border: none;
+    background-position: 100% 100%;
+    outline: none;
+  }
 `;

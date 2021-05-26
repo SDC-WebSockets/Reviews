@@ -4,7 +4,7 @@
   "description": "Review service for Udemy clone (by HR rpt27 team Charlotte Badger)",
   "main": "server/index.js",
   "scripts": {
-    "test": "jest --silent",
+    "test": "jest",
     "start": "nodemon server/index.js",
     "build": "webpack --config webpack.config.js --mode development --watch",
     "prod": "webpack --config webpack.config.js --mode production",

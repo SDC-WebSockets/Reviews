@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
-import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js';
+import { sampleDataForOneCourse } from '../../fixtures/sampleDataForOneCourse.js';
 
 import ReviewService from '../../../client/src/reviewService.jsx';
 import Featured from '../../../client/src/components/featured.jsx';
@@ -12,13 +12,7 @@ import SearchMessage from '../../../client/src/components/searchMessage.jsx';
 describe('ReviewService Component', () => {
 
   const wrapper = mount(<ReviewService />);
-  const instance = wrapper.instance();
-
-  it ('calls the getReviews method in componentDidMount', () => {
-    jest.spyOn(instance, 'getReviews');
-    instance.componentDidMount();
-    expect(instance.getReviews).toHaveBeenCalledTimes(1);
-  });
+  wrapper.setState({displayedReviews: sampleDataForOneCourse.reviews});
 
   it ('only renders the Featured component if the state has a featured review and if the course has at least ten reviews', () => {
     expect(wrapper.containsMatchingElement(<Featured/>)).toBe(false);
@@ -50,12 +44,14 @@ describe('ReviewService Component', () => {
     wrapper.setState({
       courseId: 9,
       reviewsBySearch: [sampleDataForOneCourse.reviews[0], sampleDataForOneCourse.reviews[1], sampleDataForOneCourse.reviews[4]],
+      displayedReviews: [sampleDataForOneCourse.reviews[0], sampleDataForOneCourse.reviews[1], sampleDataForOneCourse.reviews[4]],
       currentSearchTerm: 'quas'
     });
     expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(true);
     wrapper.setState({
       reviewsBySearch: null,
-      currentSearchTerm: null
+      currentSearchTerm: null,
+      displayedReviews: []
     });
   });
 
@@ -64,9 +60,9 @@ describe('ReviewService Component', () => {
     wrapper.setState({
       courseId: 9,
       reviewsByTier: [],
+      displayedReviews: [],
       currentTier: 2
     });
     expect(wrapper.containsMatchingElement(<SearchMessage/>)).toBe(true);
   });
-
 });

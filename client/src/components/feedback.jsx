@@ -2,7 +2,7 @@ import React from 'react';
 import Search from './search.jsx';
 import Stars from './stars.jsx';
 import Gauge from './gauge.jsx';
-import { xRating } from '../svg.js';
+import { xPath } from '../svg.js';
 import { Title } from '../styles/main.style.js';
 import {
   FeedbackStyle,
@@ -19,7 +19,7 @@ import {
 
 class Feedback extends React.Component {
   constructor(props) {
-    // console.log('Props in Feedback:', props);
+    console.log('Props in Feedback:', props);
     super(props);
     this.filterByTier = this.filterByTier.bind(this);
     this.removeFilter = this.removeFilter.bind(this);
@@ -37,9 +37,13 @@ class Feedback extends React.Component {
   }
 
   handleClick(tier) {
-    this.filterByTier(tier);
-    this.select.current.value = tier.toString();
-    this.renderTransparent(tier);
+    if (this.props.currentTier !== null) {
+      this.removeFilter();
+    } else {
+      this.filterByTier(tier);
+      this.select.current.value = tier.toString();
+      this.renderTransparent(tier);
+    }
   }
 
   handleSelect(e) {
@@ -109,23 +113,29 @@ class Feedback extends React.Component {
                   <Tier key={currentTier} style={portion === 0 ?
                     {cursor: 'no-drop', opacity: '.25'} : {cursor: 'pointer'}}>
 
-                    <ReviewData className={portion > 0 ? 'tierWithData' : null} id={`tier${currentTier}`} onClick={portion > 0 ? () => this.handleClick(Number(currentTier)) : null}>
+                    <ReviewData className={portion > 0 ? 'tierWithData' : null} id={`tier${currentTier}`}
+                      onClick={portion > 0 ? () => this.handleClick(Number(currentTier)) : null}
+                    >
                       <Gauge portion={portion}/>
                       <Stars rating={currentTier}/>
                       <Percentage>{percentage}</Percentage>
                     </ReviewData>
-
                     {this.props.currentTier === currentTier ?
-                      <TierX onClick={portion > 0 ? this.removeFilter : null} style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
-                        <span dangerouslySetInnerHTML={{ __html: xRating }}></span>
-                      </TierX> : null}
+                      <TierX
+                        onClick={portion > 0 ? this.removeFilter : null}
+                        style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
+                        <svg viewBox="4 4 16 16">
+                          <path fill="rgb(115, 114, 108)" d={xPath}/>
+                        </svg>
+                      </TierX>
+                      : null
+                    }
                   </Tier>
                 );
               })}
             </Tiers>
           </FeedbackStyle>
           <div>
-
             <Title>Reviews</Title>
             <ReviewControls>
               {this.props.totalReviews && this.props.totalReviews.length > 0 &&
@@ -136,13 +146,15 @@ class Feedback extends React.Component {
                 setReviewsFilteredBySearchAndTier={this.props.setReviewsFilteredBySearchAndTier}
               />
               }
-              <TierSelect className="tierSelect" ref={this.select} onChange={this.handleSelect}>
-                <option value="0">All ratings</option>
-                <option value="5">Five stars</option>
-                <option value="4">Four stars</option>
-                <option value="3">Three stars</option>
-                <option value="2">Two stars</option>
-                <option value="1">One star</option>
+              <TierSelect>
+                <select className="tierSelect" ref={this.select} onChange={this.handleSelect}>
+                  <option value="0">All ratings</option>
+                  <option value="5">Five stars</option>
+                  <option value="4">Four stars</option>
+                  <option value="3">Three stars</option>
+                  <option value="2">Two stars</option>
+                  <option value="1">One star</option>
+                </select>
               </TierSelect>
             </ReviewControls>
           </div>

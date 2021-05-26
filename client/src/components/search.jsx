@@ -1,10 +1,9 @@
 import React from 'react';
-import { magnifyingGlass, xSearch } from '../svg.js';
+import { magnifyingGlassPath, xPath } from '../svg.js';
 import {
   Inputs,
   SearchBar,
   ClearSearchBar,
-  SearchButtonContainer,
   SearchButton
 } from '../styles/search.style.js';
 
@@ -15,6 +14,7 @@ class Search extends React.Component {
     this.handleTermChange = this.handleTermChange.bind(this);
     this.filterByTerm = this.filterByTerm.bind(this);
     this.resetSearch = this.resetSearch.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
 
     this.state = {
       term: '',
@@ -37,6 +37,12 @@ class Search extends React.Component {
     }
   }
 
+  handleKeyPress (e) {
+    if (e.key === 'Enter') {
+      this.filterByTerm(this.state.term);
+    }
+  }
+
   resetSearch() {
     this.setState({term: ''});
     this.props.setReviewsFilteredBySearch(null);
@@ -46,19 +52,21 @@ class Search extends React.Component {
   render() {
     return (
       <Inputs>
-        <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange}>
+        <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress}>
         </SearchBar>
         {this.state.term ?
           <ClearSearchBar id="clearSearch" onClick={this.resetSearch}>
-            <span dangerouslySetInnerHTML={{ __html: xSearch }}></span>
+            <svg viewBox="0 0 24 24">
+              <path fill="rgb(115, 114, 108)" d={xPath}/>
+            </svg>
           </ClearSearchBar>
           :
           null}
-        <SearchButtonContainer>
-          <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
-            <span dangerouslySetInnerHTML={{ __html: magnifyingGlass }}></span>
-          </SearchButton>
-        </SearchButtonContainer>
+        <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
+          <svg viewBox="-7 -7 35 35">
+            <path fill="rgb(255, 255, 255)" d={magnifyingGlassPath}/>
+          </svg>
+        </SearchButton>
       </Inputs>
     );
   }

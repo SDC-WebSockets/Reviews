@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ReviewListStyle = styled.div`
   margin-top: 12px;
+  min-height: 600px;
 `;
 
 export const SeeMoreReviews = styled.button`
@@ -17,9 +18,18 @@ export const SeeMoreReviews = styled.button`
   border-style: solid;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
   font-weight: 700;
   padding-left: 12px;
   padding-right: 12px;
+  &:hover {
+    color: rgb(9, 76, 89);
+    border-color: rgb(28, 106, 120);
+  }
+  &:active {
+    color: rgb(9, 76, 89);
+    border-color: rgb(28, 106, 120);
+  }
 `;
 
 export const SeeMoreReviewsContainer = styled.div`

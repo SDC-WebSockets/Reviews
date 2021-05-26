@@ -20,9 +20,8 @@ class ReviewService extends React.Component {
     this.setReviewsFilteredByTier = this.setReviewsFilteredByTier.bind(this);
     this.setReviewsFilteredBySearchAndTier = this.setReviewsFilteredBySearchAndTier.bind(this);
     this.showTwelveMoreReviews = this.showTwelveMoreReviews.bind(this);
-
     this.state = {
-      courseId: null,
+      courseId: Number(querystring.parse(window.location.search)['?courseId']),
       totalReviews: null,
       currentSearchTerm: null,
       reviewsBySearch: null,
@@ -33,12 +32,13 @@ class ReviewService extends React.Component {
       ratings: null,
       displayedReviews: null
     };
+    this.getReviews(this.state.courseId);
   }
 
-  componentDidMount() {
-    let courseId = Number(querystring.parse(window.location.search)['?courseId']);
-    this.getReviews(courseId);
-  }
+  // componentDidMount() {
+  //   let courseId = Number(querystring.parse(window.location.search)['?courseId']);
+  //   this.getReviews(courseId);
+  // }
 
   getReviews(id) {
     fetch(`http://localhost:2712/reviews/item?courseId=${id}`, {
@@ -50,7 +50,7 @@ class ReviewService extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Data from server:', data);
+        // console.log('Data from server:', data);
         if (data === 'No course selected') {
           this.setState({courseId: null});
         } else {
@@ -61,7 +61,7 @@ class ReviewService extends React.Component {
         }
       })
       .catch((err) => {
-        console.log('Error retrieving data from server:', err);
+        // console.log('Error retrieving data from server:', err);
       });
   }
 
@@ -96,7 +96,7 @@ class ReviewService extends React.Component {
         currentSearchTerm: term,
         displayedReviews: filteredReviews.slice(0, 12)
       });
-      console.log(`Reviews with the word ${term}:`, filteredReviews);
+      // console.log(`Reviews with the word ${term}:`, filteredReviews);
       return filteredReviews;
     }
   }
@@ -116,7 +116,7 @@ class ReviewService extends React.Component {
         currentTier: tier,
         displayedReviews: filteredReviews.slice(0, 12)
       });
-      console.log(`Reviews with ${tier} stars:`, filteredReviews);
+      // console.log(`Reviews with ${tier} stars:`, filteredReviews);
       return filteredReviews;
     }
   }
@@ -151,7 +151,7 @@ class ReviewService extends React.Component {
   render() {
     if (!this.state.courseId) {
       return (
-        <MainStyle>Loading...</MainStyle>
+        <MainStyle>Course not found</MainStyle>
       );
     } else {
       return (

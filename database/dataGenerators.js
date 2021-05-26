@@ -53,7 +53,7 @@ const generateRandomReview = (courseId) => {
 
   const ratings = [5, 5, 5, 5, 5, 4.5, 4.5, 4, 4, 3.5, 3, 2.5, 2, 1.5, 1]; // makes it more likely for it to have good ratings
   const randomRating = ratings[randomInclusiveInteger(0, ratings.length - 1)];
-  const randomComment = faker.lorem.sentences();
+  const randomComment = faker.lorem.text();
   const startTime = new Date('01 January 2018 00:00 UTC');
   const currentTime = new Date();
   const randomTime = randomDate(startTime, currentTime).toISOString();

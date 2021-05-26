@@ -7,8 +7,11 @@ export const Inputs = styled.span`
 export const SearchBar = styled.input`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  border: 1px solid #989586;
-  width: 356px;
+  border-top: 1px solid #989586;
+  border-right: 0;
+  border-bottom: 1px solid #989586;
+  border-left: 1px solid #989586;
+  width: 303px;
   height: 44px;
   padding-left: 12px;
   padding-right: 40px;
@@ -16,6 +19,9 @@ export const SearchBar = styled.input`
   font-size: 16px;
   overflow: scroll;
   outline: none;
+  &:focus{
+    border-color: rgb(60, 59, 55);
+  }
 `;
 
 export const ClearSearchBar = styled.button`
@@ -29,7 +35,7 @@ export const ClearSearchBar = styled.button`
   margin-top: 9px;
   margin-bottom: 5px;
   position: absolute;
-  left: 410px;
+  left: 358px;
 `;
 
 export const SearchButton = styled.button`
@@ -42,12 +48,10 @@ export const SearchButton = styled.button`
   border: 0;
   display: block;
   margin-right: 18px;
-`;
-
-export const SearchButtonContainer = styled.div`
   &:hover {
-    ${SearchButton} {
-      background-color: rgb(9, 76, 89);
-    }
+    background-color: rgb(9, 76, 89);
+  }
+  &:active {
+    background-color: rgb(9, 76, 89);
   }
 `;

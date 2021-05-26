@@ -1,5 +1,5 @@
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from '../../../client/src/filters.js';
-import { sampleDataForOneCourse } from '../../mockData/sampleDataForOneCourse.js';
+import { sampleDataForOneCourse } from '../../fixtures/sampleDataForOneCourse.js';
 
 describe('Function "getBestReview"', () => {
   it ('returns the review with the longest comment if there are multiple five-star reviews', () => {

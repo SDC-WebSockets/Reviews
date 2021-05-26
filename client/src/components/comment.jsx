@@ -1,5 +1,13 @@
 import React from 'react';
-import { CommentStyle } from '../styles/comment.style.js';
+import { arrowDownPath, arrowUpPath } from '../svg.js';
+import {
+  CommentStyle,
+  gradientStyle,
+  defaultStyle,
+  ShowMore,
+  Arrow,
+  ArrowPath
+} from '../styles/comment.style.js';
 
 const Comment = (props) => {
   // console.log('Props in Comment:', props);
@@ -17,10 +25,32 @@ const Comment = (props) => {
     );
   };
 
+
+
   return (
-    <CommentStyle className="reviewComment">
-      {props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}
-    </CommentStyle>
+    <div>
+      <CommentStyle className="reviewComment" id={`commentId${props.review._id}`}
+        style={props.review.comment.length > 300 && props.commentHeight === '100px' ? gradientStyle : {height: 'auto'}}>
+        {props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}
+      </CommentStyle>
+      {props.review.comment.length > 300 &&
+
+        <div onClick={() => { props.handleClick('showMore'); } }>
+          {props.commentHeight === '100px' ?
+            <ShowMore>Show more
+              <Arrow viewBox="0 0 24 24">
+                <ArrowPath strokeWidth="0.1" d={arrowDownPath}/>
+              </Arrow>
+            </ShowMore> :
+            <ShowMore>Show less
+              <Arrow viewBox="0 0 24 24">
+                <ArrowPath strokeWidth="0.1" d={arrowUpPath}/>
+              </Arrow>
+            </ShowMore>
+          }
+        </div>
+      }
+    </div>
   );
 
 };
