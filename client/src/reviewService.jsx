@@ -35,11 +35,6 @@ class ReviewService extends React.Component {
     this.getReviews(this.state.courseId);
   }
 
-  // componentDidMount() {
-  //   let courseId = Number(querystring.parse(window.location.search)['?courseId']);
-  //   this.getReviews(courseId);
-  // }
-
   getReviews(id) {
     fetch(`http://localhost:2712/reviews/item?courseId=${id}`, {
       method: 'GET',
@@ -61,7 +56,7 @@ class ReviewService extends React.Component {
         }
       })
       .catch((err) => {
-        // console.log('Error retrieving data from server:', err);
+        console.log('Error retrieving data from server:', err);
       });
   }
 
