@@ -5,7 +5,6 @@ import { RatingStyle, Moment } from '../styles/rating.style.js';
 
 const Rating = (props) => (
   <RatingStyle>
-    {/* {console.log('Props in Rating', props)} */}
     <Stars className="reviewRating" rating={props.rating}/>
     <Moment className="reviewDate">
       {moment(props.createdAt).fromNow()}

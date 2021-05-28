@@ -21,7 +21,6 @@ const makeStar = (starFill) => {
 };
 
 const Stars = (props) => {
-  // console.log('Props in Stars:', props);
   const rating = Number(props.rating).toFixed(1);
   let stars;
   if (rating >= 4.8) {

@@ -1,10 +1,14 @@
+*.pem
 .DS_Store
-AWSconfig.js
+Ajax-Preloader.gif
+AWS
 coverage
+login.sh
 node_modules
 package-lock.json
 reviewBundle.js
 reviewBundle.js.LICENSE.txt
 rootkey.numbers
+s3config.js
 scribbles.js
 WebSequence.png

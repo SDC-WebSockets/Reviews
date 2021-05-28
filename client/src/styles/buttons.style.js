@@ -17,7 +17,7 @@ export const Thumbs = styled.button`
   border-width: 1px;
   border-style: solid;
   border-radius: 50%;
-  color: gb(15, 124, 144);
+  color: rgb(15, 124, 144);
   cursor: pointer;
   margin-right: 8px;
   padding: 10px;

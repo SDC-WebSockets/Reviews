@@ -19,7 +19,6 @@ import { Name } from '../styles/review.style.js';
 
 class Featured extends React.Component {
   constructor(props) {
-    // console.log('Props in Featured:', props);
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.state = {

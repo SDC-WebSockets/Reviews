@@ -4,7 +4,6 @@ import { Helpful, ButtonStyle, Thumbs, Report } from '../styles/buttons.style.js
 
 const Buttons = (props) => (
   <div>
-    {/* {console.log('Props in Buttons:', props.reviewState)} */}
     {props.reviewState.thumbsUp === true || props.reviewState.thumbsDown === true ?
       <Helpful>Thank you for your feedback</Helpful> :
       <Helpful>Was this review helpful?</Helpful>

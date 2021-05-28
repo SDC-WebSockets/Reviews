@@ -19,7 +19,6 @@ import {
 
 class Feedback extends React.Component {
   constructor(props) {
-    console.log('Props in Feedback:', props);
     super(props);
     this.filterByTier = this.filterByTier.bind(this);
     this.removeFilter = this.removeFilter.bind(this);

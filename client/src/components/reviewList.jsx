@@ -4,7 +4,6 @@ import { ReviewListStyle, SeeMoreReviews, SeeMoreReviewsContainer } from '../sty
 
 
 const ReviewList = (props) => {
-  // console.log('Props in ReviewList:', props);
   let currentReviews;
   if (props.reviewsBySearchAndTier) {
     currentReviews = props.reviewsBySearchAndTier;

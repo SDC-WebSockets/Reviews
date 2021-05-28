@@ -13,7 +13,6 @@ import { MainStyle } from './styles/main.style.js';
 
 class ReviewService extends React.Component {
   constructor(props) {
-    // console.log('Props in ReviewService:', props);
     super(props);
     this.getReviews = this.getReviews.bind(this);
     this.setReviewsFilteredBySearch = this.setReviewsFilteredBySearch.bind(this);
@@ -32,11 +31,12 @@ class ReviewService extends React.Component {
       ratings: null,
       displayedReviews: null
     };
+    this.host = 'http://ec2-54-176-79-167.us-west-1.compute.amazonaws.com:2712/';
     this.getReviews(this.state.courseId);
   }
 
   getReviews(id) {
-    fetch(`http://localhost:2712/reviews/item?courseId=${id}`, {
+    fetch(`${this.host}/reviews/item?courseId=${id}`, {
       method: 'GET',
       mode: 'cors',
       headers: {

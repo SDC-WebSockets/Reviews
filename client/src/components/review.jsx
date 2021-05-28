@@ -18,7 +18,6 @@ import {
 
 class Review extends React.Component {
   constructor(props) {
-    // console.log('Props in Review:', props);
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.state = {

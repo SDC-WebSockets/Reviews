@@ -10,7 +10,6 @@ import {
 } from '../styles/comment.style.js';
 
 const Comment = (props) => {
-  // console.log('Props in Comment:', props);
   const CommentWithBoldSearchTerm = () => {
     const comment = props.review.comment;
     const searchTerm = props.currentSearchTerm;

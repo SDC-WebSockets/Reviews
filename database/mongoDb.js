@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/review-service', { useNewUrlParser: true, useUnifiedTopology: true });
+
+let dbUrl = '127.0.0.1:27017' || 'localhost';
+
+mongoose.connect(`mongodb://${dbUrl}/review-service`, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const mongoDb = mongoose.connection;
 mongoDb.on('error', console.error.bind(console, 'connection error:'));

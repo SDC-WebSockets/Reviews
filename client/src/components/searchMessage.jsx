@@ -2,7 +2,6 @@ import React from 'react';
 import { Message } from '../styles/searchMessage.style.js';
 
 const SearchMessage = (props) => {
-  // console.log('Props in SearchMessage:', props);
   if (props.reviewsBySearchAndTier) {
     if (props.reviewsBySearchAndTier.length > 0) {
       return (

@@ -46,12 +46,10 @@ app.get('/reviews/item', (req, res) => {
   }
 });
 
-// app.get('/reviewBundle.js', (req, res) => {
-//   let bundlePath = path.join(__dirname, '..', 'client', 'public', 'reviewBundle.js');
-//   console.log(bundlePath);
-//   res.sendFile(path.join(__dirname, '..', 'client', 'public', 'reviewBundle.js'));
-// });
+app.get('/bundle', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'public', 'reviewBundle.js'));
+});
 
 app.listen(PORT, () => {
-  console.log(`Server listening at http://localhost:${PORT}`);
+  console.log(`Server listening on port ${PORT}`);
 });
