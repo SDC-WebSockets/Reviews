@@ -2,9 +2,9 @@ import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import { sampleDataForOneCourse } from '../../fixtures/sampleDataForOneCourse.js';
 
-import ReviewList from '../../../client/src/components/ReviewList.jsx';
+import ReviewList from '../../../client/src/components/reviewList.jsx';
 import ReviewService from '../../../client/src/reviewService.jsx';
-import Review from '../../../client/src/components/Review.jsx';
+import Review from '../../../client/src/components/review.jsx';
 
 describe ('ReviewList component', () => {
   const reviewServiceWrapper = mount(<ReviewService courseId={9}/>);

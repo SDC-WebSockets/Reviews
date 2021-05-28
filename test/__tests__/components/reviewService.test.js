@@ -6,7 +6,7 @@ import ReviewService from '../../../client/src/reviewService.jsx';
 import Featured from '../../../client/src/components/featured.jsx';
 import Feedback from '../../../client/src/components/feedback.jsx';
 import Search from '../../../client/src/components/search.jsx';
-import ReviewList from '../../../client/src/components/ReviewList.jsx';
+import ReviewList from '../../../client/src/components/reviewList.jsx';
 import SearchMessage from '../../../client/src/components/searchMessage.jsx';
 
 describe('ReviewService Component', () => {

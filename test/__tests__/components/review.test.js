@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import { sampleDataForOneCourse } from '../../fixtures/sampleDataForOneCourse.js';
 
-import Review from '../../../client/src/components/Review.jsx';
+import Review from '../../../client/src/components/review.jsx';
 
 describe ('Review component', () => {
   let wrapper = mount(<Review review={sampleDataForOneCourse.reviews[0]} displayedReviews={sampleDataForOneCourse.reviews}currentSearchTerm='quas'/>);
