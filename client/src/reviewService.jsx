@@ -31,7 +31,7 @@ class ReviewService extends React.Component {
       ratings: null,
       displayedReviews: null
     };
-    this.host = 'http://ec2-54-176-79-167.us-west-1.compute.amazonaws.com:2712/';
+    this.host = 'http://ec2-54-176-79-167.us-west-1.compute.amazonaws.com:2712';
     this.getReviews(this.state.courseId);
   }
 
