@@ -31,7 +31,7 @@ class ReviewService extends React.Component {
       ratings: null,
       displayedReviews: null
     };
-    this.host = 'http://ec2-54-176-79-167.us-west-1.compute.amazonaws.com:2712';
+    this.host = 'http://ec2-54-176-79-167.us-west-1.compute.amazonaws.com:2712'; // http://localhost:2712
     this.getReviews(this.state.courseId);
   }
 
@@ -45,7 +45,6 @@ class ReviewService extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log('Data from server:', data);
         if (data === 'No course selected') {
           this.setState({courseId: null});
         } else {

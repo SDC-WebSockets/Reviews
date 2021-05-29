@@ -43,6 +43,7 @@ export const Report = styled.button`
   border: none;
   cursor: pointer;
   font-family: Arial;
+  font-size: 14px;
   letter-spacing: -0.2px;
   line-height: 19.6px;
   width: auto;

@@ -82,5 +82,6 @@ export const TierSelect = styled.div`
     border: none;
     background-position: 100% 100%;
     outline: none;
+    /* appearance: none; */
   }
 `;
