@@ -80,7 +80,7 @@ class Feedback extends React.Component {
     if (this.props.ratings.totalRatings === 0) {
       return (
         <div>
-          <h2>Student feedback</h2>
+          <Title>Student feedback</Title>
           <div>This course doesn't have any ratings yet.</div>
         </div>
       );
