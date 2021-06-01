@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const FeedbackStyle = styled.div`
+export const ReviewFeedbackStyle = styled.div`
   display: flex;
 `;
 
-export const OverallRating = styled.div`
+export const ReviewOverallRating = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,19 +15,19 @@ export const OverallRating = styled.div`
   width: 100px;
 `;
 
-export const Grade = styled.div`
+export const ReviewGrade = styled.div`
   line-height: 64px;
   font-size: 64px;
 `;
 
-export const Tiers = styled.div`
+export const ReviewTiers = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 32px;
   width: 468px;
 `;
 
-export const Tier = styled.span`
+export const ReviewTier = styled.span`
   display: flex;
   align-items: center;
 `;
@@ -41,12 +41,12 @@ export const ReviewData = styled.span`
   align-items: center;
 `;
 
-export const Percentage = styled.span`
+export const ReviewPercentage = styled.span`
   margin-left: 8px;
   margin-right: 10px;
 `;
 
-export const TierX = styled.button`
+export const ReviewTierX = styled.button`
   align-items: center;
   display: block;
   height: 22px;
@@ -63,7 +63,7 @@ export const ReviewControls = styled.div`
   justify-content: center;
 `;
 
-export const TierSelect = styled.div`
+export const ReviewTierSelect = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;

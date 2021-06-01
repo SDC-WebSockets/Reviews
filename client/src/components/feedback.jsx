@@ -3,18 +3,18 @@ import Search from './search.jsx';
 import Stars from './stars.jsx';
 import Gauge from './gauge.jsx';
 import { xPath } from '../svg.js';
-import { Title } from '../styles/main.style.js';
+import { ReviewTitle } from '../styles/main.style.js';
 import {
-  FeedbackStyle,
-  OverallRating,
-  Grade,
-  Tiers,
-  Tier,
+  ReviewFeedbackStyle,
+  ReviewOverallRating,
+  ReviewGrade,
+  ReviewTiers,
+  ReviewTier,
   ReviewData,
-  Percentage,
-  TierX,
+  ReviewPercentage,
+  ReviewTierX,
   ReviewControls,
-  TierSelect
+  ReviewTierSelect
 } from '../styles/feedback.style.js';
 
 class Feedback extends React.Component {
@@ -80,7 +80,7 @@ class Feedback extends React.Component {
     if (this.props.ratings.totalRatings === 0) {
       return (
         <div>
-          <Title>Student feedback</Title>
+          <ReviewTitle>Student feedback</ReviewTitle>
           <div>This course doesn't have any ratings yet.</div>
         </div>
       );
@@ -90,17 +90,17 @@ class Feedback extends React.Component {
       ];
       return (
         <div>
-          <Title>Student feedback</Title>
-          <FeedbackStyle>
-            <OverallRating>
-              <Grade>{this.props.ratings.overallRating.toFixed(1)}
-              </Grade>
+          <ReviewTitle>Student feedback</ReviewTitle>
+          <ReviewFeedbackStyle>
+            <ReviewOverallRating>
+              <ReviewGrade>{this.props.ratings.overallRating.toFixed(1)}
+              </ReviewGrade>
               <div>
                 <Stars rating={this.props.ratings.overallRating}/>
               </div>
               <div>Course Rating</div>
-            </OverallRating>
-            <Tiers>
+            </ReviewOverallRating>
+            <ReviewTiers>
               {tiers.map((tier) => {
                 let percentage;
                 let currentTier = Number(tier[tier.length - 1]);
@@ -109,7 +109,7 @@ class Feedback extends React.Component {
                   percentage = this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]]);
                 let portion = Number(percentage.slice(0, percentage.length - 1));
                 return (
-                  <Tier key={currentTier} style={portion === 0 ?
+                  <ReviewTier key={currentTier} style={portion === 0 ?
                     {cursor: 'no-drop', opacity: '.25'} : {cursor: 'pointer'}}>
 
                     <ReviewData className={portion > 0 ? 'tierWithData' : null} id={`tier${currentTier}`}
@@ -117,25 +117,25 @@ class Feedback extends React.Component {
                     >
                       <Gauge portion={portion}/>
                       <Stars rating={currentTier}/>
-                      <Percentage>{percentage}</Percentage>
+                      <ReviewPercentage>{percentage}</ReviewPercentage>
                     </ReviewData>
                     {this.props.currentTier === currentTier ?
-                      <TierX
+                      <ReviewTierX
                         onClick={portion > 0 ? this.removeFilter : null}
                         style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
                         <svg viewBox="4 4 16 16">
                           <path fill="rgb(115, 114, 108)" d={xPath}/>
                         </svg>
-                      </TierX>
+                      </ReviewTierX>
                       : null
                     }
-                  </Tier>
+                  </ReviewTier>
                 );
               })}
-            </Tiers>
-          </FeedbackStyle>
+            </ReviewTiers>
+          </ReviewFeedbackStyle>
           <div>
-            <Title>Reviews</Title>
+            <ReviewTitle>Reviews</ReviewTitle>
             <ReviewControls>
               {this.props.totalReviews && this.props.totalReviews.length > 0 &&
               <Search
@@ -145,7 +145,7 @@ class Feedback extends React.Component {
                 setReviewsFilteredBySearchAndTier={this.props.setReviewsFilteredBySearchAndTier}
               />
               }
-              <TierSelect>
+              <ReviewTierSelect>
                 <select className="tierSelect" ref={this.select} onChange={this.handleSelect}>
                   <option value="0">All ratings</option>
                   <option value="5">Five stars</option>
@@ -154,7 +154,7 @@ class Feedback extends React.Component {
                   <option value="2">Two stars</option>
                   <option value="1">One star</option>
                 </select>
-              </TierSelect>
+              </ReviewTierSelect>
             </ReviewControls>
           </div>
         </div>

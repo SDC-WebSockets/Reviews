@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BlackBar = styled.div`
+export const ReviewBlackBar = styled.div`
   height: 8px;
   background-color: rgb(115, 114, 108);
   grid-column: 1;
@@ -8,7 +8,7 @@ export const BlackBar = styled.div`
   z-index: 2;
 `;
 
-export const GreyBar = styled.div`
+export const ReviewGreyBar = styled.div`
   width: 280px;
   height: 8px;
   background-color: rgb(220, 218, 203);

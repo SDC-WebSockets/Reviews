@@ -4,15 +4,15 @@ import Comment from './comment.jsx';
 import Buttons from './buttons.jsx';
 import {
   ReviewStyle,
-  ReviewerAvatar,
-  ReviewerInitials,
-  ReviewerPicture,
+  ReviewReviewerAvatar,
+  ReviewReviewerInitials,
+  ReviewReviewerPicture,
   ReviewContent,
-  Name
+  ReviewName
 } from '../styles/review.style.js';
 import {
-  gradientStyle,
-  defaultStyle
+  reviewGradientStyle,
+  reviewDefaultStyle
 } from '../styles/comment.style.js';
 
 
@@ -42,10 +42,10 @@ class Review extends React.Component {
       let currentComment = document.getElementById(`commentId${this.props.review._id}`);
       if (this.state.commentHeight === '100px') {
         this.setState({ commentHeight: 'auto' });
-        currentComment.style = defaultStyle;
+        currentComment.style = reviewDefaultStyle;
       } else {
         this.setState({ commentHeight: '100px' });
-        currentComment.style = gradientStyle;
+        currentComment.style = reviewGradientStyle;
       }
     }
   }
@@ -54,18 +54,18 @@ class Review extends React.Component {
     return (
       <ReviewStyle
         style={this.props.reviewNumber === this.props.displayedReviews.length ? {borderBottomWidth: '0'} : null}>
-        <ReviewerAvatar className="reviewerAvatar">
+        <ReviewReviewerAvatar className="reviewerAvatar">
           {/* if the reviewer has no avatar, the default avatar consists of a saved color background and the reviewer's initials */}
           {this.props.review.reviewer.picture.slice(0, 3) === 'rgb' ?
-            <ReviewerInitials className="reviewerInitials" style={{backgroundColor: this.props.review.reviewer.picture}}>{this.props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</ReviewerInitials> :
-            <ReviewerPicture className="reviewerPicture" src={this.props.review.reviewer.picture}/>}
-        </ReviewerAvatar>
+            <ReviewReviewerInitials className="reviewerInitials" style={{backgroundColor: this.props.review.reviewer.picture}}>{this.props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</ReviewReviewerInitials> :
+            <ReviewReviewerPicture className="reviewerPicture" src={this.props.review.reviewer.picture}/>}
+        </ReviewReviewerAvatar>
         <ReviewContent>
-          <Name className="reviewerName" style={this.state.reported ? {color: 'rgb(210, 0, 0)'} : null}>
+          <ReviewName className="reviewerName" style={this.state.reported ? {color: 'rgb(210, 0, 0)'} : null}>
             {this.state.reported ?
               this.props.review.reviewer.name + ' USER REPORTED' :
               this.props.review.reviewer.name}
-          </Name>
+          </ReviewName>
           <Rating rating={this.props.review.rating} createdAt={this.props.review.createdAt}/>
           <Comment review={this.props.review} currentSearchTerm={this.props.currentSearchTerm} commentHeight={this.state.commentHeight} handleClick={this.handleClick}/>
           <Buttons reviewState={this.state} handleClick={this.handleClick}/>

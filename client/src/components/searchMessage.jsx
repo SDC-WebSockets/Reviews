@@ -1,43 +1,43 @@
 import React from 'react';
-import { Message } from '../styles/searchMessage.style.js';
+import { ReviewMessage } from '../styles/searchMessage.style.js';
 
 const SearchMessage = (props) => {
   if (props.reviewsBySearchAndTier) {
     if (props.reviewsBySearchAndTier.length > 0) {
       return (
-        <Message>{props.reviewsBySearchAndTier.length} {props.reviewsBySearchAndTier.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</Message>
+        <ReviewMessage>{props.reviewsBySearchAndTier.length} {props.reviewsBySearchAndTier.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</ReviewMessage>
       );
     } else {
       return (
-        <Message>
+        <ReviewMessage>
           No reviews mentioning '<strong>{props.currentSearchTerm}</strong>'
           <br></br>
           <br></br>
           Your search returned no results with the selected rating. Try clearing your selection to see reviews matching your search.
-        </Message>
+        </ReviewMessage>
       );
     }
   } else if (!props.reviewsBySearchAndTier && props.reviewsBySearch && !props.reviewsByTier) {
     if (props.reviewsBySearch.length > 0) {
       return (
-        <Message>{props.reviewsBySearch.length} {props.reviewsBySearch.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</Message>
+        <ReviewMessage>{props.reviewsBySearch.length} {props.reviewsBySearch.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</ReviewMessage>
       );
     } else {
       return (
-        <Message>
+        <ReviewMessage>
           No reviews mentioning '<strong>{props.currentSearchTerm}</strong>'
           <br></br>
           <br></br>
           No reviews matched your search. Try searching with another term.
-        </Message>
+        </ReviewMessage>
       );
     }
   } else if (!props.reviewsBySearchAndTier && !props.reviewsBySearch && props.reviewsByTier) {
     if (props.reviewsByTier.length === 0) {
       return (
-        <Message>
+        <ReviewMessage>
           There are no written comments for the rating you've selected. Please select another rating or clear your selection to view all written comments for this course.
-        </Message>
+        </ReviewMessage>
       );
     } else {
       return null;

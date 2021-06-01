@@ -8,7 +8,7 @@ import fetch from 'node-fetch';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from './filters.js';
 import querystring from 'querystring';
 
-import { MainStyle } from './styles/main.style.js';
+import { ReviewMainStyle } from './styles/main.style.js';
 
 
 class ReviewService extends React.Component {
@@ -31,7 +31,7 @@ class ReviewService extends React.Component {
       ratings: null,
       displayedReviews: null
     };
-    this.host = 'http://ec2-54-176-79-167.us-west-1.compute.amazonaws.com:2712'; // http://localhost:2712
+    this.host = 'http://localhost:2712'; // http://ec2-54-176-79-167.us-west-1.compute.amazonaws.com:2712
     this.getReviews(this.state.courseId);
   }
 
@@ -145,11 +145,11 @@ class ReviewService extends React.Component {
   render() {
     if (!this.state.courseId) {
       return (
-        <MainStyle>Course not found</MainStyle>
+        <ReviewMainStyle>Course not found</ReviewMainStyle>
       );
     } else {
       return (
-        <MainStyle>
+        <ReviewMainStyle>
           {this.state.featuredReview && this.state.totalReviews && this.state.totalReviews.length >= 10 &&
           <Featured
             review={this.state.featuredReview}
@@ -185,7 +185,7 @@ class ReviewService extends React.Component {
             showTwelveMoreReviews={this.showTwelveMoreReviews}
           />
           }
-        </MainStyle>
+        </ReviewMainStyle>
       );
     }
   }

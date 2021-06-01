@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const FeaturedStyle = styled.div`
+export const ReviewFeaturedStyle = styled.div`
   background-attachment: scroll;
   background-clip: border-box;
   background-color: rgb(251, 251, 248);
@@ -15,15 +15,15 @@ export const FeaturedStyle = styled.div`
   width: 550px;
 `;
 
-export const FeaturedReviewer = styled.div`
+export const ReviewFeaturedReviewer = styled.div`
   display: flex;
 `;
 
-export const FeaturedReviewerAvatar = styled.div`
+export const ReviewFeaturedReviewerAvatar = styled.div`
   margin-right: 8px;
 `;
 
-export const FeaturedReviewerInitials = styled.div`
+export const ReviewFeaturedReviewerInitials = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,7 +37,7 @@ export const FeaturedReviewerInitials = styled.div`
   aspect-ratio: auto 64 / 64;
 `;
 
-export const FeaturedReviewerPicture = styled.img`
+export const ReviewFeaturedReviewerPicture = styled.img`
   border-color: rgb(220,218,203);
   border-style: solid;
   border-width: 1px;
@@ -47,7 +47,7 @@ export const FeaturedReviewerPicture = styled.img`
   aspect-ratio: auto 64 / 64;
 `;
 
-export const FeaturedReviewerMetadata = styled.div`
+export const ReviewFeaturedReviewerMetadata = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

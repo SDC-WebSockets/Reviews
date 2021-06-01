@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const Inputs = styled.span`
+export const ReviewInputs = styled.span`
   display: flex;
 `;
 
-export const SearchBar = styled.input`
+export const ReviewSearchBar = styled.input`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   border-top: 1px solid #989586;
@@ -24,7 +24,7 @@ export const SearchBar = styled.input`
   }
 `;
 
-export const ClearSearchBar = styled.button`
+export const ReviewClearSearchBar = styled.button`
   height: 30px;
   width: 30px;
   background-color: transparent;
@@ -38,7 +38,7 @@ export const ClearSearchBar = styled.button`
   left: 358px;
 `;
 
-export const SearchButton = styled.button`
+export const ReviewSearchButton = styled.button`
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   background-color: rgb(15, 124, 144);
