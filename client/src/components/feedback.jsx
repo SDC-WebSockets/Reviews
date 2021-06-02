@@ -43,7 +43,8 @@ class Feedback extends React.Component {
   }
 
   handleClick(tier) {
-    if (this.props.currentTier !== null) {
+    let clickedTier = Number(document.getElementById(`tier${tier}`).id.slice(4));
+    if (this.props.currentTier === clickedTier) {
       this.removeFilter();
     } else {
       this.filterByTier(tier);
