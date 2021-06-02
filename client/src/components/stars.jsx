@@ -1,6 +1,6 @@
 import React from 'react';
 import { starPath } from '../svg.js';
-import { ReviewStarStyle, ReviewStarsStyle } from '../styles/stars.style.js';
+import { ReviewStarStyle, ReviewStarsStyle, ReviewStar } from '../styles/stars.style.js';
 
 const makeStar = (starFill) => {
   const empty = 'rgb(255, 255, 255)';
@@ -44,7 +44,7 @@ const Stars = (props) => {
   }
   return (
     <ReviewStarsStyle>
-      {stars.map((star, index) => <span key={index}>{star}</span>)}
+      {stars.map((star, index) => <ReviewStar key={index}>{star}</ReviewStar>)}
     </ReviewStarsStyle>
   );
 };

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export const ReviewButtonsWrapper = styled.div``;
+
 export const ReviewHelpful = styled.p`
   font-size: 12px;
 `;

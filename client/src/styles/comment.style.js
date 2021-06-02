@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 
+export const ReviewCommentWrapper = styled.div``;
+
 export const ReviewCommentStyle = styled.div`
   width: auto;
   max-width: 600px;
   overflow: hidden;
 `;
+
+export const ReviewShowMoreWrapper = styled.div``;
 
 export const ReviewArrow = styled.svg`
   width: 24px;
@@ -51,6 +55,8 @@ export const ReviewShowMore = styled.button`
     }
   }
 `;
+
+export const ReviewCommentWithBoldSearchTerm = styled.div``;
 
 export const reviewGradientStyle = {
   height: '100px',

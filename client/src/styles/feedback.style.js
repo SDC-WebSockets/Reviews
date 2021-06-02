@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const ReviewFeedbackWrapper = styled.div``;
+
+export const ReviewNoFeedback = styled.div``;
+
 export const ReviewFeedbackStyle = styled.div`
   display: flex;
 `;
@@ -19,6 +23,10 @@ export const ReviewGrade = styled.div`
   line-height: 64px;
   font-size: 64px;
 `;
+
+export const ReviewStarsWrapper = styled.div``;
+
+export const ReviewCourseRatingTitle = styled.div``;
 
 export const ReviewTiers = styled.div`
   display: flex;
@@ -58,12 +66,16 @@ export const ReviewTierX = styled.button`
   left: 620px;
 `;
 
+export const ReviewSearchControlsWrapper = styled.div``;
+
 export const ReviewControls = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-export const ReviewTierSelect = styled.div`
+export const ReviewTierSelect = styled.select``;
+
+export const ReviewTierMenu = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -72,7 +84,7 @@ export const ReviewTierSelect = styled.div`
   width: 178px;
   height: 46px;
 
-  & select {
+  & ${ReviewTierSelect} {
     cursor: pointer;
     padding: 12px;
     margin-right: 12px;
@@ -85,3 +97,5 @@ export const ReviewTierSelect = styled.div`
     /* appearance: none; */
   }
 `;
+
+export const ReviewTierOption = styled.option``;
