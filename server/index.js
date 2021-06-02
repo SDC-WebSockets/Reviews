@@ -3,7 +3,8 @@ const path = require('path');
 const cors = require('cors');
 const mongoDb = require('../database/mongoDb.js');
 const app = express();
-const PORT = process.env.PORT || 2712;
+const port = process.env.PORT || 2712;
+const host = process.env.HOST || 'localhost';
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
@@ -50,6 +51,6 @@ app.get('/bundle', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', 'public', 'reviewBundle.js'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server listening at http://${host}:${port}`);
 });

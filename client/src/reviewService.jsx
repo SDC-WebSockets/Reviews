@@ -10,6 +10,8 @@ import querystring from 'querystring';
 
 import { ReviewMainStyle } from './styles/main.style.js';
 
+const host = process.env.HOST || 'localhost';
+const port = process.env.PORT || 2712;
 
 class ReviewService extends React.Component {
   constructor(props) {
@@ -31,12 +33,13 @@ class ReviewService extends React.Component {
       ratings: null,
       displayedReviews: null
     };
-    this.host = 'http://localhost:2712'; // http://ec2-54-176-79-167.us-west-1.compute.amazonaws.com:2712
+    console.log(host);
+    console.log(port);
     this.getReviews(this.state.courseId);
   }
 
   getReviews(id) {
-    fetch(`${this.host}/reviews/item?courseId=${id}`, {
+    fetch(`${host}:${port}/reviews/item?courseId=${id}`, {
       method: 'GET',
       mode: 'cors',
       headers: {

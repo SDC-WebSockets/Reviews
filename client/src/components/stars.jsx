@@ -4,13 +4,13 @@ import { ReviewStarStyle, ReviewStarsStyle } from '../styles/stars.style.js';
 
 const makeStar = (starFill) => {
   const empty = 'rgb(255, 255, 255)';
-  const half = 'url(#gradient)';
+  const half = 'url(#starGradient)';
   const full = 'rgb(235, 138, 47)';
   const starTypes = [empty, half, full];
   return (
     <ReviewStarStyle viewBox="0 0 24 24">
       <defs>
-        <linearGradient id="gradient">
+        <linearGradient id="starGradient">
           <stop offset="50%" stopColor="rgb(235, 138, 47)"/>
           <stop offset="50%" stopColor="rgb(255, 255, 255)" stopOpacity="1"/>
         </linearGradient>
