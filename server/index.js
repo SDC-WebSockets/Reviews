@@ -3,6 +3,8 @@ const path = require('path');
 const cors = require('cors');
 const mongoDb = require('../database/mongoDb.js');
 const app = express();
+// const dotenv = require('dotenv');
+// dotenv.config();
 const port = process.env.PORT || 2712;
 const host = process.env.HOST || 'localhost';
 

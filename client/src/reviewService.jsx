@@ -33,13 +33,11 @@ class ReviewService extends React.Component {
       ratings: null,
       displayedReviews: null
     };
-    console.log(host);
-    console.log(port);
     this.getReviews(this.state.courseId);
   }
 
   getReviews(id) {
-    fetch(`${host}:${port}/reviews/item?courseId=${id}`, {
+    fetch(`http://${host}:${port}/reviews/item?courseId=${id}`, {
       method: 'GET',
       mode: 'cors',
       headers: {
