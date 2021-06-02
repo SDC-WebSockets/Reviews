@@ -12,8 +12,9 @@ export const ReviewButtonStyle = styled.div`
 `;
 
 export const ReviewThumbs = styled.button`
+  display: flex;
+  justify-content: center;
   align-items: center;
-  display: block;
   background-color: transparent;
   border-color: rgb(40, 150, 169);
   border-width: 1px;
@@ -22,11 +23,9 @@ export const ReviewThumbs = styled.button`
   color: rgb(15, 124, 144);
   cursor: pointer;
   margin-right: 8px;
-  padding: 10px;
-  padding: 10px;
   width: 40px;
   height: 40px;
-  fill: rgb(15, 124, 144);
+  fill: rgb(40, 150, 169);
   &:hover {
     border-color: rgb(9, 76, 89);
   }

@@ -10,13 +10,13 @@ export const ReviewMainStyle = styled.div`
   float: left;
   letter-spacing: -0.2px
   line-height: 22.4px;
-  min-height: 701px;
-  width: auto;
-  min-width: 600px;
-  max-width: 1084px;
-  padding-bottom: 0px;
-  padding-left: 32px;
+  margin: auto;
   padding-top: 32px;
+  padding-right: 5%;
+  padding-bottom: 0px;
+  padding-left: 5%;
+  margin-left: 24px;
+
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 `;

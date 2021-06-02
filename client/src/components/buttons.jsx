@@ -20,7 +20,7 @@ const Buttons = (props) => (
           { borderColor: 'rgb(15, 124, 144)', backgroundColor: 'rgb(15, 124, 144)', fill: 'rgb(255, 255, 255)' }
           : null
         }>
-        <svg viewBox="0 0 24 24">
+        <svg viewBox="0 0 24 24" width="20px" height="20px">
           <path d={thumbsUpPath}/>
         </svg>
       </ReviewThumbs>
@@ -29,7 +29,7 @@ const Buttons = (props) => (
           { borderColor: 'rgb(15, 124, 144)', backgroundColor: 'rgb(15, 124, 144)', fill: 'rgb(255, 255, 255)' }
           : null
         }>
-        <svg viewBox="0 0 24 24">
+        <svg viewBox="0 0 24 24" width="20px" height="20px">
           <path d={thumbsDownPath}/>
         </svg>
       </ReviewThumbs>

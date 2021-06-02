@@ -2,6 +2,7 @@ import React from 'react';
 import { magnifyingGlassPath, xPath } from '../svg.js';
 import {
   ReviewInputs,
+  ReviewSearchInput,
   ReviewSearchBar,
   ReviewClearSearchBar,
   ReviewSearchButton
@@ -51,16 +52,15 @@ class Search extends React.Component {
   render() {
     return (
       <ReviewInputs>
-        <ReviewSearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress}>
-        </ReviewSearchBar>
-        {this.state.term ?
-          <ReviewClearSearchBar id="clearSearch" onClick={this.resetSearch}>
+        <ReviewSearchInput>
+          <ReviewSearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress}>
+          </ReviewSearchBar>
+          <ReviewClearSearchBar id="clearSearch" onClick={this.resetSearch} style={this.state.term ? {visibility: 'visible'} : {visibility: 'hidden'}}>
             <svg viewBox="0 0 24 24">
               <path fill="rgb(115, 114, 108)" d={xPath}/>
             </svg>
           </ReviewClearSearchBar>
-          :
-          null}
+        </ReviewSearchInput>
         <ReviewSearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
           <svg viewBox="-7 -7 35 35">
             <path fill="rgb(255, 255, 255)" d={magnifyingGlassPath}/>

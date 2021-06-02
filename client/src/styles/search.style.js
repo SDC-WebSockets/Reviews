@@ -4,24 +4,37 @@ export const ReviewInputs = styled.span`
   display: flex;
 `;
 
-export const ReviewSearchBar = styled.input`
+export const ReviewSearchInput = styled.div`
+  display: flex;
+  align-items: center;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   border-top: 1px solid #989586;
   border-right: 0;
   border-bottom: 1px solid #989586;
   border-left: 1px solid #989586;
-  width: 303px;
-  height: 44px;
+  min-width: 303px;
+  max-width: 600px;
+  height: 46px;
+  &:focus-within {
+    border-color: rgb(60, 59, 55);
+  }
+`;
+
+export const ReviewSearchBar = styled.input`
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  color: rgb(60, 59, 55);
+  min-width: 303px;
+  max-width: 600px;
+  height: 42px;
+  padding-top: 2px;
   padding-left: 12px;
-  padding-right: 40px;
   line-height: 22.4px;
   font-size: 16px;
   overflow: scroll;
   outline: none;
-  &:focus{
-    border-color: rgb(60, 59, 55);
-  }
+  border: none;
 `;
 
 export const ReviewClearSearchBar = styled.button`
@@ -32,10 +45,8 @@ export const ReviewClearSearchBar = styled.button`
   cursor: pointer;
   padding: 2px;
   display: block;
-  margin-top: 9px;
-  margin-bottom: 5px;
-  position: absolute;
-  left: 358px;
+  margin-right: 9px;
+  position: relative;
 `;
 
 export const ReviewSearchButton = styled.button`

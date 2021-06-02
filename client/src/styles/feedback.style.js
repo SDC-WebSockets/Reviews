@@ -6,6 +6,7 @@ export const ReviewNoFeedback = styled.div``;
 
 export const ReviewFeedbackStyle = styled.div`
   display: flex;
+  width: 600px;
 `;
 
 export const ReviewOverallRating = styled.div`
@@ -24,15 +25,19 @@ export const ReviewGrade = styled.div`
   font-size: 64px;
 `;
 
-export const ReviewStarsWrapper = styled.div``;
+export const ReviewStarsWrapper = styled.div`
+  padding: 4px;
+`;
 
-export const ReviewCourseRatingTitle = styled.div``;
+export const ReviewCourseRatingTitle = styled.div`
+`;
 
 export const ReviewTiers = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 32px;
-  width: 468px;
+  /* width: 468px; */
+  width: 100%;
 `;
 
 export const ReviewTier = styled.span`
@@ -43,7 +48,8 @@ export const ReviewTier = styled.span`
 export const ReviewData = styled.span`
   color: rgb(15, 124, 144);
   display: flex;
-  width: 468px;
+  /* width: 468px; */
+  width: 100%;
   height: 20px;
   margin-bottom: 8px;
   align-items: center;
@@ -62,15 +68,15 @@ export const ReviewTierX = styled.button`
   background-color: transparent;
   border: none;
   margin-bottom: 6px;
-  position: absolute;
-  left: 620px;
+  position: relative;
 `;
 
 export const ReviewSearchControlsWrapper = styled.div``;
 
 export const ReviewControls = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 `;
 
 export const ReviewTierSelect = styled.select``;
