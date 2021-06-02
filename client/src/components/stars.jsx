@@ -1,22 +1,22 @@
 import React from 'react';
 import { starPath } from '../svg.js';
-import { StarStyle, StarsStyle } from '../styles/stars.style.js';
+import { ReviewStarStyle, ReviewStarsStyle } from '../styles/stars.style.js';
 
 const makeStar = (starFill) => {
   const empty = 'rgb(255, 255, 255)';
-  const half = 'url(#gradient)';
+  const half = 'url(#starGradient)';
   const full = 'rgb(235, 138, 47)';
   const starTypes = [empty, half, full];
   return (
-    <StarStyle viewBox="0 0 24 24">
+    <ReviewStarStyle viewBox="0 0 24 24">
       <defs>
-        <linearGradient id="gradient">
+        <linearGradient id="starGradient">
           <stop offset="50%" stopColor="rgb(235, 138, 47)"/>
           <stop offset="50%" stopColor="rgb(255, 255, 255)" stopOpacity="1"/>
         </linearGradient>
       </defs>
       <path d={starPath} strokeWidth="2px" stroke="rgb(235, 138, 47)" fill={starTypes[starFill * 2]}/>
-    </StarStyle>
+    </ReviewStarStyle>
   );
 };
 
@@ -43,9 +43,9 @@ const Stars = (props) => {
     stars = [makeStar(1), makeStar(0), makeStar(0), makeStar(0), makeStar(0)];
   }
   return (
-    <StarsStyle>
+    <ReviewStarsStyle>
       {stars.map((star, index) => <span key={index}>{star}</span>)}
-    </StarsStyle>
+    </ReviewStarsStyle>
   );
 };
 

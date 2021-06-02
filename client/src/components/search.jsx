@@ -1,10 +1,10 @@
 import React from 'react';
 import { magnifyingGlassPath, xPath } from '../svg.js';
 import {
-  Inputs,
-  SearchBar,
-  ClearSearchBar,
-  SearchButton
+  ReviewInputs,
+  ReviewSearchBar,
+  ReviewClearSearchBar,
+  ReviewSearchButton
 } from '../styles/search.style.js';
 
 class Search extends React.Component {
@@ -50,23 +50,23 @@ class Search extends React.Component {
 
   render() {
     return (
-      <Inputs>
-        <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress}>
-        </SearchBar>
+      <ReviewInputs>
+        <ReviewSearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress}>
+        </ReviewSearchBar>
         {this.state.term ?
-          <ClearSearchBar id="clearSearch" onClick={this.resetSearch}>
+          <ReviewClearSearchBar id="clearSearch" onClick={this.resetSearch}>
             <svg viewBox="0 0 24 24">
               <path fill="rgb(115, 114, 108)" d={xPath}/>
             </svg>
-          </ClearSearchBar>
+          </ReviewClearSearchBar>
           :
           null}
-        <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
+        <ReviewSearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
           <svg viewBox="-7 -7 35 35">
             <path fill="rgb(255, 255, 255)" d={magnifyingGlassPath}/>
           </svg>
-        </SearchButton>
-      </Inputs>
+        </ReviewSearchButton>
+      </ReviewInputs>
     );
   }
 }

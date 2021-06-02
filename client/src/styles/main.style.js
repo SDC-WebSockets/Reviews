@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MainStyle = styled.div`
+export const ReviewMainStyle = styled.div`
   box-sizing: border-box;
   color: rgb(60, 59, 55);
   display: block;
@@ -21,7 +21,7 @@ export const MainStyle = styled.div`
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 `;
 
-export const Title = styled.h2`
+export const ReviewTitle = styled.h2`
   font-size: 24px;
   font-weight: 700;
   line-height: 28.8px;

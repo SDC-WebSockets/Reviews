@@ -1,10 +1,10 @@
 import React from 'react';
-import { BlackBar, GreyBar } from '../styles/gauge.style.js';
+import { ReviewBlackBar, ReviewGreyBar } from '../styles/gauge.style.js';
 
 const Gauge = (props) => (
   <div style={{ display: 'grid'}}>
-    <BlackBar style={{ width: `${(props.portion / 100) * 280}px`}}></BlackBar>
-    <GreyBar/>
+    <ReviewBlackBar style={{ width: `${(props.portion / 100) * 280}px`}}></ReviewBlackBar>
+    <ReviewGreyBar/>
   </div>
 );
 

@@ -5,7 +5,7 @@ export const ReviewListStyle = styled.div`
   min-height: 600px;
 `;
 
-export const SeeMoreReviews = styled.button`
+export const ReviewSeeMoreReviews = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,20 +29,5 @@ export const SeeMoreReviews = styled.button`
   &:active {
     color: rgb(9, 76, 89);
     border-color: rgb(28, 106, 120);
-  }
-`;
-
-export const SeeMoreReviewsContainer = styled.div`
-  &:hover {
-    ${SeeMoreReviews} {
-      color: rgb(9, 76, 89);
-      border-color: rgb(28, 106, 120);
-    }
-  }
-  &:active {
-    ${SeeMoreReviews} {
-      color: rgb(9, 76, 89);
-      border-color: rgb(28, 106, 120);
-    }
   }
 `;

@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
-export const Helpful = styled.p`
+export const ReviewHelpful = styled.p`
   font-size: 12px;
 `;
 
-export const ButtonStyle = styled.div`
+export const ReviewButtonStyle = styled.div`
   display: flex;
   align-items: center;
 `;
 
-export const Thumbs = styled.button`
+export const ReviewThumbs = styled.button`
   align-items: center;
   display: block;
   background-color: transparent;
@@ -35,7 +35,7 @@ export const Thumbs = styled.button`
   }
 `;
 
-export const Report = styled.button`
+export const ReviewReport = styled.button`
   color: rgb(15, 124, 144);
   align-items: center;
   background-color: transparent;

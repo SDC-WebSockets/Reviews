@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 
-export const CommentStyle = styled.div`
+export const ReviewCommentStyle = styled.div`
   width: auto;
   max-width: 600px;
   overflow: hidden;
 `;
 
-export const Arrow = styled.svg`
+export const ReviewArrow = styled.svg`
   width: 24px;
   height: 15px;
   margin-left: 6px;
 `;
 
-export const ArrowPath = styled.path`
+export const ReviewArrowPath = styled.path`
   stroke: rgb(15, 124, 144);
   fill: rgb(15, 124, 144);
   &:hover {
@@ -21,7 +21,7 @@ export const ArrowPath = styled.path`
   }
 `;
 
-export const ShowMore = styled.button`
+export const ReviewShowMore = styled.button`
   display: flex;
   align-items: center;
   color: rgb(15, 124, 144);
@@ -38,21 +38,21 @@ export const ShowMore = styled.button`
   left: 112px;
   &:hover {
     color: rgb(9, 76, 89);
-    ${ArrowPath} {
+    ${ReviewArrowPath} {
       stroke: rgb(9, 76, 89);
       fill: rgb(9, 76, 89);
     }
   }
   &:active {
     color: rgb(9, 76, 89);
-    ${ArrowPath} {
+    ${ReviewArrowPath} {
       stroke: rgb(9, 76, 89);
       fill: rgb(9, 76, 89);
     }
   }
 `;
 
-export const gradientStyle = {
+export const reviewGradientStyle = {
   height: '100px',
   backgroundColor: 'rgb(60, 59, 55)',
   backgroundImage: 'linear-gradient(180deg, rgb(60, 59, 55), rgb(60, 59, 55) 60px, rgb(255,255,255))',
@@ -63,7 +63,7 @@ export const gradientStyle = {
   MozTextFillColor: 'transparent'
 };
 
-export const defaultStyle = {
+export const reviewDefaultStyle = {
   height: 'auto',
   backgroundColor: 'rgb(60, 59, 55)',
   backgroundImage: 'none',

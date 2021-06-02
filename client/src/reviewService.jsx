@@ -8,8 +8,10 @@ import fetch from 'node-fetch';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from './filters.js';
 import querystring from 'querystring';
 
-import { MainStyle } from './styles/main.style.js';
+import { ReviewMainStyle } from './styles/main.style.js';
 
+const host = process.env.HOST || 'localhost';
+const port = process.env.PORT || 2712;
 
 class ReviewService extends React.Component {
   constructor(props) {
@@ -31,12 +33,13 @@ class ReviewService extends React.Component {
       ratings: null,
       displayedReviews: null
     };
-    this.host = 'http://ec2-54-176-79-167.us-west-1.compute.amazonaws.com:2712'; // http://localhost:2712
+    console.log(host);
+    console.log(port);
     this.getReviews(this.state.courseId);
   }
 
   getReviews(id) {
-    fetch(`${this.host}/reviews/item?courseId=${id}`, {
+    fetch(`${host}:${port}/reviews/item?courseId=${id}`, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -145,11 +148,11 @@ class ReviewService extends React.Component {
   render() {
     if (!this.state.courseId) {
       return (
-        <MainStyle>Course not found</MainStyle>
+        <ReviewMainStyle>Course not found</ReviewMainStyle>
       );
     } else {
       return (
-        <MainStyle>
+        <ReviewMainStyle>
           {this.state.featuredReview && this.state.totalReviews && this.state.totalReviews.length >= 10 &&
           <Featured
             review={this.state.featuredReview}
@@ -185,7 +188,7 @@ class ReviewService extends React.Component {
             showTwelveMoreReviews={this.showTwelveMoreReviews}
           />
           }
-        </MainStyle>
+        </ReviewMainStyle>
       );
     }
   }
