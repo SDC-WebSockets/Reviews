@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export const ReviewGaugeStyle = styled.div``;
+
 export const ReviewBlackBar = styled.div`
   height: 8px;
   background-color: rgb(115, 114, 108);

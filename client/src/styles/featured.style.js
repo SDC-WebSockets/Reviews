@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const ReviewFeaturedStyle = styled.div`
+export const FeaturedReviewWrapper = styled.div``;
+
+export const FeaturedReviewStyle = styled.div`
   background-attachment: scroll;
   background-clip: border-box;
   background-color: rgb(251, 251, 248);
@@ -15,15 +17,15 @@ export const ReviewFeaturedStyle = styled.div`
   width: 550px;
 `;
 
-export const ReviewFeaturedReviewer = styled.div`
+export const FeaturedReviewer = styled.div`
   display: flex;
 `;
 
-export const ReviewFeaturedReviewerAvatar = styled.div`
+export const FeaturedReviewerAvatar = styled.div`
   margin-right: 8px;
 `;
 
-export const ReviewFeaturedReviewerInitials = styled.div`
+export const FeaturedReviewerInitials = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,7 +39,7 @@ export const ReviewFeaturedReviewerInitials = styled.div`
   aspect-ratio: auto 64 / 64;
 `;
 
-export const ReviewFeaturedReviewerPicture = styled.img`
+export const FeaturedReviewerPicture = styled.img`
   border-color: rgb(220,218,203);
   border-style: solid;
   border-width: 1px;
@@ -47,8 +49,12 @@ export const ReviewFeaturedReviewerPicture = styled.img`
   aspect-ratio: auto 64 / 64;
 `;
 
-export const ReviewFeaturedReviewerMetadata = styled.div`
+export const FeaturedReviewerMetadata = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
+
+export const FeaturedReviewerCoursesTaken = styled.div``;
+
+export const FeaturedReviewerReviews = styled.div``;

@@ -5,16 +5,23 @@ import Gauge from './gauge.jsx';
 import { xPath } from '../svg.js';
 import { ReviewTitle } from '../styles/main.style.js';
 import {
+  ReviewFeedbackWrapper,
+  ReviewNoFeedback,
   ReviewFeedbackStyle,
   ReviewOverallRating,
   ReviewGrade,
+  ReviewStarsWrapper,
+  ReviewCourseRatingTitle,
   ReviewTiers,
   ReviewTier,
   ReviewData,
   ReviewPercentage,
   ReviewTierX,
+  ReviewSearchControlsWrapper,
   ReviewControls,
-  ReviewTierSelect
+  ReviewTierSelect,
+  ReviewTierMenu,
+  ReviewTierOption
 } from '../styles/feedback.style.js';
 
 class Feedback extends React.Component {
@@ -79,26 +86,26 @@ class Feedback extends React.Component {
   render() {
     if (this.props.ratings.totalRatings === 0) {
       return (
-        <div>
+        <ReviewFeedbackWrapper>
           <ReviewTitle>Student feedback</ReviewTitle>
-          <div>This course doesn't have any ratings yet.</div>
-        </div>
+          <ReviewNoFeedback>This course doesn't have any ratings yet.</ReviewNoFeedback>
+        </ReviewFeedbackWrapper>
       );
     } else {
       const tiers = [
         ['5'], ['4 1/2', '4'], ['3 1/2', '3'], ['2 1/2', '2'], ['1 1/2', '1']
       ];
       return (
-        <div>
+        <ReviewFeedbackWrapper>
           <ReviewTitle>Student feedback</ReviewTitle>
           <ReviewFeedbackStyle>
             <ReviewOverallRating>
               <ReviewGrade>{this.props.ratings.overallRating.toFixed(1)}
               </ReviewGrade>
-              <div>
+              <ReviewStarsWrapper>
                 <Stars rating={this.props.ratings.overallRating}/>
-              </div>
-              <div>Course Rating</div>
+              </ReviewStarsWrapper>
+              <ReviewCourseRatingTitle>Course Rating</ReviewCourseRatingTitle>
             </ReviewOverallRating>
             <ReviewTiers>
               {tiers.map((tier) => {
@@ -134,7 +141,7 @@ class Feedback extends React.Component {
               })}
             </ReviewTiers>
           </ReviewFeedbackStyle>
-          <div>
+          <ReviewSearchControlsWrapper>
             <ReviewTitle>Reviews</ReviewTitle>
             <ReviewControls>
               {this.props.totalReviews && this.props.totalReviews.length > 0 &&
@@ -145,19 +152,19 @@ class Feedback extends React.Component {
                 setReviewsFilteredBySearchAndTier={this.props.setReviewsFilteredBySearchAndTier}
               />
               }
-              <ReviewTierSelect>
-                <select className="tierSelect" ref={this.select} onChange={this.handleSelect}>
-                  <option value="0">All ratings</option>
-                  <option value="5">Five stars</option>
-                  <option value="4">Four stars</option>
-                  <option value="3">Three stars</option>
-                  <option value="2">Two stars</option>
-                  <option value="1">One star</option>
-                </select>
-              </ReviewTierSelect>
+              <ReviewTierMenu>
+                <ReviewTierSelect className="tierSelect" ref={this.select} onChange={this.handleSelect}>
+                  <ReviewTierOption value="0">All ratings</ReviewTierOption>
+                  <ReviewTierOption value="5">Five stars</ReviewTierOption>
+                  <ReviewTierOption value="4">Four stars</ReviewTierOption>
+                  <ReviewTierOption value="3">Three stars</ReviewTierOption>
+                  <ReviewTierOption value="2">Two stars</ReviewTierOption>
+                  <ReviewTierOption value="1">One star</ReviewTierOption>
+                </ReviewTierSelect>
+              </ReviewTierMenu>
             </ReviewControls>
-          </div>
-        </div>
+          </ReviewSearchControlsWrapper>
+        </ReviewFeedbackWrapper>
       );
     }
   }

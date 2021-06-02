@@ -10,3 +10,5 @@ export const ReviewStarsStyle = styled.div`
   width: 100px;
   height: 20px;
 `;
+
+export const ReviewStar = styled.span``;

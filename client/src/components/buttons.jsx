@@ -1,9 +1,15 @@
 import React from 'react';
 import { thumbsUpPath, thumbsDownPath } from '../svg.js';
-import { ReviewHelpful, ReviewButtonStyle, ReviewThumbs, ReviewReport } from '../styles/buttons.style.js';
+import {
+  ReviewButtonsWrapper,
+  ReviewHelpful,
+  ReviewButtonStyle,
+  ReviewThumbs,
+  ReviewReport
+} from '../styles/buttons.style.js';
 
 const Buttons = (props) => (
-  <div>
+  <ReviewButtonsWrapper>
     {props.reviewState.thumbsUp === true || props.reviewState.thumbsDown === true ?
       <ReviewHelpful>Thank you for your feedback</ReviewHelpful> :
       <ReviewHelpful>Was this review helpful?</ReviewHelpful>
@@ -32,7 +38,7 @@ const Buttons = (props) => (
         Report
       </ReviewReport>
     </ReviewButtonStyle>
-  </div>
+  </ReviewButtonsWrapper>
 );
 
 export default Buttons;

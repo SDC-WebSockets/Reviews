@@ -11,11 +11,11 @@ export const ReviewStyle = styled.div`
   width: 600px;
 `;
 
-export const ReviewReviewerAvatar = styled.div`
+export const ReviewerAvatar = styled.div`
   min-width: 72px;
 `;
 
-export const ReviewReviewerInitials = styled.div`
+export const ReviewerInitials = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +29,7 @@ export const ReviewReviewerInitials = styled.div`
   aspect-ratio: auto 48 / 48;
 `;
 
-export const ReviewReviewerPicture = styled.img`
+export const ReviewerPicture = styled.img`
   border-radius: 50%;
   width: 48px;
   height: 48px;
@@ -44,7 +44,7 @@ export const ReviewContent = styled.div`
   display: block;
 `;
 
-export const ReviewName = styled.div`
+export const ReviewerName = styled.div`
   font-size: 16px;
   font-weight: 700;
   height: 19px;

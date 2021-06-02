@@ -1,10 +1,13 @@
 import React from 'react';
 import { arrowDownPath, arrowUpPath } from '../svg.js';
 import {
+  ReviewCommentWrapper,
   ReviewCommentStyle,
   ReviewShowMore,
   ReviewArrow,
   ReviewArrowPath,
+  ReviewCommentWithBoldSearchTerm,
+  ReviewShowMoreWrapper,
   reviewGradientStyle
 } from '../styles/comment.style.js';
 
@@ -19,21 +22,21 @@ const Comment = (props) => {
     const newComment = boldString(comment, searchTerm);
 
     return (
-      <div className="commentWithBoldSearchTerm" dangerouslySetInnerHTML={{ __html: newComment}}></div>
+      <ReviewCommentWithBoldSearchTerm className="commentWithBoldSearchTerm" dangerouslySetInnerHTML={{ __html: newComment}}/>
     );
   };
 
 
 
   return (
-    <div>
+    <ReviewCommentWrapper>
       <ReviewCommentStyle className="reviewComment" id={`commentId${props.review._id}`}
         style={props.review.comment.length > 300 && props.commentHeight === '100px' ? reviewGradientStyle : {height: 'auto'}}>
         {props.currentSearchTerm ? <CommentWithBoldSearchTerm/> : props.review.comment}
       </ReviewCommentStyle>
       {props.review.comment.length > 300 &&
 
-        <div onClick={() => { props.handleClick('showMore'); } }>
+        <ReviewShowMoreWrapper onClick={() => { props.handleClick('showMore'); } }>
           {props.commentHeight === '100px' ?
             <ReviewShowMore>Show more
               <ReviewArrow viewBox="0 0 24 24">
@@ -46,9 +49,9 @@ const Comment = (props) => {
               </ReviewArrow>
             </ReviewShowMore>
           }
-        </div>
+        </ReviewShowMoreWrapper>
       }
-    </div>
+    </ReviewCommentWrapper>
   );
 
 };
