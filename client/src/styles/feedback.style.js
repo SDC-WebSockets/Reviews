@@ -87,14 +87,14 @@ export const ReviewTierMenu = styled.div`
   cursor: pointer;
   border-radius: 4px;
   border: 1px solid #989586;
-  width: 178px;
+  width: 176px;
   height: 46px;
 
   & ${ReviewTierSelect} {
     cursor: pointer;
     padding: 12px;
     margin-right: 12px;
-    width: 180px;
+    width: 176px;
     color: rgb(115, 114, 108);
     font-size: 16px;
     border: none;
