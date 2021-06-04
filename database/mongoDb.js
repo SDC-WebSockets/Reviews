@@ -1,17 +1,11 @@
 const mongoose = require('mongoose');
 
-const dotenv = require('dotenv');
-dotenv.config();
-
-const port = process.env.PORT || 2712;
-const host = process.env.HOST || 'localhost';
-
-mongoose.connect(`mongodb://${host}/review-service`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost/review-service', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const mongoDb = mongoose.connection;
 mongoDb.on('error', console.error.bind(console, 'connection error:'));
 mongoDb.once('open', () => {
-  console.log(`Connected to the MongoDB database at ${host}`);
+  console.log('Connected to the MongoDB database');
 });
 
 const reviewSchema = new mongoose.Schema({ // 1 -> many: course_id -> reviews
