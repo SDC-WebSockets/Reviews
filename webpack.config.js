@@ -18,9 +18,18 @@ module.exports = {
     ]
   },
   plugins: [
-    new Dotenv()
-
-
+    new Dotenv(),
+    new S3Plugin({
+      exclude: /.*\.html$/,
+      s3Options: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: 'us-west-1'
+      },
+      s3UploadOptions: {
+        Bucket: 'review-bundle-bucket'
+      }
+    })
   ],
   output: {
     path: outputPath,
