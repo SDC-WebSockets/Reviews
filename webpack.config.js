@@ -1,7 +1,7 @@
 const path = require('path');
 const entryPath = path.join(__dirname, '/client/src/index.jsx');
 const outputPath = path.join(__dirname, '/client/public');
-// const Dotenv = require('dotenv-webpack');
+const Dotenv = require('dotenv-webpack');
 const S3Plugin = require('webpack-s3-plugin');
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
     ]
   },
   plugins: [
-    // new Dotenv()
+    new Dotenv()
 
 
   ],
