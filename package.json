@@ -21,26 +21,6 @@
     "url": "https://github.com/Charlotte-Badger/Reviews/issues"
   },
   "homepage": "https://github.com/Charlotte-Badger/Reviews#readme",
-  "devDependencies": {
-    "@babel/cli": "^7.1.0",
-    "@babel/core": "^7.1.0",
-    "@babel/plugin-transform-react-jsx": "^7.13.12",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.13.16",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
-    "babel-loader": "^8.0.2",
-    "babel-plugin-styled-components": "^1.12.0",
-    "dotenv-webpack": "^7.0.2",
-    "enzyme": "^3.11.0",
-    "eslint": "^7.25.0",
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
-    "jest": "^26.6.3",
-    "ts-jest": "^26.5.6",
-    "webpack": "^5.35.1",
-    "webpack-cli": "^4.6.0",
-    "webpack-dev": "^1.1.1"
-  },
   "dependencies": {
     "aws-sdk": "^2.897.0",
     "babel-jest": "^26.6.3",
@@ -56,5 +36,24 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-styled-components": "^1.12.0",
+    "css-loader": "^5.2.6",
+    "dotenv-webpack": "^7.0.2",
+    "enzyme": "^3.11.0",
+    "eslint": "^7.25.0",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "jest": "^26.6.3",
+    "style-loader": "^2.0.0",
+    "ts-jest": "^26.5.6",
+    "webpack": "^5.35.1",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev": "^1.1.1"
   }
 }
