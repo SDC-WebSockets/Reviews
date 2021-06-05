@@ -5,6 +5,8 @@ import {
   SearchInput,
   SearchBar,
   ClearSearchBar,
+  ClearSearchBarSVG,
+  MagnifyingGlassSVG,
   SearchButton
 } from '../styles/search.style.js';
 
@@ -56,15 +58,15 @@ class Search extends React.Component {
           <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress}>
           </SearchBar>
           <ClearSearchBar id="clearSearch" onClick={this.resetSearch} style={this.state.term ? {visibility: 'visible'} : {visibility: 'hidden'}}>
-            <svg viewBox="0 0 24 24">
+            <ClearSearchBarSVG viewBox="0 0 24 24">
               <path fill="rgb(115, 114, 108)" d={xPath}/>
-            </svg>
+            </ClearSearchBarSVG>
           </ClearSearchBar>
         </SearchInput>
         <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
-          <svg viewBox="-7 -7 35 35">
+          <MagnifyingGlassSVG viewBox="-7 -7 35 35">
             <path fill="rgb(255, 255, 255)" d={magnifyingGlassPath}/>
-          </svg>
+          </MagnifyingGlassSVG>
         </SearchButton>
       </SearchWrapper>
     );

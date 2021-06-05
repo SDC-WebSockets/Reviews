@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ReviewServiceWrapper = styled.div`
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   color: rgb(60, 59, 55);
   display: block;
   font-family: "sf pro text", "-apple-system", system-ui, "Roboto", "segoe ui", Helvetica, Arial, sans-serif, "apple color emoji", "segoe ui emoji", "segoe ui symbol";
@@ -11,10 +11,10 @@ export const ReviewServiceWrapper = styled.div`
   letter-spacing: -0.2px
   line-height: 22.4px;
   /* margin: auto; */
-  padding-top: 32px;
-  padding-right: 5%;
-  padding-bottom: 0px;
-  padding-left: 5%;
+  /* padding-top: 32px; */
+  /* padding-right: 5%; */
+  /* padding-bottom: 0px; */
+  /* padding-left: 5%; */
   /* margin-left: 24px; */
 
   -webkit-font-smoothing: antialiased;

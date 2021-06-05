@@ -93,8 +93,9 @@ export const TierMenu = styled.div`
   & ${TierSelect} {
     cursor: pointer;
     padding: 12px;
+    margin-left: 1px;
     margin-right: 12px;
-    width: 176px;
+    width: 175px;
     color: rgb(115, 114, 108);
     font-size: 16px;
     border: none;

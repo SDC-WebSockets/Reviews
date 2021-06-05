@@ -49,6 +49,10 @@ export const ClearSearchBar = styled.button`
   position: relative;
 `;
 
+export const ClearSearchBarSVG = styled.svg``;
+
+export const MagnifyingGlassSVG = styled.svg``;
+
 export const SearchButton = styled.button`
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
