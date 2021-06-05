@@ -5,7 +5,7 @@ export const ReviewListStyle = styled.div`
   min-height: 600px;
 `;
 
-export const ReviewSeeMoreReviews = styled.button`
+export const SeeMoreReviews = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { starPath } from '../svg.js';
-import { ReviewStarStyle, ReviewStarsStyle, ReviewStar } from '../styles/stars.style.js';
+import { StarStyle, StarsStyle, Star } from '../styles/stars.style.js';
 
 const makeStar = (starFill) => {
   const empty = 'rgb(255, 255, 255)';
@@ -8,7 +8,7 @@ const makeStar = (starFill) => {
   const full = 'rgb(235, 138, 47)';
   const starTypes = [empty, half, full];
   return (
-    <ReviewStarStyle viewBox="0 0 24 24">
+    <StarStyle viewBox="0 0 24 24">
       <defs>
         <linearGradient id="starGradient">
           <stop offset="50%" stopColor="rgb(235, 138, 47)"/>
@@ -16,7 +16,7 @@ const makeStar = (starFill) => {
         </linearGradient>
       </defs>
       <path d={starPath} strokeWidth="2px" stroke="rgb(235, 138, 47)" fill={starTypes[starFill * 2]}/>
-    </ReviewStarStyle>
+    </StarStyle>
   );
 };
 
@@ -43,9 +43,9 @@ const Stars = (props) => {
     stars = [makeStar(1), makeStar(0), makeStar(0), makeStar(0), makeStar(0)];
   }
   return (
-    <ReviewStarsStyle>
-      {stars.map((star, index) => <ReviewStar key={index}>{star}</ReviewStar>)}
-    </ReviewStarsStyle>
+    <StarsStyle>
+      {stars.map((star, index) => <Star key={index}>{star}</Star>)}
+    </StarsStyle>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Review from './review.jsx';
-import { ReviewListStyle, ReviewSeeMoreReviews } from '../styles/reviewList.style.js';
+import { ReviewListStyle, SeeMoreReviews } from '../styles/reviewList.style.js';
 
 
 const ReviewList = (props) => {
@@ -20,7 +20,7 @@ const ReviewList = (props) => {
       {props.displayedReviews.map((review, index) => <Review displayedReviews={props.displayedReviews} key={index} reviewNumber={index + 1} review={review} currentSearchTerm={props.currentSearchTerm} />)}
       {props.totalReviews.length > 12 &&
       props.displayedReviews.length !== currentReviews.length &&
-      <ReviewSeeMoreReviews onClick={ props.showTwelveMoreReviews }>See more reviews</ReviewSeeMoreReviews>
+      <SeeMoreReviews onClick={ props.showTwelveMoreReviews }>See more reviews</SeeMoreReviews>
       }
     </ReviewListStyle>
   );

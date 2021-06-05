@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-export const ReviewGaugeStyle = styled.div``;
+export const GaugeStyle = styled.div``;
 
-export const ReviewBlackBar = styled.div`
+export const BlackBar = styled.div`
   height: 8px;
   background-color: rgb(115, 114, 108);
   grid-column: 1;
@@ -10,7 +10,7 @@ export const ReviewBlackBar = styled.div`
   z-index: 2;
 `;
 
-export const ReviewGreyBar = styled.div`
+export const GreyBar = styled.div`
   width: 280px;
   height: 8px;
   background-color: rgb(220, 218, 203);
