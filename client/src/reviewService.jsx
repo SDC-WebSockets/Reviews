@@ -8,7 +8,7 @@ import fetch from 'node-fetch';
 import { getBestReview, filterReviewsByTerm, filterReviewsByTier } from './filters.js';
 import querystring from 'querystring';
 
-import { ReviewMainStyle } from './styles/main.style.js';
+import { ReviewServiceWrapper } from './styles/main.style.js';
 
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 2712;
@@ -146,11 +146,11 @@ class ReviewService extends React.Component {
   render() {
     if (!this.state.courseId) {
       return (
-        <ReviewMainStyle>Course not found</ReviewMainStyle>
+        <ReviewServiceWrapper>Course not found</ReviewServiceWrapper>
       );
     } else {
       return (
-        <ReviewMainStyle>
+        <ReviewServiceWrapper>
           {this.state.featuredReview && this.state.totalReviews && this.state.totalReviews.length >= 10 &&
           <Featured
             review={this.state.featuredReview}
@@ -186,7 +186,7 @@ class ReviewService extends React.Component {
             showTwelveMoreReviews={this.showTwelveMoreReviews}
           />
           }
-        </ReviewMainStyle>
+        </ReviewServiceWrapper>
       );
     }
   }

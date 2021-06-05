@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
-export const ReviewFeedbackWrapper = styled.div``;
+export const FeedbackWrapper = styled.div``;
 
-export const ReviewNoFeedback = styled.div``;
+export const NoFeedback = styled.div``;
 
-export const ReviewFeedbackStyle = styled.div`
+export const FeedbackStyle = styled.div`
   display: flex;
   width: 600px;
 `;
 
-export const ReviewOverallRating = styled.div`
+export const OverallRating = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,19 +20,19 @@ export const ReviewOverallRating = styled.div`
   width: 100px;
 `;
 
-export const ReviewGrade = styled.div`
+export const CourseGrade = styled.div`
   line-height: 64px;
   font-size: 64px;
 `;
 
-export const ReviewStarsWrapper = styled.div`
+export const StarsWrapper = styled.div`
   padding: 4px;
 `;
 
-export const ReviewCourseRatingTitle = styled.div`
+export const CourseRatingTitle = styled.div`
 `;
 
-export const ReviewTiers = styled.div`
+export const Tiers = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 32px;
@@ -40,12 +40,12 @@ export const ReviewTiers = styled.div`
   width: 100%;
 `;
 
-export const ReviewTier = styled.span`
+export const Tier = styled.span`
   display: flex;
   align-items: center;
 `;
 
-export const ReviewData = styled.span`
+export const Data = styled.span`
   color: rgb(15, 124, 144);
   display: flex;
   /* width: 468px; */
@@ -55,12 +55,12 @@ export const ReviewData = styled.span`
   align-items: center;
 `;
 
-export const ReviewPercentage = styled.span`
+export const Percentage = styled.span`
   margin-left: 8px;
   margin-right: 10px;
 `;
 
-export const ReviewTierX = styled.button`
+export const TierX = styled.button`
   align-items: center;
   display: block;
   height: 22px;
@@ -71,17 +71,17 @@ export const ReviewTierX = styled.button`
   position: relative;
 `;
 
-export const ReviewSearchControlsWrapper = styled.div``;
+export const SearchControlsWrapper = styled.div``;
 
-export const ReviewControls = styled.div`
+export const SearchControls = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
 `;
 
-export const ReviewTierSelect = styled.select``;
+export const TierSelect = styled.select``;
 
-export const ReviewTierMenu = styled.div`
+export const TierMenu = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -90,7 +90,7 @@ export const ReviewTierMenu = styled.div`
   width: 176px;
   height: 46px;
 
-  & ${ReviewTierSelect} {
+  & ${TierSelect} {
     cursor: pointer;
     padding: 12px;
     margin-right: 12px;
@@ -104,4 +104,4 @@ export const ReviewTierMenu = styled.div`
   }
 `;
 
-export const ReviewTierOption = styled.option``;
+export const TierOption = styled.option``;

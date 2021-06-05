@@ -5,23 +5,23 @@ import Gauge from './gauge.jsx';
 import { xPath } from '../svg.js';
 import { ReviewTitle } from '../styles/main.style.js';
 import {
-  ReviewFeedbackWrapper,
-  ReviewNoFeedback,
-  ReviewFeedbackStyle,
-  ReviewOverallRating,
-  ReviewGrade,
-  ReviewStarsWrapper,
-  ReviewCourseRatingTitle,
-  ReviewTiers,
-  ReviewTier,
-  ReviewData,
-  ReviewPercentage,
-  ReviewTierX,
-  ReviewSearchControlsWrapper,
-  ReviewControls,
-  ReviewTierSelect,
-  ReviewTierMenu,
-  ReviewTierOption
+  FeedbackWrapper,
+  NoFeedback,
+  FeedbackStyle,
+  OverallRating,
+  CourseGrade,
+  StarsWrapper,
+  CourseRatingTitle,
+  Tiers,
+  Tier,
+  Data,
+  Percentage,
+  TierX,
+  SearchControlsWrapper,
+  SearchControls,
+  TierSelect,
+  TierMenu,
+  TierOption
 } from '../styles/feedback.style.js';
 
 class Feedback extends React.Component {
@@ -87,28 +87,28 @@ class Feedback extends React.Component {
   render() {
     if (this.props.ratings.totalRatings === 0) {
       return (
-        <ReviewFeedbackWrapper>
+        <FeedbackWrapper>
           <ReviewTitle>Student feedback</ReviewTitle>
-          <ReviewNoFeedback>This course doesn't have any ratings yet.</ReviewNoFeedback>
-        </ReviewFeedbackWrapper>
+          <NoFeedback>This course doesn't have any ratings yet.</NoFeedback>
+        </FeedbackWrapper>
       );
     } else {
       const tiers = [
         ['5'], ['4 1/2', '4'], ['3 1/2', '3'], ['2 1/2', '2'], ['1 1/2', '1']
       ];
       return (
-        <ReviewFeedbackWrapper>
+        <FeedbackWrapper>
           <ReviewTitle>Student feedback</ReviewTitle>
-          <ReviewFeedbackStyle>
-            <ReviewOverallRating>
-              <ReviewGrade>{this.props.ratings.overallRating.toFixed(1)}
-              </ReviewGrade>
-              <ReviewStarsWrapper>
+          <FeedbackStyle>
+            <OverallRating>
+              <CourseGrade>{this.props.ratings.overallRating.toFixed(1)}
+              </CourseGrade>
+              <StarsWrapper>
                 <Stars rating={this.props.ratings.overallRating}/>
-              </ReviewStarsWrapper>
-              <ReviewCourseRatingTitle>Course Rating</ReviewCourseRatingTitle>
-            </ReviewOverallRating>
-            <ReviewTiers>
+              </StarsWrapper>
+              <CourseRatingTitle>Course Rating</CourseRatingTitle>
+            </OverallRating>
+            <Tiers>
               {tiers.map((tier) => {
                 let percentage;
                 let currentTier = Number(tier[tier.length - 1]);
@@ -117,34 +117,34 @@ class Feedback extends React.Component {
                   percentage = this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]]);
                 let portion = Number(percentage.slice(0, percentage.length - 1));
                 return (
-                  <ReviewTier key={currentTier} style={portion === 0 ?
+                  <Tier key={currentTier} style={portion === 0 ?
                     {cursor: 'no-drop', opacity: '.25'} : {cursor: 'pointer'}}>
 
-                    <ReviewData className={portion > 0 ? 'tierWithData' : null} id={`tier${currentTier}`}
+                    <Data className={portion > 0 ? 'tierWithData' : null} id={`tier${currentTier}`}
                       onClick={portion > 0 ? () => this.handleClick(Number(currentTier)) : null}
                     >
                       <Gauge portion={portion}/>
                       <Stars rating={currentTier}/>
-                      <ReviewPercentage>{percentage}</ReviewPercentage>
-                    </ReviewData>
+                      <Percentage>{percentage}</Percentage>
+                    </Data>
                     {this.props.currentTier === currentTier ?
-                      <ReviewTierX
+                      <TierX
                         onClick={portion > 0 ? this.removeFilter : null}
                         style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
                         <svg viewBox="4 4 16 16">
                           <path fill="rgb(115, 114, 108)" d={xPath}/>
                         </svg>
-                      </ReviewTierX>
+                      </TierX>
                       : null
                     }
-                  </ReviewTier>
+                  </Tier>
                 );
               })}
-            </ReviewTiers>
-          </ReviewFeedbackStyle>
-          <ReviewSearchControlsWrapper>
+            </Tiers>
+          </FeedbackStyle>
+          <SearchControlsWrapper>
             <ReviewTitle>Reviews</ReviewTitle>
-            <ReviewControls>
+            <SearchControls>
               {this.props.totalReviews && this.props.totalReviews.length > 0 &&
               <Search
                 totalReviews={this.props.totalReviews}
@@ -153,19 +153,19 @@ class Feedback extends React.Component {
                 setReviewsFilteredBySearchAndTier={this.props.setReviewsFilteredBySearchAndTier}
               />
               }
-              <ReviewTierMenu>
-                <ReviewTierSelect className="tierSelect" ref={this.select} onChange={this.handleSelect}>
-                  <ReviewTierOption value="0">All ratings</ReviewTierOption>
-                  <ReviewTierOption value="5">Five stars</ReviewTierOption>
-                  <ReviewTierOption value="4">Four stars</ReviewTierOption>
-                  <ReviewTierOption value="3">Three stars</ReviewTierOption>
-                  <ReviewTierOption value="2">Two stars</ReviewTierOption>
-                  <ReviewTierOption value="1">One star</ReviewTierOption>
-                </ReviewTierSelect>
-              </ReviewTierMenu>
-            </ReviewControls>
-          </ReviewSearchControlsWrapper>
-        </ReviewFeedbackWrapper>
+              <TierMenu>
+                <TierSelect className="tierSelect" ref={this.select} onChange={this.handleSelect}>
+                  <TierOption value="0">All ratings</TierOption>
+                  <TierOption value="5">Five stars</TierOption>
+                  <TierOption value="4">Four stars</TierOption>
+                  <TierOption value="3">Three stars</TierOption>
+                  <TierOption value="2">Two stars</TierOption>
+                  <TierOption value="1">One star</TierOption>
+                </TierSelect>
+              </TierMenu>
+            </SearchControls>
+          </SearchControlsWrapper>
+        </FeedbackWrapper>
       );
     }
   }

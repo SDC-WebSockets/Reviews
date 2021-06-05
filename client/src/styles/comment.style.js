@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 
-export const ReviewCommentWrapper = styled.div``;
+export const CommentWrapper = styled.div``;
 
-export const ReviewCommentStyle = styled.div`
+export const CommentStyle = styled.div`
   width: auto;
   max-width: 600px;
   overflow: hidden;
 `;
 
-export const ReviewShowMoreWrapper = styled.div``;
+export const ShowMoreWrapper = styled.div``;
 
-export const ReviewArrow = styled.svg`
+export const ArrowSVG = styled.svg`
   width: 24px;
   height: 15px;
   margin-left: 6px;
 `;
 
-export const ReviewArrowPath = styled.path`
+export const ArrowSVGPath = styled.path`
   stroke: rgb(15, 124, 144);
   fill: rgb(15, 124, 144);
   &:hover {
@@ -25,7 +25,7 @@ export const ReviewArrowPath = styled.path`
   }
 `;
 
-export const ReviewShowMore = styled.button`
+export const ShowMore = styled.button`
   display: flex;
   align-items: center;
   color: rgb(15, 124, 144);
@@ -42,21 +42,21 @@ export const ReviewShowMore = styled.button`
   left: 112px;
   &:hover {
     color: rgb(9, 76, 89);
-    ${ReviewArrowPath} {
+    ${ArrowSVGPath} {
       stroke: rgb(9, 76, 89);
       fill: rgb(9, 76, 89);
     }
   }
   &:active {
     color: rgb(9, 76, 89);
-    ${ReviewArrowPath} {
+    ${ArrowSVGPath} {
       stroke: rgb(9, 76, 89);
       fill: rgb(9, 76, 89);
     }
   }
 `;
 
-export const ReviewCommentWithBoldSearchTerm = styled.div``;
+export const CommentWithBoldSearchTermWrapper = styled.div``;
 
 export const reviewGradientStyle = {
   height: '100px',

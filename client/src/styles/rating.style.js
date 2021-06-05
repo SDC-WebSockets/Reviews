@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ReviewRatingStyle = styled.span`
+export const RatingStyle = styled.span`
   margin: 8px 0;
   display: flex;
   align-items: center;
