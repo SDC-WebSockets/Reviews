@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const ReviewInputs = styled.span`
+export const SearchWrapper = styled.span`
   display: flex;
 `;
 
-export const ReviewSearchInput = styled.div`
+export const SearchInput = styled.div`
   display: flex;
   align-items: center;
   border-top-left-radius: 4px;
@@ -21,7 +21,7 @@ export const ReviewSearchInput = styled.div`
   }
 `;
 
-export const ReviewSearchBar = styled.input`
+export const SearchBar = styled.input`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   color: rgb(60, 59, 55);
@@ -37,7 +37,7 @@ export const ReviewSearchBar = styled.input`
   border: none;
 `;
 
-export const ReviewClearSearchBar = styled.button`
+export const ClearSearchBar = styled.button`
   height: 30px;
   width: 30px;
   background-color: transparent;
@@ -49,7 +49,11 @@ export const ReviewClearSearchBar = styled.button`
   position: relative;
 `;
 
-export const ReviewSearchButton = styled.button`
+export const ClearSearchBarSVG = styled.svg``;
+
+export const MagnifyingGlassSVG = styled.svg``;
+
+export const SearchButton = styled.button`
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   background-color: rgb(15, 124, 144);

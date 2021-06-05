@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ReviewMainStyle = styled.div`
+export const ReviewServiceWrapper = styled.div`
   box-sizing: border-box;
   color: rgb(60, 59, 55);
   display: block;
@@ -10,12 +10,12 @@ export const ReviewMainStyle = styled.div`
   float: left;
   letter-spacing: -0.2px
   line-height: 22.4px;
-  margin: auto;
-  padding-top: 32px;
-  padding-right: 5%;
-  padding-bottom: 0px;
-  padding-left: 5%;
-  margin-left: 24px;
+  /* margin: auto; */
+  /* padding-top: 32px; */
+  /* padding-right: 5%; */
+  /* padding-bottom: 0px; */
+  /* padding-left: 5%; */
+  /* margin-left: 24px; */
 
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

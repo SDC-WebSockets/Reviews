@@ -1,11 +1,13 @@
 import React from 'react';
 import { magnifyingGlassPath, xPath } from '../svg.js';
 import {
-  ReviewInputs,
-  ReviewSearchInput,
-  ReviewSearchBar,
-  ReviewClearSearchBar,
-  ReviewSearchButton
+  SearchWrapper,
+  SearchInput,
+  SearchBar,
+  ClearSearchBar,
+  ClearSearchBarSVG,
+  MagnifyingGlassSVG,
+  SearchButton
 } from '../styles/search.style.js';
 
 class Search extends React.Component {
@@ -51,22 +53,22 @@ class Search extends React.Component {
 
   render() {
     return (
-      <ReviewInputs>
-        <ReviewSearchInput>
-          <ReviewSearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress}>
-          </ReviewSearchBar>
-          <ReviewClearSearchBar id="clearSearch" onClick={this.resetSearch} style={this.state.term ? {visibility: 'visible'} : {visibility: 'hidden'}}>
-            <svg viewBox="0 0 24 24">
+      <SearchWrapper>
+        <SearchInput>
+          <SearchBar id="reviewSearch" className="searchBar" type="text" placeholder="Search reviews" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress}>
+          </SearchBar>
+          <ClearSearchBar id="clearSearch" onClick={this.resetSearch} style={this.state.term ? {visibility: 'visible'} : {visibility: 'hidden'}}>
+            <ClearSearchBarSVG viewBox="0 0 24 24">
               <path fill="rgb(115, 114, 108)" d={xPath}/>
-            </svg>
-          </ReviewClearSearchBar>
-        </ReviewSearchInput>
-        <ReviewSearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
-          <svg viewBox="-7 -7 35 35">
+            </ClearSearchBarSVG>
+          </ClearSearchBar>
+        </SearchInput>
+        <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
+          <MagnifyingGlassSVG viewBox="-7 -7 35 35">
             <path fill="rgb(255, 255, 255)" d={magnifyingGlassPath}/>
-          </svg>
-        </ReviewSearchButton>
-      </ReviewInputs>
+          </MagnifyingGlassSVG>
+        </SearchButton>
+      </SearchWrapper>
     );
   }
 }

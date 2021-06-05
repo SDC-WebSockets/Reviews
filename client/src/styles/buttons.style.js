@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
-export const ReviewButtonsWrapper = styled.div``;
+export const ButtonsWrapper = styled.div``;
 
-export const ReviewHelpful = styled.p`
+export const Helpful = styled.p`
   font-size: 12px;
 `;
 
-export const ReviewButtonStyle = styled.div`
+export const ButtonStyle = styled.div`
   display: flex;
   align-items: center;
 `;
 
-export const ReviewThumbs = styled.button`
+export const Thumbs = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +36,7 @@ export const ReviewThumbs = styled.button`
   }
 `;
 
-export const ReviewReport = styled.button`
+export const Report = styled.button`
   color: rgb(15, 124, 144);
   align-items: center;
   background-color: transparent;
