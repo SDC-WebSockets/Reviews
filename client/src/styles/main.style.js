@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ReviewMainStyle = styled.div`
+export const ReviewServiceWrapper = styled.div`
   box-sizing: border-box;
   color: rgb(60, 59, 55);
   display: block;
