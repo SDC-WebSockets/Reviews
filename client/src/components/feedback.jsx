@@ -55,13 +55,6 @@ class Feedback extends React.Component {
   handleSelect(e) {
     this.filterByTier(Number(e.target.value));
     this.renderTransparent(e.target.value);
-    if (e.target.value !== '0') {
-      this.select.current.style.color = 'rgb(60, 59, 55)';
-      this.select.current.style.borderColor = 'rgb(118, 118, 118)';
-    } else {
-      this.select.current.style.color = 'rgb(115, 114, 108)';
-      this.select.current.style.borderColor = 'rgb(152, 149, 134)';
-    }
   }
 
   filterByTier(tier) {
@@ -70,12 +63,22 @@ class Feedback extends React.Component {
     } else {
       this.props.setReviewsFilteredBySearchAndTier(this.props.currentSearchTerm, tier);
     }
+    console.log(tier);
+    if (!tier || tier === 0) {
+      this.select.current.style.color = 'rgb(115, 114, 108)';
+      this.select.current.style.borderColor = 'rgb(152, 149, 134)';
+    } else {
+      this.select.current.style.color = 'rgb(60, 59, 55)';
+      this.select.current.style.borderColor = 'rgb(118, 118, 118)';
+    }
   }
 
   removeFilter() {
     this.props.setReviewsFilteredByTier(0);
     this.select.current.value = '0';
     this.renderTransparent(0);
+    this.select.current.style.color = 'rgb(115, 114, 108)';
+    this.select.current.style.borderColor = 'rgb(152, 149, 134)';
   }
 
   renderTransparent(tier) {
