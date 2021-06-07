@@ -16,6 +16,9 @@ export const SearchInput = styled.div`
   min-width: 303px;
   max-width: 600px;
   height: 46px;
+  &:hover {
+    border-color: rgb(118, 118, 118);
+  }
   &:focus-within {
     border-color: rgb(60, 59, 55);
   }
@@ -25,7 +28,7 @@ export const SearchBar = styled.input`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   color: rgb(60, 59, 55);
-  min-width: 303px;
+  min-width: 300px;
   max-width: 600px;
   height: 42px;
   padding-top: 2px;

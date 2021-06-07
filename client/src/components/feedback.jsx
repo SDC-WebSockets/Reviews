@@ -20,7 +20,7 @@ import {
   SearchControlsWrapper,
   SearchControls,
   TierSelect,
-  TierMenu,
+  AllRatingsOption,
   TierOption
 } from '../styles/feedback.style.js';
 
@@ -153,16 +153,14 @@ class Feedback extends React.Component {
                 setReviewsFilteredBySearchAndTier={this.props.setReviewsFilteredBySearchAndTier}
               />
               }
-              <TierMenu>
-                <TierSelect className="tierSelect" ref={this.select} onChange={this.handleSelect}>
-                  <TierOption value="0">All ratings</TierOption>
-                  <TierOption value="5">Five stars</TierOption>
-                  <TierOption value="4">Four stars</TierOption>
-                  <TierOption value="3">Three stars</TierOption>
-                  <TierOption value="2">Two stars</TierOption>
-                  <TierOption value="1">One star</TierOption>
-                </TierSelect>
-              </TierMenu>
+              <TierSelect className="tierSelect" ref={this.select} onChange={this.handleSelect}>
+                <AllRatingsOption value="0">All ratings</AllRatingsOption>
+                <TierOption value="5">Five stars</TierOption>
+                <TierOption value="4">Four stars</TierOption>
+                <TierOption value="3">Three stars</TierOption>
+                <TierOption value="2">Two stars</TierOption>
+                <TierOption value="1">One star</TierOption>
+              </TierSelect>
             </SearchControls>
           </SearchControlsWrapper>
         </FeedbackWrapper>
