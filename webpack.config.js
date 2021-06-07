@@ -4,6 +4,11 @@ const outputPath = path.join(__dirname, '/client/public');
 const Dotenv = require('dotenv-webpack');
 const S3Plugin = require('webpack-s3-plugin');
 
+process.env.AWS_ACCESS_KEY_ID = require('./AWS/s3config.js').AWS_ACCESS_KEY_ID;
+process.env.AWS_SECRET_ACCESS_KEY = require('./AWS/s3config.js').AWS_SECRET_ACCESS_KEY;
+
+console.log(process.env);
+
 module.exports = {
   entry: entryPath,
   module: {
