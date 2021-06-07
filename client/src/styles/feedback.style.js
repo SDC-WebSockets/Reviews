@@ -81,7 +81,7 @@ export const SearchControls = styled.div`
 export const TierSelect = styled.select`
   cursor: pointer;
   border-radius: 4px;
-  border: 1px solid #989586;
+  border: 1px solid rgb(152, 149, 134);
   width: 180px;
   height: 48px;
   padding: 12px;
@@ -96,10 +96,5 @@ export const TierSelect = styled.select`
   background-position: right 8px top 50%;
 `;
 
-export const AllRatingsOption = styled.option`
-
-`;
-
 export const TierOption = styled.option`
-  background-color: rgb(115, 114, 108);
 `;
