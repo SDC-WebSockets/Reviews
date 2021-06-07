@@ -5,7 +5,7 @@ mongoose.connect('mongodb://localhost/review-service', { useNewUrlParser: true, 
 const mongoDb = mongoose.connection;
 mongoDb.on('error', console.error.bind(console, 'connection error:'));
 mongoDb.once('open', () => {
-  console.log('Connected to the MongoDB database');
+  console.log('Connected to MongoDB');
 });
 
 const reviewSchema = new mongoose.Schema({ // 1 -> many: course_id -> reviews
