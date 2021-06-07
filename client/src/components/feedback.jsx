@@ -63,7 +63,6 @@ class Feedback extends React.Component {
     } else {
       this.props.setReviewsFilteredBySearchAndTier(this.props.currentSearchTerm, tier);
     }
-    console.log(tier);
     if (!tier || tier === 0) {
       this.select.current.style.color = 'rgb(115, 114, 108)';
       this.select.current.style.borderColor = 'rgb(152, 149, 134)';
