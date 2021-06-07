@@ -20,7 +20,6 @@ import {
   SearchControlsWrapper,
   SearchControls,
   TierSelect,
-  AllRatingsOption,
   TierOption
 } from '../styles/feedback.style.js';
 
@@ -64,12 +63,21 @@ class Feedback extends React.Component {
     } else {
       this.props.setReviewsFilteredBySearchAndTier(this.props.currentSearchTerm, tier);
     }
+    if (!tier || tier === 0) {
+      this.select.current.style.color = 'rgb(115, 114, 108)';
+      this.select.current.style.borderColor = 'rgb(152, 149, 134)';
+    } else {
+      this.select.current.style.color = 'rgb(60, 59, 55)';
+      this.select.current.style.borderColor = 'rgb(118, 118, 118)';
+    }
   }
 
   removeFilter() {
     this.props.setReviewsFilteredByTier(0);
     this.select.current.value = '0';
     this.renderTransparent(0);
+    this.select.current.style.color = 'rgb(115, 114, 108)';
+    this.select.current.style.borderColor = 'rgb(152, 149, 134)';
   }
 
   renderTransparent(tier) {
@@ -154,7 +162,7 @@ class Feedback extends React.Component {
               />
               }
               <TierSelect className="tierSelect" ref={this.select} onChange={this.handleSelect}>
-                <AllRatingsOption value="0">All ratings</AllRatingsOption>
+                <TierOption value="0">All ratings</TierOption>
                 <TierOption value="5">Five stars</TierOption>
                 <TierOption value="4">Four stars</TierOption>
                 <TierOption value="3">Three stars</TierOption>
