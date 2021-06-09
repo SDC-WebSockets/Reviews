@@ -17,8 +17,8 @@ import {
   Data,
   Percentage,
   TierX,
-  SearchControlsWrapper,
-  SearchControls,
+  FeedbackInputsWrapper,
+  FeedbackInputs,
   TierSelect,
   TierOption
 } from '../styles/feedback.style.js';
@@ -134,25 +134,26 @@ class Feedback extends React.Component {
                       <Gauge portion={portion}/>
                       <Stars rating={currentTier}/>
                       <Percentage>{percentage}</Percentage>
+
+                      {this.props.currentTier === currentTier ?
+                        <TierX style={{visibility: 'visible'}}
+                          onClick={portion > 0 ? this.removeFilter : null}
+                          style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
+                          <svg viewBox="-8 -6 36 36">
+                            <path fill="rgb(115, 114, 108)" d={xPath}/>
+                          </svg>
+                        </TierX>
+                        : <TierX style={{visibility: 'hidden'}}/>
+                      }
                     </Data>
-                    {this.props.currentTier === currentTier ?
-                      <TierX
-                        onClick={portion > 0 ? this.removeFilter : null}
-                        style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
-                        <svg viewBox="-8 0 36 36">
-                          <path fill="rgb(115, 114, 108)" d={xPath}/>
-                        </svg>
-                      </TierX>
-                      : null
-                    }
                   </Tier>
                 );
               })}
             </Tiers>
           </FeedbackStyle>
-          <SearchControlsWrapper>
+          <FeedbackInputsWrapper>
             <ReviewTitle>Reviews</ReviewTitle>
-            <SearchControls>
+            <FeedbackInputs>
               {this.props.totalReviews && this.props.totalReviews.length > 0 &&
               <Search
                 totalReviews={this.props.totalReviews}
@@ -169,8 +170,8 @@ class Feedback extends React.Component {
                 <TierOption value="2">Two stars</TierOption>
                 <TierOption value="1">One star</TierOption>
               </TierSelect>
-            </SearchControls>
-          </SearchControlsWrapper>
+            </FeedbackInputs>
+          </FeedbackInputsWrapper>
         </FeedbackWrapper>
       );
     }

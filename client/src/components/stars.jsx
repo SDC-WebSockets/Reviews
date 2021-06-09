@@ -9,7 +9,7 @@ const makeStar = (starFill) => {
   const full = 'rgb(235, 138, 47)';
   const starTypes = [empty, half, full];
   return (
-    <StarStyle viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" strokeWidth="2px" stroke="rgb(235, 138, 47)" fill={starTypes[starFill]} >
+    <StarStyle viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill={starTypes[starFill]} >
       <defs>
         <linearGradient id="starGradient">
           <stop offset="50%" stopColor="rgb(235, 138, 47)"/>

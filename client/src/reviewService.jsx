@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Featured from './components/featured.jsx';
 import Feedback from './components/feedback.jsx';
 import Search from './components/search.jsx';
@@ -143,6 +144,14 @@ class ReviewService extends React.Component {
     this.setState({displayedReviews: currentReviews.slice(0, currentlyDisplayed + 12)});
   }
 
+  componentDidUpdate() {
+    if (this.state.featuredReview && this.state.totalReviews && this.state.totalReviews.length >= 10) {
+      ReactDOM.render(<Featured
+        review={this.state.featuredReview}
+      />, document.getElementById('featured'));
+    }
+  }
+
   render() {
     if (!this.state.courseId) {
       return (
@@ -151,11 +160,11 @@ class ReviewService extends React.Component {
     } else {
       return (
         <ReviewServiceWrapper>
-          {this.state.featuredReview && this.state.totalReviews && this.state.totalReviews.length >= 10 &&
+          {/* {this.state.featuredReview && this.state.totalReviews && this.state.totalReviews.length >= 10 &&
           <Featured
             review={this.state.featuredReview}
           />
-          }
+          } */}
           {this.state.ratings &&
           <Feedback
             totalReviews={this.state.totalReviews}

@@ -14,7 +14,9 @@ export const FeaturedReviewStyle = styled.div`
   line-height: 19.6px;
   margin-bottom: 24px;
   padding: 24px;
-  width: 550px;
+  width: auto;
+  min-width: 250px;
+  max-width: 650px;
 `;
 
 export const FeaturedReviewer = styled.div`

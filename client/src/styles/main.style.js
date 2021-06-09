@@ -7,9 +7,10 @@ export const ReviewServiceWrapper = styled.div`
   font-family: "sf pro text", "-apple-system", system-ui, "Roboto", "segoe ui", Helvetica, Arial, sans-serif, "apple color emoji", "segoe ui emoji", "segoe ui symbol";
   font-size: 14px;
   font-weight: 400;
-  float: left;
   letter-spacing: -0.2px
   line-height: 22.4px;
+  width: auto;
+  max-width: 700px;
   /* margin: auto; */
   /* padding-top: 32px; */
   /* padding-right: 5%; */
