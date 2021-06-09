@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const SearchWrapper = styled.span`
   display: flex;
-  flex-basis: 70%;
-  margin-right: 16px;
+  flex-basis: 67%;
+  /* margin-right: 16px; */
   min-width: 300px;
   max-width: 700px;
 `;
