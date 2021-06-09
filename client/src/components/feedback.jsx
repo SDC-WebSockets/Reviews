@@ -139,7 +139,7 @@ class Feedback extends React.Component {
                       <TierX
                         onClick={portion > 0 ? this.removeFilter : null}
                         style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
-                        <svg viewBox="4 4 16 16">
+                        <svg viewBox="-8 0 36 36">
                           <path fill="rgb(115, 114, 108)" d={xPath}/>
                         </svg>
                       </TierX>

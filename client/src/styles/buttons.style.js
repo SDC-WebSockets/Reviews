@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 
-export const ButtonsWrapper = styled.div``;
+export const ButtonsWrapper = styled.div`
+  display: block;
+  line-height: 14px;
+`;
 
 export const Helpful = styled.p`
+  margin-top: 8px;
   font-size: 12px;
 `;
 
 export const ButtonStyle = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 8px;
 `;
 
 export const Thumbs = styled.button`
@@ -47,6 +52,7 @@ export const Report = styled.button`
   font-size: 14px;
   letter-spacing: -0.2px;
   line-height: 19.6px;
+  margin-left: 8px;
   width: auto;
   text-align: center;
   text-rendering: auto;

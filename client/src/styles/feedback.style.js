@@ -66,7 +66,7 @@ export const TierX = styled.button`
   width: 22px;
   background-color: transparent;
   border: none;
-  margin-bottom: 6px;
+  /* margin-bottom: 6px; */
   position: relative;
 `;
 
@@ -74,7 +74,7 @@ export const SearchControlsWrapper = styled.div``;
 
 export const SearchControls = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-wrap: wrap;
 `;
 
@@ -92,7 +92,7 @@ export const TierSelect = styled.select`
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' width='24' height='20' xmlns='http://www.w3.org/2000/svg'><g><path d='M 16.59 8.59 L 12 13.17 L 7.41 8.59 L 6 10 l 6 6 l 6 -6 l -1.41 -1.41 Z' fill='rgb(115, 114, 108)'/></g></svg>") no-repeat;
+  background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' width='24' height='20' xmlns='http://www.w3.org/2000/svg'><path d='M 16.59 8.59 L 12 13.17 L 7.41 8.59 L 6 10 l 6 6 l 6 -6 l -1.41 -1.41 Z' fill='rgb(115, 114, 108)'/></svg>") no-repeat;
   background-position: right 8px top 50%;
 `;
 
