@@ -2,21 +2,20 @@ import React from 'react';
 import { starPath } from '../svg.js';
 import { StarStyle, StarsStyle, Star } from '../styles/stars.style.js';
 
-const makeStar = (starFill) => {
-  starFill = starFill * 2;
+const makeStar = (starFill) => { // takes in 0, 0.5, or 1 as argument
   const empty = 'rgb(255, 255, 255)';
   const half = 'url(#starGradient)';
   const full = 'rgb(235, 138, 47)';
   const starTypes = [empty, half, full];
   return (
-    <StarStyle viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill={starTypes[starFill]} >
+    <StarStyle viewBox="0 0 24 24" /* xmlns="http://www.w3.org/2000/svg" */>
       <defs>
         <linearGradient id="starGradient">
           <stop offset="50%" stopColor="rgb(235, 138, 47)"/>
           <stop offset="50%" stopColor="rgb(255, 255, 255)"/>
         </linearGradient>
       </defs>
-      <path d='M 12 17.27 L 18.18 21 l -1.64 -7.03 L 22 9.24 l -7.19 -0.61 L 12 2 L 9.19 8.63 L 2 9.24 l 5.46 4.73 L 5.82 21 L 12 17.27 Z' />
+      <path d="M 12 17.27 L 18.18 21 l -1.64 -7.03 L 22 9.24 l -7.19 -0.61 L 12 2 L 9.19 8.63 L 2 9.24 l 5.46 4.73 L 5.82 21 L 12 17.27 Z" strokeWidth="2" stroke="rgb(235, 138, 47)" fill={starTypes[starFill * 2]}/>
     </StarStyle>
   );
 };

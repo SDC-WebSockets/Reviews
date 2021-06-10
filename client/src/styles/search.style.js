@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const SearchWrapper = styled.span`
   display: flex;
   flex-basis: 67%;
-  /* margin-right: 16px; */
   min-width: 300px;
   max-width: 700px;
 `;
@@ -68,7 +67,6 @@ export const SearchButton = styled.button`
   min-width: 48px;
   border: 0;
   display: block;
-  /* margin-right: 18px; */
   &:hover {
     background-color: rgb(9, 76, 89);
   }
