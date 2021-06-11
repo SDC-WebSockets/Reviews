@@ -2,22 +2,24 @@ import styled from 'styled-components';
 
 export const SearchWrapper = styled.span`
   display: flex;
+  flex-basis: 67%;
+  min-width: 300px;
+  max-width: 700px;
 `;
 
 export const SearchInput = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   border-top: 1px solid #989586;
   border-right: 0;
   border-bottom: 1px solid #989586;
   border-left: 1px solid #989586;
-  min-width: 303px;
-  max-width: 600px;
   height: 46px;
   &:hover {
-    border-color: rgb(118, 118, 118);
+    border-color: rgb(118,118,118);
   }
   &:focus-within {
     border-color: rgb(60, 59, 55);
@@ -28,8 +30,7 @@ export const SearchBar = styled.input`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   color: rgb(60, 59, 55);
-  min-width: 300px;
-  max-width: 600px;
+  width: 100%;
   height: 42px;
   padding-top: 2px;
   padding-left: 12px;
@@ -63,9 +64,9 @@ export const SearchButton = styled.button`
   cursor: pointer;
   height: 48px;
   width: 48px;
+  min-width: 48px;
   border: 0;
   display: block;
-  margin-right: 18px;
   &:hover {
     background-color: rgb(9, 76, 89);
   }

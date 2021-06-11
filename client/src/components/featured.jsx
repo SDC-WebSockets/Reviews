@@ -2,7 +2,7 @@ import React from 'react';
 import Rating from './rating.jsx';
 import Comment from './comment.jsx';
 import Buttons from './buttons.jsx';
-import { ReviewTitle } from '../styles/main.style.js';
+import { ReviewServiceWrapper, ReviewTitle } from '../styles/main.style.js';
 import {
   FeaturedReviewWrapper,
   FeaturedReviewStyle,
@@ -56,33 +56,35 @@ class Featured extends React.Component {
 
   render() {
     return (
-      <FeaturedReviewWrapper>
-        {this.props.review && this.props.review.reviewer &&
-          <FeaturedReviewStyle>
-            <ReviewTitle>Featured review</ReviewTitle>
-            <FeaturedReviewer>
-              <FeaturedReviewerAvatar className="featuredReviewerAvatar">
-                {/* if the reviewer has no avatar, the default avatar consists of a saved color background and the reviewer's initials */}
-                {this.props.review.reviewer.picture.slice(0, 3) === 'rgb' ?
-                  <FeaturedReviewerInitials className="featuredReviewerInitials" style={{backgroundColor: this.props.review.reviewer.picture}}>{this.props.review.reviewer.name.split(' ').map((n)=>n[0]).join('').slice(0, 2)}</FeaturedReviewerInitials> :
-                  <FeaturedReviewerPicture className="featuredReviewerPicture" src={this.props.review.reviewer.picture}/>}
-              </FeaturedReviewerAvatar>
-              <FeaturedReviewerMetadata className="featuredReviewerMetadata">
-                <ReviewerName className="reviewerName" style={this.state.reported ? {color: 'rgb(210, 0, 0)'} : null}>
-                  {this.state.reported ?
-                    this.props.review.reviewer.name + ' USER REPORTED' :
-                    this.props.review.reviewer.name}
-                </ReviewerName>
-                <FeaturedReviewerCoursesTaken className="reviewerCoursesTaken">{this.props.review.reviewer.coursesTaken} {this.props.review.reviewer.reviews === 1 ? 'course' : 'courses'}</FeaturedReviewerCoursesTaken>
-                <FeaturedReviewerReviews className="reviewerReviews">{this.props.review.reviewer.reviews} {this.props.review.reviewer.reviews === 1 ? 'review' : 'reviews'}</FeaturedReviewerReviews>
-              </FeaturedReviewerMetadata>
-            </FeaturedReviewer>
-            <Rating rating={this.props.review.rating} createdAt={this.props.review.createdAt}/>
-            <Comment review={this.props.review} currentSearchTerm={this.props.currentSearchTerm} commentHeight={this.state.commentHeight} handleClick={this.handleClick}/>
-            <Buttons reviewState={this.state} handleClick={this.handleClick}/>
-          </FeaturedReviewStyle>
-        }
-      </FeaturedReviewWrapper>
+      <ReviewServiceWrapper>
+        <FeaturedReviewWrapper>
+          {this.props.review && this.props.review.reviewer &&
+            <FeaturedReviewStyle>
+              <ReviewTitle>Featured review</ReviewTitle>
+              <FeaturedReviewer>
+                <FeaturedReviewerAvatar className="featuredReviewerAvatar">
+                  {/* if the reviewer has no avatar, the default avatar consists of a saved color background and the reviewer's initials */}
+                  {this.props.review.reviewer.picture.slice(0, 3) === 'rgb' ?
+                    <FeaturedReviewerInitials className="featuredReviewerInitials" style={{backgroundColor: this.props.review.reviewer.picture}}>{this.props.review.reviewer.name.split(' ').map((n)=>n[0]).join('').slice(0, 2)}</FeaturedReviewerInitials> :
+                    <FeaturedReviewerPicture className="featuredReviewerPicture" src={this.props.review.reviewer.picture}/>}
+                </FeaturedReviewerAvatar>
+                <FeaturedReviewerMetadata className="featuredReviewerMetadata">
+                  <ReviewerName className="reviewerName" style={this.state.reported ? {color: 'rgb(210, 0, 0)'} : null}>
+                    {this.state.reported ?
+                      this.props.review.reviewer.name + ' USER REPORTED' :
+                      this.props.review.reviewer.name}
+                  </ReviewerName>
+                  <FeaturedReviewerCoursesTaken className="reviewerCoursesTaken">{this.props.review.reviewer.coursesTaken} {this.props.review.reviewer.reviews === 1 ? 'course' : 'courses'}</FeaturedReviewerCoursesTaken>
+                  <FeaturedReviewerReviews className="reviewerReviews">{this.props.review.reviewer.reviews} {this.props.review.reviewer.reviews === 1 ? 'review' : 'reviews'}</FeaturedReviewerReviews>
+                </FeaturedReviewerMetadata>
+              </FeaturedReviewer>
+              <Rating rating={this.props.review.rating} createdAt={this.props.review.createdAt}/>
+              <Comment review={this.props.review} currentSearchTerm={this.props.currentSearchTerm} commentHeight={this.state.commentHeight} handleClick={this.handleClick}/>
+              <Buttons reviewState={this.state} handleClick={this.handleClick}/>
+            </FeaturedReviewStyle>
+          }
+        </FeaturedReviewWrapper>
+      </ReviewServiceWrapper>
     );
   }
 }

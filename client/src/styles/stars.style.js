@@ -6,8 +6,10 @@ export const StarStyle = styled.svg`
   margin: 2px;
 `;
 
-export const StarsStyle = styled.div`
+export const StarsStyle = styled.span`
+  display: block;
   width: 100px;
+  min-width: 100px;
   height: 20px;
 `;
 

@@ -12,7 +12,6 @@ https://github.com/Charlotte-Badger/Sidebar
 https://github.com/Charlotte-Badger/udemy-proxy-fredrosselet
 
 ## Table of Contents
-
 1. [Requirements](#requirements)
 2. [Installation](#installation)
 
