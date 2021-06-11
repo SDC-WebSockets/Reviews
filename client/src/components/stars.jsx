@@ -11,14 +11,14 @@ const makeStar = (starFill) => { // takes in 0, 0.5, or 1 as argument
     );
   } else if (starFill === 0.5) {
     return (
-      <StarSVG viewBox="0 0 24 24">
-        <defs>
+      <StarSVG viewBox="2.2 2.2 19.8 19.8">
+        {/* <defs>
           <linearGradient id="starGradient">
             <stop offset="50%" stopColor="rgb(235, 138, 47)"/>
             <stop offset="50%" stopColor="rgb(255, 255, 255)"/>
           </linearGradient>
-        </defs>
-        <path d={starPath} strokeWidth="2" stroke="rgb(235, 138, 47)" fill='url(#starGradient)'/>
+        </defs> */}
+        <path d='M 22 9.24 L 14.81 8.62 L 12 2 L 9.19 8.63 L 2 9.24 L 7.46 13.97 L 5.82 21 L 12 17.27 L 18.18 21 L 16.55 13.97 L 22 9.24 Z M 12 15.4 L 12 6.1 L 13.71 10.14 L 18.09 10.52 L 14.77 13.4 L 15.77 17.68 L 12 15.4 Z' strokeWidth="0.1" stroke="rgb(235, 138, 47)" fill='rgb(235, 138, 47)'/>
       </StarSVG>
     );
   } else if (starFill === 1) {

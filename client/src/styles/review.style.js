@@ -10,7 +10,6 @@ export const ReviewStyle = styled.div`
   padding-top: 16px;
   width: auto;
   min-width: 300px;
-  max-width: 700px;
 `;
 
 export const ReviewerAvatar = styled.div`

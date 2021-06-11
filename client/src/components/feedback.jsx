@@ -1,19 +1,13 @@
 import React from 'react';
-import CourseRating from './courseRating.jsx';
+import { MemoizedCourseRating } from './courseRating.jsx';
+import Tiers from './tiers.jsx';
 import Search from './search.jsx';
-import Stars from './stars.jsx';
-import Gauge from './gauge.jsx';
-import { xPath } from '../svg.js';
+
 import { ReviewTitle } from '../styles/main.style.js';
 import {
   FeedbackWrapper,
   NoFeedback,
   FeedbackStyle,
-  Tiers,
-  Tier,
-  Data,
-  Percentage,
-  TierX,
   FeedbackInputsWrapper,
   FeedbackInputs,
   TierSelect,
@@ -23,23 +17,21 @@ import {
 class Feedback extends React.Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
     this.filterByTier = this.filterByTier.bind(this);
     this.removeFilter = this.removeFilter.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
     this.renderTransparent = this.renderTransparent.bind(this);
     this.select = React.createRef();
-    // this.state = {
-    //   overallRating: props.overallRating
-    // };
   }
 
-  getPercentage(tier1 = 0, tier2 = 0) {
-    let percentage = (tier1 + tier2) / this.props.ratings.totalRatings * 100;
-    if (0 < percentage && percentage < 1) {
-      return '< 1%';
-    }
-    return Math.round(percentage) + '%';
-  }
+  // getPercentage(tier1 = 0, tier2 = 0) {
+  //   let percentage = (tier1 + tier2) / this.props.ratings.totalRatings * 100;
+  //   if (0 < percentage && percentage < 1) {
+  //     return '< 1%';
+  //   }
+  //   return Math.round(percentage) + '%';
+  // }
 
   handleClick(tier) {
     let clickedTier = Number(document.getElementById(`tier${tier}`).id.slice(4));
@@ -101,56 +93,16 @@ class Feedback extends React.Component {
         </FeedbackWrapper>
       );
     } else {
-      const tiers = [
-        ['5'], ['4 1/2', '4'], ['3 1/2', '3'], ['2 1/2', '2'], ['1 1/2', '1']
-      ];
       return (
         <FeedbackWrapper>
           <ReviewTitle>Student feedback</ReviewTitle>
           <FeedbackStyle>
-            <CourseRating overallRating={Number(this.props.overallRating)} />
-            {/* <OverallRating>
-              <CourseGrade>{this.props.overallRating}
-              </CourseGrade>
-              <StarsWrapper>
-                <Rating rating={Number(this.props.overallRating)}/>
-              </StarsWrapper>
-              <CourseRatingTitle>Course Rating</CourseRatingTitle>
-            </OverallRating> */}
-            <Tiers>
-              {tiers.map((tier) => {
-                let percentage;
-                let currentTier = Number(tier[tier.length - 1]);
-                tier.length === 1 ?
-                  percentage = this.getPercentage(this.props.ratings[tier[0]]) :
-                  percentage = this.getPercentage(this.props.ratings[tier[0]], this.props.ratings[tier[1]]);
-                let portion = Number(percentage.slice(0, percentage.length - 1));
-                return (
-                  <Tier key={currentTier} style={portion === 0 ?
-                    {cursor: 'no-drop', opacity: '.25'} : {cursor: 'pointer'}}>
-
-                    <Data className={portion > 0 ? 'tierWithData' : null} id={`tier${currentTier}`}
-                      onClick={portion > 0 ? () => this.handleClick(Number(currentTier)) : null}
-                    >
-                      <Gauge portion={portion}/>
-                      <Stars rating={currentTier}/>
-                      <Percentage>{percentage}</Percentage>
-
-                      {this.props.currentTier === currentTier ?
-                        <TierX style={{visibility: 'visible'}}
-                          onClick={portion > 0 ? this.removeFilter : null}
-                          style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
-                          <svg viewBox="0 0 24 24" height="16px" width="16px">
-                            <path fill="rgb(115, 114, 108)" d={xPath}/>
-                          </svg>
-                        </TierX>
-                        : <TierX style={{visibility: 'hidden'}}/>
-                      }
-                    </Data>
-                  </Tier>
-                );
-              })}
-            </Tiers>
+            <MemoizedCourseRating overallRating={this.props.overallRating} />
+            <Tiers
+              ratings={this.props.ratings}
+              currentTier={this.props.currentTier}
+              handleClick={this.handleClick}
+            />
           </FeedbackStyle>
           <FeedbackInputsWrapper>
             <ReviewTitle>Reviews</ReviewTitle>

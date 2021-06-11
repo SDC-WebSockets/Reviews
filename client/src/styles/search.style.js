@@ -4,7 +4,6 @@ export const SearchWrapper = styled.span`
   display: flex;
   flex-basis: 67%;
   min-width: 300px;
-  max-width: 700px;
 `;
 
 export const SearchInput = styled.div`

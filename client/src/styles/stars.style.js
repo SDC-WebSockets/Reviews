@@ -13,4 +13,5 @@ export const StarsWrapper = styled.span`
   height: 20px;
 `;
 
-export const Star = styled.span``;
+export const Star = styled.span`
+`;

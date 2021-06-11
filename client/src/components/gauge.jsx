@@ -1,12 +1,12 @@
 import React from 'react';
-import { GaugeStyle, BlackBar, GreyBar } from '../styles/gauge.style.js';
+import { GaugeWrapper, BlackBar, GreyBar } from '../styles/gauge.style.js';
 
 const Gauge = (props) => {
   return (
-    <GaugeStyle>
+    <GaugeWrapper>
       <BlackBar style={{ width: `${(props.portion)}%`}}></BlackBar>
       <GreyBar/>
-    </GaugeStyle>
+    </GaugeWrapper>
   );
 };
 
