@@ -26,13 +26,11 @@ class CourseRating extends React.Component {
       <OverallRating>
         <CourseGrade>{this.props.overallRating}
         </CourseGrade>
-        <StarsWrapper>
-          <Rating rating={Number(this.props.overallRating)}/>
-        </StarsWrapper>
+        <Rating rating={Number(this.props.overallRating)}/>
         <CourseRatingTitle>Course Rating</CourseRatingTitle>
       </OverallRating>
     );
   }
 }
 
-export default CourseRating;
+export const MemoizedCourseRating = React.memo(CourseRating);

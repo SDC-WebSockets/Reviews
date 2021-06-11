@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const GaugeStyle = styled.span`
+export const GaugeWrapper = styled.span`
   display: grid;
   flex-basis: 380px;
   width: auto;

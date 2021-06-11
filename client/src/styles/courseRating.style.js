@@ -16,8 +16,5 @@ export const CourseGrade = styled.div`
   font-size: 64px;
 `;
 
-export const StarsWrapper = styled.div`
-`;
-
 export const CourseRatingTitle = styled.div`
 `;

@@ -72,7 +72,7 @@ class ReviewService extends React.Component {
   updateRatings(ratings) {
     this.setState({
       ratings: ratings,
-      overallRating: ratings.overallRating.toFixed(1)
+      overallRating: Number(ratings.overallRating.toFixed(1))
     });
   }
 
