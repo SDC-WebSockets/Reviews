@@ -30,7 +30,7 @@ export const Percentage = styled.span`
 export const TierX = styled.button`
   height: 24px;
   width: 24px;
-  padding-top: 4px;
+  padding: 4px 0 2px 0;
   display: flex;
   align-items: center;
   background-color: transparent;
