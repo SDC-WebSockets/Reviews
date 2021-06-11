@@ -6,8 +6,6 @@ const Dotenv = require('dotenv-webpack');
 const S3Plugin = require('webpack-s3-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
-// console.log(webpack.optimize);
-
 process.env.AWS_ACCESS_KEY_ID = require('./AWS/s3config.js').AWS_ACCESS_KEY_ID;
 process.env.AWS_SECRET_ACCESS_KEY = require('./AWS/s3config.js').AWS_SECRET_ACCESS_KEY;
 
@@ -40,7 +38,7 @@ module.exports = {
 
     new CompressionPlugin({
       test: /\.js$|\.jsx$|\.html$/,
-      compressionOptions: { level: 9},
+      compressionOptions: { level: 9 },
       threshold: 0,
       minRatio: 0.8
     })
