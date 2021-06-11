@@ -24,6 +24,7 @@ class ReviewService extends React.Component {
     this.showTwelveMoreReviews = this.showTwelveMoreReviews.bind(this);
     this.state = {
       courseId: Number(querystring.parse(window.location.search)['?courseId']),
+      overallRating: null,
       totalReviews: null,
       currentSearchTerm: null,
       reviewsBySearch: null,
@@ -69,7 +70,10 @@ class ReviewService extends React.Component {
   }
 
   updateRatings(ratings) {
-    this.setState({ratings: ratings});
+    this.setState({
+      ratings: ratings,
+      overallRating: ratings.overallRating.toFixed(1)
+    });
   }
 
   updateFeaturedReview(reviews) {
@@ -169,6 +173,7 @@ class ReviewService extends React.Component {
           <Feedback
             totalReviews={this.state.totalReviews}
             ratings={this.state.ratings}
+            overallRating={this.state.overallRating}
             currentSearchTerm={this.state.currentSearchTerm}
             currentTier={this.state.currentTier}
             setReviewsFilteredByTier={this.setReviewsFilteredByTier}

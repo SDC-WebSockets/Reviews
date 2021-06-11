@@ -1,4 +1,5 @@
 import React from 'react';
+import CourseRating from './courseRating.jsx';
 import Search from './search.jsx';
 import Stars from './stars.jsx';
 import Gauge from './gauge.jsx';
@@ -8,10 +9,6 @@ import {
   FeedbackWrapper,
   NoFeedback,
   FeedbackStyle,
-  OverallRating,
-  CourseGrade,
-  StarsWrapper,
-  CourseRatingTitle,
   Tiers,
   Tier,
   Data,
@@ -31,6 +28,9 @@ class Feedback extends React.Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.renderTransparent = this.renderTransparent.bind(this);
     this.select = React.createRef();
+    // this.state = {
+    //   overallRating: props.overallRating
+    // };
   }
 
   getPercentage(tier1 = 0, tier2 = 0) {
@@ -93,7 +93,7 @@ class Feedback extends React.Component {
   }
 
   render() {
-    if (this.props.ratings.totalRatings === 0) {
+    if (this.props.overallRating === 0) {
       return (
         <FeedbackWrapper>
           <ReviewTitle>Student feedback</ReviewTitle>
@@ -108,14 +108,15 @@ class Feedback extends React.Component {
         <FeedbackWrapper>
           <ReviewTitle>Student feedback</ReviewTitle>
           <FeedbackStyle>
-            <OverallRating>
-              <CourseGrade>{this.props.ratings.overallRating.toFixed(1)}
+            <CourseRating overallRating={Number(this.props.overallRating)} />
+            {/* <OverallRating>
+              <CourseGrade>{this.props.overallRating}
               </CourseGrade>
               <StarsWrapper>
-                <Stars rating={this.props.ratings.overallRating}/>
+                <Rating rating={Number(this.props.overallRating)}/>
               </StarsWrapper>
               <CourseRatingTitle>Course Rating</CourseRatingTitle>
-            </OverallRating>
+            </OverallRating> */}
             <Tiers>
               {tiers.map((tier) => {
                 let percentage;
@@ -139,7 +140,7 @@ class Feedback extends React.Component {
                         <TierX style={{visibility: 'visible'}}
                           onClick={portion > 0 ? this.removeFilter : null}
                           style={portion === 0 ? {cursor: 'no-drop'} : {cursor: 'pointer'}}>
-                          <svg viewBox="-8 -6 36 36">
+                          <svg viewBox="0 0 24 24" height="16px" width="16px">
                             <path fill="rgb(115, 114, 108)" d={xPath}/>
                           </svg>
                         </TierX>

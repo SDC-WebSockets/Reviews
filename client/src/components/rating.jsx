@@ -6,10 +6,13 @@ import { RatingStyle, ReviewMoment } from '../styles/rating.style.js';
 const Rating = (props) => (
   <RatingStyle>
     <Stars className="reviewRating" rating={props.rating}/>
-    <ReviewMoment className="reviewDate">
-      {moment(props.createdAt).fromNow()}
-    </ReviewMoment>
+    {props.createdAt &&
+      <ReviewMoment className="reviewDate">
+        {moment(props.createdAt).fromNow()}
+      </ReviewMoment>
+    }
   </RatingStyle>
 );
+
 
 export default Rating;

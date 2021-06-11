@@ -3,48 +3,67 @@ import { starPath } from '../svg.js';
 import { StarStyle, StarsStyle, Star } from '../styles/stars.style.js';
 
 const makeStar = (starFill) => { // takes in 0, 0.5, or 1 as argument
-  const empty = 'rgb(255, 255, 255)';
-  const half = 'url(#starGradient)';
-  const full = 'rgb(235, 138, 47)';
-  const starTypes = [empty, half, full];
-  return (
-    <StarStyle viewBox="0 0 24 24" /* xmlns="http://www.w3.org/2000/svg" */>
-      <defs>
-        <linearGradient id="starGradient">
-          <stop offset="50%" stopColor="rgb(235, 138, 47)"/>
-          <stop offset="50%" stopColor="rgb(255, 255, 255)"/>
-        </linearGradient>
-      </defs>
-      <path d="M 12 17.27 L 18.18 21 l -1.64 -7.03 L 22 9.24 l -7.19 -0.61 L 12 2 L 9.19 8.63 L 2 9.24 l 5.46 4.73 L 5.82 21 L 12 17.27 Z" strokeWidth="2" stroke="rgb(235, 138, 47)" fill={starTypes[starFill * 2]}/>
-    </StarStyle>
-  );
+  if (starFill === 0) {
+    return (
+      <StarStyle viewBox="0 0 24 24" fill='rgb(255, 255, 255)'>
+        <path d={starPath} strokeWidth="2" stroke="rgb(235, 138, 47)"/>
+      </StarStyle>
+    );
+  } else if (starFill === 0.5) {
+    return (
+      <StarStyle viewBox="0 0 24 24">
+        <defs>
+          <linearGradient id="starGradient">
+            <stop offset="50%" stopColor="rgb(235, 138, 47)"/>
+            <stop offset="50%" stopColor="rgb(255, 255, 255)"/>
+          </linearGradient>
+        </defs>
+        <path d={starPath} strokeWidth="2" stroke="rgb(235, 138, 47)" fill='url(#starGradient)'/>
+      </StarStyle>
+    );
+  } else if (starFill === 1) {
+    return (
+      <StarStyle viewBox="0 0 24 24" fill='rgb(235, 138, 47)'>
+        <path d={starPath} strokeWidth="2" stroke="rgb(235, 138, 47)"/>
+      </StarStyle>
+    );
+  }
 };
 
+const emptyStar = makeStar(0);
+const halfStar = makeStar(0.5);
+const fullStar = makeStar(1);
+
 const Stars = (props) => {
-  const rating = Number(props.rating).toFixed(1);
+  const rating = Number(props.rating);
   let stars;
   if (rating >= 4.8) {
-    stars = [makeStar(1), makeStar(1), makeStar(1), makeStar(1), makeStar(1)];
+    stars = [fullStar, fullStar, fullStar, fullStar, fullStar];
   } else if (4.3 <= rating && rating <= 4.7) {
-    stars = [makeStar(1), makeStar(1), makeStar(1), makeStar(1), makeStar(0.5)];
+    stars = [fullStar, fullStar, fullStar, fullStar, halfStar];
   } else if (3.8 <= rating && rating <= 4.2) {
-    stars = [makeStar(1), makeStar(1), makeStar(1), makeStar(1), makeStar(0)];
+    stars = [fullStar, fullStar, fullStar, fullStar, emptyStar];
   } else if (3.3 <= rating && rating <= 3.7) {
-    stars = [makeStar(1), makeStar(1), makeStar(1), makeStar(0.5), makeStar(0)];
+    stars = [fullStar, fullStar, fullStar, halfStar, emptyStar];
   } else if (2.8 <= rating && rating <= 3.2) {
-    stars = [makeStar(1), makeStar(1), makeStar(1), makeStar(0), makeStar(0)];
+    stars = [fullStar, fullStar, fullStar, emptyStar, emptyStar];
   } else if (2.3 <= rating && rating <= 2.7) {
-    stars = [makeStar(1), makeStar(1), makeStar(0.5), makeStar(0), makeStar(0)];
+    stars = [fullStar, fullStar, halfStar, emptyStar, emptyStar];
   } else if (1.8 <= rating && rating <= 2.2) {
-    stars = [makeStar(1), makeStar(1), makeStar(0), makeStar(0), makeStar(0)];
+    stars = [fullStar, fullStar, emptyStar, emptyStar, emptyStar];
   } else if (1.3 <= rating && rating <= 1.7) {
-    stars = [makeStar(1), makeStar(0.5), makeStar(0), makeStar(0), makeStar(0)];
+    stars = [fullStar, halfStar, emptyStar, emptyStar, emptyStar];
   } else if (rating <= 1.2) {
-    stars = [makeStar(1), makeStar(0), makeStar(0), makeStar(0), makeStar(0)];
+    stars = [fullStar, emptyStar, emptyStar, emptyStar, emptyStar];
   }
   return (
     <StarsStyle>
-      {stars.map((star, index) => <Star key={index}>{star}</Star>)}
+      {stars ? stars.map((star, index) => {
+        const StarMemo = React.memo(
+          () => <Star key={index}>{star}</Star>
+        );
+        return <StarMemo key={index}/>;
+      }) : null}
     </StarsStyle>
   );
 };
