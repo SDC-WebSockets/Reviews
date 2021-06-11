@@ -37,11 +37,11 @@ module.exports = {
     //     Bucket: 'charlotte-badger-reviews'
     //   }
     // }),
+
     new CompressionPlugin({
-      filename: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.js$|\.css$|\.html$/,
-      threshold: 10240,
+      test: /\.js$|\.jsx$|\.html$/,
+      compressionOptions: { level: 9},
+      threshold: 0,
       minRatio: 0.8
     })
   ],

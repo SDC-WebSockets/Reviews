@@ -9,6 +9,7 @@ node_modules
 package-lock.json
 reviewBundle.js
 reviewBundle.js.LICENSE.txt
+reviewBundle.js.gz
 rootkey.numbers
 s3config.js
 scribbles.js
