@@ -39,6 +39,9 @@ export const Percentage = styled.span`
 `;
 
 export const TierX = styled.button`
+  height: 24px;
+  width: 24px;
+  padding-top: 4px;
   display: flex;
   align-items: center;
   background-color: transparent;
