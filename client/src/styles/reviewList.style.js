@@ -6,7 +6,6 @@ export const ReviewListStyle = styled.div`
   min-height: 600px;
   width: auto;
   min-width: 300px;
-  max-width: 700px;
 `;
 
 export const SeeMoreReviews = styled.button`

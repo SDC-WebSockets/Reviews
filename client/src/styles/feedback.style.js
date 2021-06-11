@@ -8,7 +8,6 @@ export const FeedbackStyle = styled.div`
   display: flex;
   width: auto;
   min-width: 300px;
-  max-width: 700px;
 `;
 
 export const FeedbackInputsWrapper = styled.div``;

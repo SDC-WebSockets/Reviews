@@ -16,7 +16,6 @@ export const FeaturedReviewStyle = styled.div`
   padding: 24px;
   width: auto;
   min-width: 250px;
-  max-width: 650px;
 `;
 
 export const FeaturedReviewer = styled.div`

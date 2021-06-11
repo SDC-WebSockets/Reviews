@@ -10,7 +10,7 @@ export const ReviewServiceWrapper = styled.div`
   letter-spacing: -0.2px
   line-height: 22.4px;
   width: auto;
-  max-width: 600px;
+  /* max-width: 600px; */
   /* margin: auto; */
   /* padding-top: 32px; */
   /* padding-right: 5%; */
