@@ -3,7 +3,7 @@ import { thumbsUpPath, thumbsDownPath } from '../svg.js';
 import {
   ButtonsWrapper,
   Helpful,
-  ButtonStyle,
+  ButtonWrapper,
   Thumbs,
   Report
 } from '../styles/buttons.style.js';
@@ -14,7 +14,7 @@ const Buttons = (props) => (
       <Helpful>Thank you for your feedback</Helpful> :
       <Helpful>Was this review helpful?</Helpful>
     }
-    <ButtonStyle>
+    <ButtonWrapper>
       <Thumbs className="thumbs-up" onClick={() => { props.handleClick('thumbsUp'); }}
         style={props.reviewState.thumbsUp === true ?
           { borderColor: 'rgb(15, 124, 144)', backgroundColor: 'rgb(15, 124, 144)', fill: 'rgb(255, 255, 255)' }
@@ -37,7 +37,7 @@ const Buttons = (props) => (
         style={props.reviewState.reported === true ? { color: 'rgb(9, 76, 89)'} : null }>
         Report
       </Report>
-    </ButtonStyle>
+    </ButtonWrapper>
   </ButtonsWrapper>
 );
 

@@ -10,7 +10,7 @@ export const Helpful = styled.p`
   font-size: 12px;
 `;
 
-export const ButtonStyle = styled.div`
+export const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-top: 8px;

@@ -5,7 +5,9 @@ const SearchMessage = (props) => {
   if (props.reviewsBySearchAndTier) {
     if (props.reviewsBySearchAndTier.length > 0) {
       return (
-        <ReviewMessage>{props.reviewsBySearchAndTier.length} {props.reviewsBySearchAndTier.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</ReviewMessage>
+        <ReviewMessage>
+          {props.reviewsBySearchAndTier.length} {props.reviewsBySearchAndTier.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'
+        </ReviewMessage>
       );
     } else {
       return (
@@ -20,7 +22,9 @@ const SearchMessage = (props) => {
   } else if (!props.reviewsBySearchAndTier && props.reviewsBySearch && !props.reviewsByTier) {
     if (props.reviewsBySearch.length > 0) {
       return (
-        <ReviewMessage>{props.reviewsBySearch.length} {props.reviewsBySearch.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'</ReviewMessage>
+        <ReviewMessage>
+          {props.reviewsBySearch.length} {props.reviewsBySearch.length === 1 ? 'review' : 'reviews'} mentioning '<strong>{props.currentSearchTerm}</strong>'
+        </ReviewMessage>
       );
     } else {
       return (

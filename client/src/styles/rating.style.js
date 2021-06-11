@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const RatingStyle = styled.span`
+export const RatingWrapper = styled.span`
   margin: 8px 0;
   display: flex;
   align-items: center;

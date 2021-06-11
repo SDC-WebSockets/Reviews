@@ -1,17 +1,17 @@
 import React from 'react';
 import { starPath } from '../svg.js';
-import { StarStyle, StarsStyle, Star } from '../styles/stars.style.js';
+import { StarSVG, StarsWrapper, Star } from '../styles/stars.style.js';
 
 const makeStar = (starFill) => { // takes in 0, 0.5, or 1 as argument
   if (starFill === 0) {
     return (
-      <StarStyle viewBox="0 0 24 24" fill='rgb(255, 255, 255)'>
+      <StarSVG viewBox="0 0 24 24" fill='rgb(255, 255, 255)'>
         <path d={starPath} strokeWidth="2" stroke="rgb(235, 138, 47)"/>
-      </StarStyle>
+      </StarSVG>
     );
   } else if (starFill === 0.5) {
     return (
-      <StarStyle viewBox="0 0 24 24">
+      <StarSVG viewBox="0 0 24 24">
         <defs>
           <linearGradient id="starGradient">
             <stop offset="50%" stopColor="rgb(235, 138, 47)"/>
@@ -19,23 +19,22 @@ const makeStar = (starFill) => { // takes in 0, 0.5, or 1 as argument
           </linearGradient>
         </defs>
         <path d={starPath} strokeWidth="2" stroke="rgb(235, 138, 47)" fill='url(#starGradient)'/>
-      </StarStyle>
+      </StarSVG>
     );
   } else if (starFill === 1) {
     return (
-      <StarStyle viewBox="0 0 24 24" fill='rgb(235, 138, 47)'>
+      <StarSVG viewBox="0 0 24 24" fill='rgb(235, 138, 47)'>
         <path d={starPath} strokeWidth="2" stroke="rgb(235, 138, 47)"/>
-      </StarStyle>
+      </StarSVG>
     );
   }
 };
 
-const emptyStar = makeStar(0);
-const halfStar = makeStar(0.5);
-const fullStar = makeStar(1);
-
 const Stars = (props) => {
   const rating = Number(props.rating);
+  const emptyStar = makeStar(0);
+  const halfStar = makeStar(0.5);
+  const fullStar = makeStar(1);
   let stars;
   if (rating >= 4.8) {
     stars = [fullStar, fullStar, fullStar, fullStar, fullStar];
@@ -57,14 +56,14 @@ const Stars = (props) => {
     stars = [fullStar, emptyStar, emptyStar, emptyStar, emptyStar];
   }
   return (
-    <StarsStyle>
+    <StarsWrapper>
       {stars ? stars.map((star, index) => {
         const StarMemo = React.memo(
           () => <Star key={index}>{star}</Star>
         );
         return <StarMemo key={index}/>;
       }) : null}
-    </StarsStyle>
+    </StarsWrapper>
   );
 };
 
