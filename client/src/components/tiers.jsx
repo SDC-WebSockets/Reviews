@@ -24,6 +24,14 @@ class Tiers extends React.Component {
     return Math.round(percentage) + '%';
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.currentTier !== this.props.currentTier) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   render() {
     const tiers = [
       ['5'], ['4 1/2', '4'], ['3 1/2', '3'], ['2 1/2', '2'], ['1 1/2', '1']

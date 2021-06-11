@@ -3,14 +3,22 @@ const path = require('path');
 const cors = require('cors');
 const mongoDb = require('../database/mongoDb.js');
 const app = express();
+// const compression = require('compression');
 const dotenv = require('dotenv');
 dotenv.config();
 
 const port = process.env.PORT || 2712;
 const host = process.env.HOST || 'localhost';
 
+// app.use(compression());
 app.use(cors());
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
+
+app.get('*.js', function (req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
 
 app.get('/reviews', (req, res) => {
   let reviews;
