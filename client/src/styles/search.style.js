@@ -30,8 +30,8 @@ export const SearchBar = styled.input`
   border-bottom-left-radius: 4px;
   color: rgb(60, 59, 55);
   width: 100%;
-  height: 42px;
-  padding-top: 2px;
+  height: 100%;
+  /* padding-top: 2px; */
   padding-left: 12px;
   line-height: 22.4px;
   font-size: 16px;
@@ -54,7 +54,10 @@ export const ClearSearchBar = styled.button`
 
 export const ClearSearchBarSVG = styled.svg``;
 
-export const MagnifyingGlassSVG = styled.svg``;
+export const MagnifyingGlassSVG = styled.svg`
+  height: 100%;
+  width: 100%;
+`;
 
 export const SearchButton = styled.button`
   border-top-right-radius: 4px;
