@@ -64,7 +64,7 @@ class Search extends React.Component {
           </ClearSearchBar>
         </SearchInput>
         <SearchButton className="searchButton" type="submit" onClick={() => { this.filterByTerm(this.state.term); }}>
-          <MagnifyingGlassSVG viewBox="-12 -12 48 48">
+          <MagnifyingGlassSVG viewBox="0 0 24 24" height="24px" width="24px">
             <path fill="rgb(255, 255, 255)" d={magnifyingGlassPath}/>
           </MagnifyingGlassSVG>
         </SearchButton>
