@@ -26,7 +26,9 @@ class CourseRating extends React.Component {
       <OverallRating>
         <CourseGrade>{this.props.overallRating}
         </CourseGrade>
-        <Rating rating={Number(this.props.overallRating)}/>
+        <Rating
+          rating={Number.isInteger(this.props.overallRating) ? this.props.overallRating + '.0' : this.props.overallRating}
+        />
         <CourseRatingTitle>Course Rating</CourseRatingTitle>
       </OverallRating>
     );

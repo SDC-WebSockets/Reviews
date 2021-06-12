@@ -11,6 +11,7 @@ reviewBundle.js
 reviewBundle.js.LICENSE.txt
 reviewBundle.js.gz
 rootkey.numbers
+s3.js
 s3config.js
 scribbles.js
 WebSequence.png
