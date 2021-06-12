@@ -24,7 +24,6 @@ class CourseRating extends React.Component {
   render() {
     return (
       <OverallRating>
-        {console.log(typeof this.props.overallRating)}
         <CourseGrade>
           {Number.isInteger(this.props.overallRating) ? this.props.overallRating.toString() + '.0' : this.props.overallRating}
         </CourseGrade>
