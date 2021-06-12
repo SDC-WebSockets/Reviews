@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const shrinkRay = require('shrink-ray-current');
 const mongoDb = require('../database/mongoDb.js');
 const app = express();
 const dotenv = require('dotenv');
@@ -10,6 +11,7 @@ const port = process.env.PORT || 2712;
 const host = process.env.HOST || 'localhost';
 
 app.use(cors());
+app.use(shrinkRay());
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 
 app.get('/reviews', (req, res) => {
