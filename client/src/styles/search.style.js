@@ -30,8 +30,7 @@ export const SearchBar = styled.input`
   border-bottom-left-radius: 4px;
   color: rgb(60, 59, 55);
   width: 100%;
-  height: 44px;
-  /* padding-top: 2px; */
+  height: 40px;
   padding-left: 12px;
   line-height: 22.4px;
   font-size: 16px;
