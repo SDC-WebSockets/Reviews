@@ -10,6 +10,8 @@ export const magnifyingGlassPath = 'M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.
 
 export const starPath = 'M 12 17.27 L 18.18 21 l -1.64 -7.03 L 22 9.24 l -7.19 -0.61 L 12 2 L 9.19 8.63 L 2 9.24 l 5.46 4.73 L 5.82 21 L 12 17.27 Z';
 
+export const halfStarPath = 'M 22 9.24 L 14.81 8.62 L 12 2 L 9.19 8.63 L 2 9.24 L 7.46 13.97 L 5.82 21 L 12 17.27 L 18.18 21 L 16.55 13.97 L 22 9.24 Z M 12 15.4 L 12 6.1 L 13.71 10.14 L 18.09 10.52 L 14.77 13.4 L 15.77 17.68 L 12 15.4 Z';
+
 export const arrowDownPath = 'M 16.59 8.59 L 12 13.17 L 7.41 8.59 L 6 10 l 6 6 l 6 -6 l -1.41 -1.41 Z';
 
 export const arrowUpPath = 'M 7.41 15.41 L 12 10.83 l 4.59 4.58 L 18 14 l -6 -6 l -6 6 l 1.41 1.41 Z';

@@ -48,6 +48,7 @@ class ReviewService extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log('Data from server:', data);
         if (data === 'No course selected') {
           this.setState({courseId: null});
         } else {

@@ -51,9 +51,11 @@ const generateRandomReview = (courseId) => {
     reviews: randomNoOfReviews
   };
 
-  const ratings = [5, 5, 5, 5, 5, 4.5, 4.5, 4, 4, 3.5, 3, 2.5, 2, 1.5, 1]; // makes it more likely for it to have good ratings
+  // make it likely for it to have good ratings
+  const ratings = [5, 5, 5, 5, 5, 5, 5, 5, 4.5, 4.5, 4, 4, 4, 3.5, 3, 2.5, 2, 1.5, 1, 1];
   const randomRating = ratings[randomInclusiveInteger(0, ratings.length - 1)];
   const randomComment = faker.lorem.text();
+  // random date since 1/1/2018
   const startTime = new Date('01 January 2018 00:00 UTC');
   const currentTime = new Date();
   const randomTime = randomDate(startTime, currentTime).toISOString();

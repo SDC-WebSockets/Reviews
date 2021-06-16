@@ -6,6 +6,8 @@
 
 // --- DATABASE ---
 
+// --- INTEGRATIION ---
+
 // REVIEWS COLLECTION
 // multiples of 13 courseIds should not have reviews or ratings
 

@@ -14,6 +14,7 @@ app.use(cors());
 app.use(shrinkRay());
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 
+// get reviews and ratings for all courses
 app.get('/reviews', (req, res) => {
   let reviews;
   let ratings;
@@ -28,6 +29,7 @@ app.get('/reviews', (req, res) => {
     });
 });
 
+// get reviews and ratings for one course
 app.get('/reviews/item', (req, res) => {
   let courseId = Number(req.query.courseId);
   let reviews;
@@ -50,10 +52,6 @@ app.get('/reviews/item', (req, res) => {
   } else {
     res.json('No course selected');
   }
-});
-
-app.get('/bundle', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'public', 'reviewBundle.js'));
 });
 
 app.listen(port, () => {

@@ -25,14 +25,6 @@ class Feedback extends React.Component {
     this.select = React.createRef();
   }
 
-  // getPercentage(tier1 = 0, tier2 = 0) {
-  //   let percentage = (tier1 + tier2) / this.props.ratings.totalRatings * 100;
-  //   if (0 < percentage && percentage < 1) {
-  //     return '< 1%';
-  //   }
-  //   return Math.round(percentage) + '%';
-  // }
-
   handleClick(tier) {
     let clickedTier = Number(document.getElementById(`tier${tier}`).id.slice(4));
     if (this.props.currentTier === clickedTier) {

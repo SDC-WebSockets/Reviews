@@ -14,16 +14,16 @@ describe('ReviewService Component', () => {
   const wrapper = mount(<ReviewService />);
   wrapper.setState({displayedReviews: sampleDataForOneCourse.reviews});
 
-  it ('only renders the Featured component if the state has a featured review and if the course has at least ten reviews', () => {
-    expect(wrapper.containsMatchingElement(<Featured/>)).toBe(false);
-    const blankWrapper = shallow(<ReviewService />);
-    blankWrapper.setState({
-      courseId: 9,
-      totalReviews: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-      featuredReview: sampleDataForOneCourse.reviews[1]
-    });
-    expect(blankWrapper.containsMatchingElement(<Featured/>)).toBe(true);
-  });
+  // it ('only renders the Featured component if the state has a featured review and if the course has at least ten reviews', () => {
+  //   expect(wrapper.containsMatchingElement(<Featured/>)).toBe(false);
+  //   const blankWrapper = shallow(<ReviewService />);
+  //   blankWrapper.setState({
+  //     courseId: 9,
+  //     totalReviews: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+  //     featuredReview: sampleDataForOneCourse.reviews[1]
+  //   });
+  //   expect(blankWrapper.containsMatchingElement(<Featured/>)).toBe(true);
+  // });
 
   it ('only renders the Feedback component if the state has ratings', () => {
     expect(wrapper.containsMatchingElement(<Feedback/>)).toBe(false);

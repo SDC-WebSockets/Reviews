@@ -12,21 +12,22 @@ import {
 } from '../styles/comment.style.js';
 
 const Comment = (props) => {
+
+  // renders search term in bold in search-filtered reviews
   const CommentWithBoldSearchTerm = () => {
     const comment = props.review.comment;
     const searchTerm = props.currentSearchTerm;
+
     const boldString = (string, term) => {
       let regExp = new RegExp ('(' + term + ')', 'gi');
       return string.replaceAll(regExp, '<strong>$1</strong>');
     };
-    const newComment = boldString(comment, searchTerm);
 
+    const newComment = boldString(comment, searchTerm);
     return (
       <CommentWithBoldSearchTermWrapper className="commentWithBoldSearchTerm" dangerouslySetInnerHTML={{ __html: newComment}}/>
     );
   };
-
-
 
   return (
     <CommentWrapper>

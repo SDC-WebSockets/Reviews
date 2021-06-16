@@ -150,10 +150,10 @@ const resetRating = (rating) => {
 module.exports = {
   Review, // used in dataGenerators.js
   Rating, // used in dataGenerators.js
-  getAllReviews, // used in server and s3.js
-  getReviewsForOneCourse, // used in server
-  getAllRatings, // used in server and s3.js
-  getRatingForOneCourse, // used in server
+  getAllReviews, // used in server/index.js and s3.js
+  getReviewsForOneCourse, // used in server/index.js
+  getAllRatings, // used in server/index.js and s3.js
+  getRatingForOneCourse, // used in server/index.js
   addReviewAndUpdateRating, // used in dataGenerators.js
   resetRating // used in dataGenerators.js
 };

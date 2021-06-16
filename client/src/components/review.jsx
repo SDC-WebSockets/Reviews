@@ -55,7 +55,7 @@ class Review extends React.Component {
       <ReviewStyle
         style={this.props.reviewNumber === this.props.displayedReviews.length ? {borderBottomWidth: '0'} : null}>
         <ReviewerAvatar className="reviewerAvatar">
-          {/* if the reviewer has no avatar, the default avatar consists of a saved color background and the reviewer's initials */}
+          {/* if the reviewer has no avatar, the default avatar consists of a color background (saved in database) and the reviewer's initials */}
           {this.props.review.reviewer.picture.slice(0, 3) === 'rgb' ?
             <ReviewerInitials className="reviewerInitials" style={{backgroundColor: this.props.review.reviewer.picture}}>{this.props.review.reviewer.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</ReviewerInitials> :
             <ReviewerPicture className="reviewerPicture" src={this.props.review.reviewer.picture}/>}
