@@ -2,14 +2,17 @@
 Reviews for Udemy Clone (Front End Capstone project by Hack Reactor RPT27 team Charlotte Badger https://github.com/Charlotte-Badger)
 
 ## Related Projects
-- Course Content
+- Course Content (Kyle Johnson)
 https://github.com/Charlotte-Badger/Course-Content
-- Overview
+- Overview (Eric Knechtges)
 https://github.com/Charlotte-Badger/Overview
-- Sidebar
+- Sidebar (Jason Carini)
 https://github.com/Charlotte-Badger/Sidebar
-- Proxy (by Frederic Rosselet)
-https://github.com/Charlotte-Badger/udemy-proxy-fredrosselet
+- Author (Eric Knechtges)
+https://github.com/Charlotte-Badger/Author
+- Proxy (Jason Carini, with some help from KJ, EK, and FR)
+https://github.com/Charlotte-Badger/udemy-proxy-carinij
+
 
 ## Table of Contents
 1. [Requirements](#requirements)
@@ -42,4 +45,13 @@ From within the Reviews directory:
 npm start
 ```
 
-<img hspace = "13px" src="readme-assets/featured.gif" width="375">
+## Sections
+### Featured Review
+<img src="readme-assets/featured.gif">
+
+### Feedback
+<img src="readme-assets/filterByTier.gif">
+<img src="readme-assets/filterBySearch.gif">
+
+### Reviews
+<img src="readme-assets/reviewList.gif">
