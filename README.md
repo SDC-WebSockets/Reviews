@@ -45,13 +45,16 @@ From within the Reviews directory:
 npm start
 ```
 
-## Sections
 ### Featured Review
+<img src="readme-assets/featuredScreenshot.png">
 <img src="readme-assets/featured.gif">
 
 ### Feedback
+<img src="readme-assets/feedbackScreenshot.png">
 <img src="readme-assets/filterByTier.gif">
 <img src="readme-assets/filterBySearch.gif">
 
 ### Reviews
+<img src="readme-assets/reviewListScreenshot1.png">
+<img src="readme-assets/reviewListScreenshot2.png">
 <img src="readme-assets/reviewList.gif">
