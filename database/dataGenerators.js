@@ -96,7 +96,7 @@ const addRandomReviews = async (noOfCourses) => {
 };
 
 // ------ RESET AND REPOPULATE DATABASE ------
-const resetDatabase = async (noOfCourses) => {
+const populateDatabase = async (noOfCourses) => {
   await Rating.countDocuments().then((results) => {
     if (results > 0) {
       Rating.collection.drop();
@@ -113,7 +113,7 @@ const resetDatabase = async (noOfCourses) => {
 };
 
 // === ACTIVATE HERE === (node database/dataGenerators.js)
-resetDatabase(100);
+populateDatabase(100);
 
 
 

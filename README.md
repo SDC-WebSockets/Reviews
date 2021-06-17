@@ -42,5 +42,4 @@ From within the Reviews directory:
 npm start
 ```
 
-
-
+<img hspace = "13px" src="readme-assets/featured.gif" width="375">
