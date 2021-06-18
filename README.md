@@ -46,15 +46,15 @@ npm start
 ```
 
 ### Featured Review
-<img src="readme-assets/featuredScreenshot.png">
-<img src="readme-assets/featured.gif">
+<img src="readme-assets/featuredScreenshot.png" width="600">
+<img src="readme-assets/featured.gif" width="600">
 
 ### Feedback
-<img src="readme-assets/feedbackScreenshot.png">
-<img src="readme-assets/filterByTier.gif">
-<img src="readme-assets/filterBySearch.gif">
+<img src="readme-assets/feedbackScreenshot.png" width="600">
+<img src="readme-assets/filterByTier.gif" width="600">
+<img src="readme-assets/filterBySearch.gif" width="600">
 
 ### Reviews
-<img src="readme-assets/reviewListScreenshot1.png">
-<img src="readme-assets/reviewListScreenshot2.png">
-<img src="readme-assets/reviewList.gif">
+<img src="readme-assets/reviewListScreenshot1.png" width="600">
+<img src="readme-assets/reviewListScreenshot2.png" width="600">
+<img src="readme-assets/reviewList.gif" width="600">
