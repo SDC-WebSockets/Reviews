@@ -1,4 +1,4 @@
-# Project Name
+# Review Service
 Reviews for Udemy Clone (Front End Capstone project by Hack Reactor RPT27 team Charlotte Badger https://github.com/Charlotte-Badger)
 
 ## Related Projects
@@ -13,11 +13,12 @@ https://github.com/Charlotte-Badger/Author
 - Proxy (Jason Carini, with some help from KJ, EK, and FR)
 https://github.com/Charlotte-Badger/udemy-proxy-carinij
 
-
 ## Table of Contents
-1. [Requirements](#requirements)
-2. [Installation](#installation)
+1. [Usage] (#usage)
+2. [Requirements](#requirements)
+3. [Installation](#installation)
 
+## Usage
 
 ## Requirements
 - Node 6.13.0
