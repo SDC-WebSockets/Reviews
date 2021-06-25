@@ -12,6 +12,7 @@ const host = process.env.HOST || 'localhost';
 
 app.use(cors());
 app.use(shrinkRay());
+app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 
 // get reviews and ratings for all courses
@@ -52,6 +53,30 @@ app.get('/reviews/item', (req, res) => {
   } else {
     res.json('No course selected');
   }
+});
+
+// DB CRUD
+app.post('/reviews/item', (req, res) => {
+  // check that all properties are present
+  let review = req.body;
+  if (review.courseId && review.reviewer && review.rating && review.comment && review.helpful) {
+    if (Number.isInteger(courseId) && courseId >= 1 && courseId <= 100) {
+      review.createdAt = review.createdAt || new Date();
+      mongoDb.addReviewAndUpdateRating(review)
+        .then(() => res.status(201).send(`Review created for course ${review.courseId}`))
+        .catch((err) => {
+          console.error(err);
+          res.status(400).send(`Failed to create review for course ${review.courseId}`);
+        });
+    }
+  } else {
+    res.status(400).send('Payload missing required fields');
+  }
+});
+
+app.put('/reviews/item/:id', (req, res) => {
+  let review = req.body;
+  const reviewId = review.id;
 });
 
 app.listen(port, () => {
