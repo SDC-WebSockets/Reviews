@@ -147,6 +147,27 @@ const resetRating = (rating) => {
     }, {upsert: true}).exec();
 };
 
+// CRUD Additions
+const updateReviewAndRating = (review) => {
+  return Review.findOneAndUpdate( {
+    id: review.id
+  }, review, { new: true } )
+    .then((newReview) => {
+      return getRatingForOneCourse(newReview.courseId)
+        .then((rating) => {
+          return updateRating(newReview, rating);
+        })
+        .catch((err) => {
+          console.error(err);
+          return err;
+        });
+    })
+    .catch((err) => {
+      console.error(err);
+      return err;
+    });
+};
+
 module.exports = {
   Review, // used in dataGenerators.js
   Rating, // used in dataGenerators.js
@@ -155,5 +176,6 @@ module.exports = {
   getAllRatings, // used in server/index.js and s3.js
   getRatingForOneCourse, // used in server/index.js
   addReviewAndUpdateRating, // used in dataGenerators.js
-  resetRating // used in dataGenerators.js
+  resetRating, // used in dataGenerators.js
+  updateReviewAndRating // used in server/index.js
 };

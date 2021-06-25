@@ -77,6 +77,13 @@ app.post('/reviews/item', (req, res) => {
 app.put('/reviews/item/:id', (req, res) => {
   let review = req.body;
   const reviewId = review.id;
+  mongoDb.updateReviewAndRating(req.body)
+    .then((result) => {
+      res.status(200).send(`review id ${reviewId} successfully updated`);
+    })
+    .catch((err) => {
+      res.status(400).send(`failed to update ${reviewId}`);
+    });
 });
 
 app.listen(port, () => {
