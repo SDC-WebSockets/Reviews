@@ -168,6 +168,20 @@ const updateReviewAndRating = (review) => {
     });
 };
 
+const deleteReviewAndUpdateRating = (review) => {
+  return Review.deleteOne({ id: review.id })
+    .then((review) => {
+      return getRatingForOneCourse(review.courseId)
+        .then((rating) => {
+          return updateRating(review, rating);
+        })
+        .catch((err) => {
+          console.error(err);
+          return err;
+        });
+    });
+};
+
 module.exports = {
   Review, // used in dataGenerators.js
   Rating, // used in dataGenerators.js
@@ -177,5 +191,6 @@ module.exports = {
   getRatingForOneCourse, // used in server/index.js
   addReviewAndUpdateRating, // used in dataGenerators.js
   resetRating, // used in dataGenerators.js
-  updateReviewAndRating // used in server/index.js
+  updateReviewAndRating, // used in server/index.js
+  deleteReviewAndUpdateRating // used in server/index.js
 };

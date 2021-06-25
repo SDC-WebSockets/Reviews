@@ -86,6 +86,18 @@ app.put('/reviews/item/:id', (req, res) => {
     });
 });
 
+app.delete('reviews/item/:id', (req, res) => {
+  let review = req.body;
+  const reviewId = review.id;
+  mongoDb.deleteReviewAndUpdateRating(req.body)
+    .then((result) => {
+      res.status(200).send(`review id ${reviewId} successfully deleted`);
+    })
+    .catch((err) => {
+      res.status(400).send(`failed to update ${reviewId}`);
+    });
+});
+
 app.listen(port, () => {
   console.log(`Server listening at http://${host}:${port}`);
 });
