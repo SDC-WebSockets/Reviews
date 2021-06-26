@@ -56,11 +56,22 @@ app.get('/reviews/item', (req, res) => {
 });
 
 // DB CRUD
+app.get('/reviews/item/:id', (req, res) => {
+  const reviewId = req.params.id;
+  mongoDb.getReviewById(reviewid)
+    .then((review) => {
+      res.status(200).send(review);
+    })
+    .catch((err) => {
+      res.status(400).send(`Failed to get review ${reviewId}`);
+    });
+});
+
 app.post('/reviews/item', (req, res) => {
   // check that all properties are present
   let review = req.body;
   if (review.courseId && review.reviewer && review.rating && review.comment && review.helpful) {
-    if (Number.isInteger(courseId) && courseId >= 1 && courseId <= 100) {
+    if (Number.isInteger(review.courseId) && review.courseId >= 1 && review.courseId <= 100) {
       review.createdAt = review.createdAt || new Date();
       mongoDb.addReviewAndUpdateRating(review)
         .then(() => res.status(201).send(`Review created for course ${review.courseId}`))

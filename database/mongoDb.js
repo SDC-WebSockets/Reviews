@@ -110,6 +110,7 @@ const addReviewAndUpdateRating = (review) => {
         console.log(err);
       })
       .then((result) => {
+        console.log(result.data);
         getRatingForOneCourse(result.courseId)
           .catch((err) => {
             console.log(err);
@@ -148,6 +149,10 @@ const resetRating = (rating) => {
 };
 
 // CRUD Additions
+const getReviewById = (id) => {
+  return Review.findOneById(id);
+};
+
 const updateReviewAndRating = (review) => {
   return Review.findOneAndUpdate( {
     id: review.id
@@ -183,8 +188,8 @@ const deleteReviewAndUpdateRating = (review) => {
 };
 
 module.exports = {
-  Review, // used in dataGenerators.js
-  Rating, // used in dataGenerators.js
+  Review, // used in dataGenerators.js, test/dbCrud.js
+  Rating, // used in dataGenerators.js, test/dbCrud.js
   getAllReviews, // used in server/index.js and s3.js
   getReviewsForOneCourse, // used in server/index.js
   getAllRatings, // used in server/index.js and s3.js
@@ -192,5 +197,6 @@ module.exports = {
   addReviewAndUpdateRating, // used in dataGenerators.js
   resetRating, // used in dataGenerators.js
   updateReviewAndRating, // used in server/index.js
-  deleteReviewAndUpdateRating // used in server/index.js
+  deleteReviewAndUpdateRating, // used in server/index.js
+  getReviewById // used in server/index.js
 };
