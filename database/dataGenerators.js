@@ -1,5 +1,6 @@
 const Rating = require('./mongoDb.js').Rating;
 const Review = require('./mongoDb.js').Review;
+const Reviewer = require('./mongoDb.js').Reviewer;
 const addReviewAndUpdateRating = require('./mongoDb.js').addReviewAndUpdateRating;
 const resetRating = require('./mongoDb.js').resetRating;
 const faker = require('faker');
@@ -77,7 +78,7 @@ const generateRandomReview = (courseId) => {
 // ------ SET ALL RATINGS TO 0 ------
 const resetRatings = async (noOfCourses) => {
   for (let i = 1; i <= noOfCourses; i++) {
-    await resetRating({courseId: i});
+    await resetRating(i);
   }
 };
 
@@ -105,6 +106,11 @@ const populateDatabase = async (noOfCourses) => {
   await Review.countDocuments().then((results) => {
     if (results > 0) {
       Review.collection.drop();
+    }
+  });
+  await Reviewer.countDocuments().then((results) => {
+    if (results > 0) {
+      Reviewer.collection.drop();
     }
   });
   await resetRatings(noOfCourses);
