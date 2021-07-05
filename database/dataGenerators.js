@@ -154,8 +154,14 @@ const populateCouchDB = async (noOfCourses) => {
     method: 'head',
     url: `http://${process.env.COUCH_USER}:${process.env.COUCH_PASS}@localhost:5984/udemy_reviews`
   })
+    .then(async () => {
+      await axios({
+        method: 'delete',
+        url: `http://${process.env.COUCH_USER}:${process.env.COUCH_PASS}@localhost:5984/udemy_reviews`
+      });
+      throw 'rebuild the db';
+    })
     .catch(() => {
-      console.log('DB Does Not Exist!');
       return axios({
         method: 'put',
         url: `http://${process.env.COUCH_USER}:${process.env.COUCH_PASS}@localhost:5984/udemy_reviews`
@@ -215,6 +221,6 @@ const populateCouchDB = async (noOfCourses) => {
 };
 // === ACTIVATE HERE === (node database/dataGenerators.js)
 // populateDatabase(100);
-populateCouchDB(1);
+populateCouchDB(100);
 
 
