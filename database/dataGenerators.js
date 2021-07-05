@@ -4,6 +4,7 @@ const Reviewer = require('./mongoDb.js').Reviewer;
 const addReviewAndUpdateRating = require('./mongoDb.js').addReviewAndUpdateRating;
 const resetRating = require('./mongoDb.js').resetRating;
 const faker = require('faker');
+const crypto = require('crypto');
 
 // helper functions
 const randomInclusiveInteger = (min, max, exceptions = []) => {
@@ -33,16 +34,20 @@ const randomColor = () => {
 };
 
 let usedReviewerIds = [];
-
-// create a random review for a given course ID
-const generateRandomReview = (courseId) => {
-  const randomReviewerId = randomInclusiveInteger(100000, 999999, usedReviewerIds);
+const generateRandomReviewer = (courseId) => {
+  const randomReviewerId = crypto.createHash('md5').update(randomInclusiveInteger(0, 499999).toString()).digest('hex');
   usedReviewerIds.push(randomReviewerId);
   const randomName = faker.name.findName();
-  const randomAvatar = faker.image.avatar();
+  const randomAvatar = `https://rpt27-sdc-websockets.s3.us-west-2.amazonaws.com/avatars/avatar${randomInclusiveInteger(0, 999)}.jpg`;
   const avatars = [randomColor(), randomColor(), randomColor(), randomAvatar];
   const avatarOrNoAvatar = avatars[randomInclusiveInteger(0, 3)];
-  const randomNoOfCourses = randomInclusiveInteger(1, 50);
+
+  const reviewCounts = usedReviewerIds.reduce((memo, val) => {
+    memo = val === randomReviewerId ? memo + 1 : memo;
+    return memo;
+  }, 0);
+
+  const randomNoOfCourses = reviewCounts;
   const randomNoOfReviews = randomInclusiveInteger(1, randomNoOfCourses);
   const randomReviewer = {
     reviewerId: randomReviewerId,
@@ -51,6 +56,16 @@ const generateRandomReview = (courseId) => {
     coursesTaken: randomNoOfCourses,
     reviews: randomNoOfReviews
   };
+  return randomReviewer;
+};
+
+
+
+// create a random review for a given course ID
+const generateRandomReview = (courseId, reviewNum) => {
+  // const randomReviewerId = randomInclusiveInteger(100000, 999999, usedReviewerIds);
+  // CREATE REVIEWER
+
 
   // make it likely for it to have good ratings
   const ratings = [5, 5, 5, 5, 5, 5, 5, 5, 4.5, 4.5, 4, 4, 4, 3.5, 3, 2.5, 2, 1.5, 1, 1];
@@ -119,7 +134,13 @@ const populateDatabase = async (noOfCourses) => {
 };
 
 // === ACTIVATE HERE === (node database/dataGenerators.js)
-populateDatabase(100);
+// populateDatabase(100);
+generateRandomReviewer(1);
+
+generateRandomReviewer(2);
+generateRandomReviewer(2);
+generateRandomReviewer(2);
+generateRandomReviewer(2);
 
 
 
