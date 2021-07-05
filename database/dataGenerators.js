@@ -5,6 +5,9 @@ const addReviewAndUpdateRating = require('./mongoDb.js').addReviewAndUpdateRatin
 const resetRating = require('./mongoDb.js').resetRating;
 const faker = require('faker');
 const crypto = require('crypto');
+const axios = require('axios');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // helper functions
 const randomInclusiveInteger = (min, max, exceptions = []) => {
@@ -34,7 +37,7 @@ const randomColor = () => {
 };
 
 let usedReviewerIds = [];
-const generateRandomReviewer = (courseId) => {
+const generateRandomReviewer = () => {
   const randomReviewerId = crypto.createHash('md5').update(randomInclusiveInteger(0, 499999).toString()).digest('hex');
   usedReviewerIds.push(randomReviewerId);
   const randomName = faker.name.findName();
@@ -59,27 +62,20 @@ const generateRandomReviewer = (courseId) => {
   return randomReviewer;
 };
 
-
-
 // create a random review for a given course ID
-const generateRandomReview = (courseId, reviewNum) => {
-  // const randomReviewerId = randomInclusiveInteger(100000, 999999, usedReviewerIds);
-  // CREATE REVIEWER
-
-
+const generateRandomReview = (courseId) => {
   // make it likely for it to have good ratings
   const ratings = [5, 5, 5, 5, 5, 5, 5, 5, 4.5, 4.5, 4, 4, 4, 3.5, 3, 2.5, 2, 1.5, 1, 1];
   const randomRating = ratings[randomInclusiveInteger(0, ratings.length - 1)];
   const randomComment = faker.lorem.text();
-  // random date since 1/1/2018
-  const startTime = new Date('01 January 2018 00:00 UTC');
+  // random date within 3 months
+  const startTime = new Date('01 April 2021 00:00 UTC');
   const currentTime = new Date();
   const randomTime = randomDate(startTime, currentTime).toISOString();
   const randomHelpful = randomInclusiveInteger(1, 50);
 
   const randomReview = {
     courseId: courseId,
-    reviewer: randomReviewer,
     rating: randomRating,
     comment: randomComment,
     createdAt: randomTime,
@@ -88,6 +84,23 @@ const generateRandomReview = (courseId, reviewNum) => {
   };
 
   return randomReview;
+};
+
+const generateRating = () => {
+  return {
+    overallRating: null,
+    totalRatings: 0,
+    totalStars: null,
+    '5': 0,
+    '4 1/2': 0,
+    '4': 0,
+    '3 1/2': 0,
+    '3': 0,
+    '2 1/2': 0,
+    '2': 0,
+    '1 1/2': 0,
+    '1': 0
+  };
 };
 
 // ------ SET ALL RATINGS TO 0 ------
@@ -133,14 +146,75 @@ const populateDatabase = async (noOfCourses) => {
   console.log('Finished populating database');
 };
 
+
+const populateCouchDB = async (noOfCourses) => {
+  // ensure DB exists
+  console.log(`http://${process.env.COUCH_USER}:${process.env.COUCH_PASS}@localhost:5984/udemy_reviews`);
+  const dbExists = await axios({
+    method: 'head',
+    url: `http://${process.env.COUCH_USER}:${process.env.COUCH_PASS}@localhost:5984/udemy_reviews`
+  })
+    .catch(() => {
+      console.log('DB Does Not Exist!');
+      return axios({
+        method: 'put',
+        url: `http://${process.env.COUCH_USER}:${process.env.COUCH_PASS}@localhost:5984/udemy_reviews`
+      })
+        .catch((err) => {
+          console.log('failed to create database', err);
+        });
+    });
+
+  for (let i = 1; i <= noOfCourses; i++) {
+    let doc = {
+      ratings: generateRating(),
+      reviews: [],
+      courseId: i
+    };
+    const randReviewCount = randomInclusiveInteger(1, 30);
+    for (let j = 0; j < randReviewCount; j++) {
+      let randomReview = generateRandomReview(i);
+      randomReview.reviewer = generateRandomReviewer();
+      doc.ratings.totalStars = doc.ratings.totalStars === null ? randomReview.rating : doc.ratings.totalStars + randomReview.rating;
+      if (randomReview.rating === 5) {
+        doc.ratings['5'] += 1;
+      } else if (randomReview.rating === 4.5) {
+        doc.ratings['4 1/2'] += 1;
+      } else if (randomReview.rating === 4) {
+        doc.ratings['4'] += 1;
+      } else if (randomReview.rating === 3.5) {
+        doc.ratings['3 1/2'] += 1;
+      } else if (randomReview.rating === 3) {
+        doc.ratings['3'] += 1;
+      } else if (randomReview.rating === 2.5) {
+        doc.ratings['2 1/2'] += 1;
+      } else if (randomReview.rating === 2) {
+        doc.ratings['2'] += 1;
+      } else if (randomReview.rating === 1.5) {
+        doc.ratings['1 1/2'] += 1;
+      } else if (randomReview.rating === 1) {
+        doc.ratings['1'] += 1;
+      }
+      doc.reviews.push(randomReview);
+    }
+    // ensure rating is updated with aggregate review data
+    doc.ratings.totalRatings = randReviewCount;
+    doc.ratings.overallRating = doc.ratings.totalStars / doc.ratings.totalRatings;
+    const createDoc = await axios({
+      method: 'post',
+      url: `http://${process.env.COUCH_USER}:${process.env.COUCH_PASS}@localhost:5984/udemy_reviews`,
+      data: doc
+    })
+      .then((res) => {
+        console.log(`posted review, got status ${res.status}`, res.data);
+      })
+      .catch((err) => {
+        console.log('failed to post review', err);
+      });
+  }
+};
 // === ACTIVATE HERE === (node database/dataGenerators.js)
 // populateDatabase(100);
-generateRandomReviewer(1);
-
-generateRandomReviewer(2);
-generateRandomReviewer(2);
-generateRandomReviewer(2);
-generateRandomReviewer(2);
-
+populateCouchDB(1);
 
 
