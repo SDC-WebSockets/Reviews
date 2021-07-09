@@ -8,9 +8,12 @@ const crypto = require('crypto');
 const fs = require('fs');
 const axios = require('axios');
 const dotenv = require('dotenv');
-const { Parser } = require('json2csv');
+const { parseAsync } = require('json2csv');
 const { Client, Pool } = require('pg');
+const { Sequelize, DataTypes } = require('sequelize');
 const couchbase = require('couchbase');
+const { v4: uuidv4 } = require('uuid');
+const path = require('path');
 const { exec } = require('child_process');
 dotenv.config();
 
@@ -178,7 +181,7 @@ const populateCouchbase = (noOfCourses) => {
 
   for (let i = 1; i <= 100; i++) {
     console.log('uploading file ', i);
-    exec(`"/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbimport" json -c couchbase://localhost -u ${process.env.COUCH_USER} -p ${process.env.COUCH_PASS} -b rpt27-sdc-websockets-reviews -d file:///data/nosqlData_${i}.json -f list -g key::%courseId%::#UUID#`, (err, stdout, stderr) => {
+    exec(`"/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbimport" json -c couchbase://localhost -u ${process.env.COUCH_USER} -p ${process.env.COUCH_PASS} -b rpt27-sdc-websockets-reviews -d file://${path.join(__dirname, `/data/nosqlData_${i}.json`)} -f list -g key::%courseId%::#UUID#`, (err, stdout, stderr) => {
       if (err) {
         console.error('issue with couchbase file import: ', err);
       } else {
@@ -189,153 +192,108 @@ const populateCouchbase = (noOfCourses) => {
   }
 };
 
-const createPostgresTables = (dbClient) => {
-  const createReviewsTableSQL = `CREATE TABLE Reviews (
-    id varchar(32),
-    courseId int,
-    reviewer varchar(32),
-    rating int NOT NULL,
-    comment varchar(4000),
-    createdAt date,
-    helpful int,
-    reported boolean,
-    PRIMARY KEY(id),
-    CONSTRAINT fk_course FOREIGN KEY(courseId) REFERENCES ratings(courseId),
-    CONSTRAINT fk_reviewer FOREIGN KEY(reviewer) REFERENCES reviewers(reviewerId)
-  )`;
-  const createReviewersTableSQL = `CREATE TABLE Reviewers (
-    id varchar(32) NOT NULL UNIQUE,
-    reviewerId varchar(32),
-    name varchar(100) NOT NULL,
-    picture varchar(100) NOT NULL,
-    coursesTaken int NOT NULL,
-    reviews int NOT NULL,
-    PRIMARY KEY (reviewerId)
-  )`;
-  const createRatingsTableSQL = `CREATE TABLE Ratings (
-    id varchar(32) NOT NULL UNIQUE,
-    courseId int,
-    overallRating decimal(2),
-    totalRatings int,
-    totalStars int,
-    five int,
-    fourhalf int,
-    four int,
-    threehalf int,
-    three int,
-    twohalf int,
-    two int,
-    onehalf int,
-    one int,
-    PRIMARY KEY (courseId)
-  )`;
+const createPostgresTables = async () => {
+  const sequelize = new Sequelize(`postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@localhost:5431/udemy_reviews`);
 
-  return pool.query(createReviewersTableSQL)
-    .then(res => console.log('created reviewers table'))
-    .catch((err) => console.log('error creating reviewers table'))
-    .then(() => pool.query(createRatingsTableSQL))
-    .then(res => console.log('created ratings table'))
-    .catch((err) => console.log('error creating ratings table'))
-    .then(() => pool.query(createReviewsTableSQL))
-    .then(res => console.log('created reviews table'))
-    .catch((err) => console.log('error creating reviews table'));
+  const Ratings = sequelize.define('Ratings', {
+    id: { type: DataTypes.STRING(64), allowNull: false, unique: true },
+    courseId: { type: DataTypes.INTEGER, primaryKey: true },
+    overallRating: { type: DataTypes.DOUBLE },
+    totalRatings: { type: DataTypes.INTEGER },
+    totalStars: { type: DataTypes.INTEGER },
+    five: { type: DataTypes.INTEGER },
+    fourhalf: { type: DataTypes.INTEGER },
+    four: { type: DataTypes.INTEGER },
+    threehalf: { type: DataTypes.INTEGER },
+    three: { type: DataTypes.INTEGER },
+    twohalf: { type: DataTypes.INTEGER },
+    two: { type: DataTypes.INTEGER },
+    onehalf: { type: DataTypes.INTEGER },
+    one: { type: DataTypes.INTEGER }
+  });
+  const Reviewers = sequelize.define('Reviewers', {
+    id: { type: DataTypes.STRING(64), allowNull: false, unique: true },
+    reviewerId: { type: DataTypes.STRING(32), primaryKey: true },
+    name: { type: DataTypes.STRING, allowNull: false },
+    picture: { type: DataTypes.STRING, allowNull: false },
+    coursesTaken: { type: DataTypes.INTEGER, allowNull: false },
+    reviews: { type: DataTypes.INTEGER, allowNull: false }
+  });
+  const Reviews = sequelize.define('Reviews', {
+    id: { type: DataTypes.STRING(64), primaryKey: true },
+    courseId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Ratings,
+        key: 'courseId'
+      }
+    },
+    reviewer: {
+      type: DataTypes.STRING(32),
+      references: {
+        model: Reviewers,
+        key: 'reviewerId'
+      }
+    },
+    rating: { type: DataTypes.INTEGER, allowNull: false },
+    comment: { type: DataTypes.STRING(4000) },
+    createdAt: { type: DataTypes.DATE },
+    helpful: { type: DataTypes.INTEGER },
+    reported: { type: DataTypes.BOOLEAN }
+  });
+
+  await sequelize.sync();
+  console.log('all tables were just synced in udemy_reviews!');
+
+  return {
+    sequelize,
+    Ratings,
+    Reviewers,
+    Reviews
+  };
 };
 
-const populatePostgresDB = async (noOfCourses) => {
-  const pgURI = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@localhost:5431/postgres`;
+const populatePostgresDB = async (noOfCourses, refresh) => {
+  console.log('starting postgres seeding');
+  const pgURI = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@localhost:5431`;
   const dbURI = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@localhost:5431/udemy_reviews`;
 
   // Create Database
-  const client = new Client({
-    connectionString: pgURI
+  if (refresh) {
+    const client = new Client({
+      connectionString: pgURI
+    });
+    client.connect();
+    await client.query('CREATE DATABASE IF NOT EXISTS udemy_reviews')
+      .catch(async () => {
+        console.log('DATABASE already exists');
+        await client.query('DROP DATABASE udemy_reviews');
+        throw 'create db';
+      })
+      .catch(() => client.query('CREATE DATABASE udemy_reviews'));
+  }
+
+  const { sequelize, Ratings, Reviewers, Reviews } = await createPostgresTables();
+
+  const pool = new Pool({
+    host: 'localhost',
+    database: 'udemy_reviews'
   });
-  client.connect();
-  await pgClient.query('CREATE DATABASE IF NOT EXISTS udemy_reviews')
-    .then(() => {
-      return new Pool({
-        connectionString: dbURI
-      });
-    })
-    .then((dbPool) => {
-      return pool.query('DROP TABLE IF EXISTS ratings, reviewers, reviews');
-    })
-    .then();
 
+  // verify setup
+  const reviews = await Reviews.findAll();
+  const reviewers = await Reviewers.findAll();
+  const ratings = await Ratings.findAll();
 
+  for (let i = 1; i <= noOfCourses / 10000; i++) {
+    console.log(' importing reviews for course ', i);
+    let ratingsFile = `sqlData_ratings_${i / 10}.csv`;
+    let reviewsFile = `sqlData_reviews_${i}.csv`;
+    let reviewersFile = `sqlData_reviewers_${i}.csv`;
 
-
-  for (let i = 1; i <= noOfCourses; i++) {
-    console.log(' creating reviews for course ', i);
-    let ratings = reformRating(generateRating());
-    const randReviewCount = randomInclusiveInteger(1, 30);
-
-    let localReviews = [];
-    let localReviewers = [];
-    for (let j = 0; j < randReviewCount; j++) {
-      let randomReview = generateRandomReview(i);
-      let randomReviewer = generateRandomReviewer();
-      randomReview.reviewer = randomReviewer.reviewerId;
-      ratings.totalStars = ratings.totalStars === null ? randomReview.rating : ratings.totalStars + randomReview.rating;
-      if (randomReview.rating === 5) {
-        ratings.five += 1;
-      } else if (randomReview.rating === 4.5) {
-        ratings.fourhalf += 1;
-      } else if (randomReview.rating === 4) {
-        ratings.four += 1;
-      } else if (randomReview.rating === 3.5) {
-        ratings.threehalf += 1;
-      } else if (randomReview.rating === 3) {
-        ratings.three += 1;
-      } else if (randomReview.rating === 2.5) {
-        ratings.twohalf += 1;
-      } else if (randomReview.rating === 2) {
-        ratings.two += 1;
-      } else if (randomReview.rating === 1.5) {
-        ratings.onehalf += 1;
-      } else if (randomReview.rating === 1) {
-        ratings.one += 1;
-      }
-
-      localReviews.push(randomReview);
-      localReviewers.push(randomReviewer);
-    }
-
-    // ensure rating is updated with aggregate review data
-    ratings.totalRatings = randReviewCount;
-    ratings.overallRating = ratings.totalStars / ratings.totalRatings;
-
-    let insertIntoRatings = 'INSERT INTO reviewers VALUES(';
-    for (let j = 0; i < 14; j++) {
-      insertIntoRatings += `$${i + 1}, `;
-    }
-    insertIntoRatings += ') RETURNING *';
-    const ratingsValues = [ratings.id, ratings.courseId, ratings.overallRating, ratings.totalRatings, ratings.totalStars, ratings.five, ratings.fourhalf, ratings.four, ratings.threehalf, ratings.three, ratings.twohalf, ratings.two, ratings.onehalf, ratings.one];
-    await pool.query(insertIntoRatings, ratingsValues)
-      .then((res) => {
-        console.log('== posted rating to db ==', res);
-      });
-
-    let insertIntoReviewers = 'INSERT INTO reviewers VALUES(';
-    for (let j = 0; i < 7; j++) {
-      insertIntoReviewers += `$${i + 1}, `;
-    }
-    insertIntoReviewers += ') RETURNING *';
-    for (let j = 0; j < localReviewers.length; j++) {
-      const reviewersValues = [randomReviewer.id, randomReviewer.reviewerId, randomReviewer.name, randomReviewer.picture, randomReviewer.coursesTaken, randomReviewer.reviews];
-      await pool.query(insertIntoReviewers, reviewersValues);
-    }
-
-    let insertIntoReviews = 'INSERT INTO reviewers VALUES(';
-    for (let j = 0; i < 8; j++) {
-      insertIntoReviews += `$${i + 1}, `;
-    }
-    insertIntoReviews += ') RETURNING *';
-    for (let j = 0; j < localReviews.length; j++) {
-      const reviewsValues = [randomReview.id, randomReview.courseId, randomReview.reviewer, randomReview.rating, randomReview.comment, randomReview.createdAt, randomReview.helpful, randomReview.reported];
-      await pool.query(insertIntoReviews, reviewsValues);
-    }
-
-    console.log('Finished uploading for course', i);
+    await pool.query(`COPY ratings FROM '${path.join(__dirname, '..', `/data/${ratingsFile}`)}' DELIMITER ',' CSV HEADER`);
+    await pool.query(`COPY reviews FROM '${path.join(__dirname, '..', `/data/${reviewsFile}`)}' DELIMITER ',' CSV HEADER`);
+    await pool.query(`COPY reviewers FROM '${path.join(__dirname, '..', `/data/${reviewersFile}`)}' DELIMITER ',' CSV HEADER`);
   }
 };
 
@@ -396,22 +354,26 @@ const createJSONdoc = (noOfCourses) => {
   }
 };
 
-createCSVdoc = (noOfCourses) => {
-  const reviewParser = new Parser({ fields: ['id', 'courseId', 'reviewer', 'rating', 'comment', 'createdAt', 'helpful', 'reported'] });
-  const reviewerParser = new Parser({ fields: ['id', 'reviewerId', 'name', 'picture', 'coursesTaken', 'reviews'] });
-  const ratingParser = new Parser({ fields: ['id', 'courseId', 'overallRating', 'totalRatings', 'totalStars', 'five', 'fourhalf', 'four', 'threehalf', 'three', 'twohalf', 'two', 'onehalf', 'one'] });
+const createCSVdoc = async (noOfCourses) => {
+  let localReviews = [];
+  let localReviewers = [];
+  let localRatings = [];
+
+  const reviewOpts = { fields: ['id', 'courseId', 'reviewer', 'rating', 'comment', 'createdAt', 'helpful', 'reported'] };
+  const reviewerOpts = { fields: ['id', 'reviewerId', 'name', 'picture', 'coursesTaken', 'reviews'] };
+  const ratingOpts = { fields: ['id', 'courseId', 'overallRating', 'totalRatings', 'totalStars', 'five', 'fourhalf', 'four', 'threehalf', 'three', 'twohalf', 'two', 'onehalf', 'one'] };
 
   for (let i = 1; i <= noOfCourses; i++) {
     console.log(' creating reviews for course ', i);
     let ratings = reformRating(generateRating());
+    ratings.id = uuidv4();
     const randReviewCount = randomInclusiveInteger(1, 10);
 
-    let localReviews = [];
-    let localReviewers = [];
-    let localRatings = [];
     for (let j = 0; j < randReviewCount; j++) {
       let randomReview = generateRandomReview(i);
+      randomReview.id = uuidv4();
       let randomReviewer = generateRandomReviewer();
+      randomReviewer.id = uuidv4();
       randomReview.reviewer = randomReviewer.reviewerId;
       ratings.totalStars = ratings.totalStars === null ? randomReview.rating : ratings.totalStars + randomReview.rating;
       if (randomReview.rating === 5) {
@@ -441,42 +403,48 @@ createCSVdoc = (noOfCourses) => {
     // ensure rating is updated with aggregate review data
     ratings.totalRatings = randReviewCount;
     ratings.overallRating = ratings.totalStars / ratings.totalRatings;
-
     localRatings.push(ratings);
 
-    console.log('Finished uploading for course', i);
-
     if (i % 10000 === 0) {
-      const reviewCSV = parser.parse(localReviews);
-      const reviewerCSV = parser.parse(localReviewers);
+      await parseAsync(localReviews, reviewOpts)
+        .then(csv => {
+          return fs.writeFileSync(`data/sqlData_reviews_${i / 10000}.csv`, csv, (err) => {
+            if (err) {
+              console.log('error with writing review data file: ', err);
+            } else {
+              console.log('review data file saved!');
+            }
+          });
+        })
+        .catch(err => console.error(err));
 
-      fs.writeFile(`data/sqlData_reviews_${i / 10000}.csv`, reviewCSV, (err) => {
-        if (err) {
-          console.log('error with writing review data file: ', err);
-        } else {
-          console.log('review data file saved!');
-        }
-      });
-      localReviews = [];
-
-      fs.writeFile(`data/sqlData_reviewers_${i / 10000}.csv`, reviewerCSV, (err) => {
-        if (err) {
-          console.log('error with writing reviewer data file: ', err);
-        } else {
-          console.log('reviewer data file saved!');
-        }
-      });
-      localReviewers = [];
-    } else if (i % 100000 === 0) {
-      const ratingCSV = parser.parse(localRatings);
-      fs.writeFile(`data/sqlData_ratings_${i / 100000}.csv`, ratingCSV, (err) => {
-        if (err) {
-          console.log('error with writing rating data file: ', err);
-        } else {
-          console.log('rating data file saved!');
-        }
-      });
+      await parseAsync(localReviewers, reviewerOpts)
+        .then(csv => {
+          return fs.writeFileSync(`data/sqlData_reviewers_${i / 10000}.csv`, csv, (err) => {
+            if (err) {
+              console.log('error with writing reviewer data file: ', err);
+            } else {
+              console.log('reviewer data file saved!');
+            }
+          });
+        })
+        .catch(err => console.error(err));
+      await parseAsync(localRatings, ratingOpts)
+        .then(csv => {
+          return fs.writeFileSync(`data/sqlData_ratings_${i / 100000}.csv`, csv, (err) => {
+            if (err) {
+              console.log('error with writing rating data file: ', err);
+            } else {
+              console.log('rating data file saved!');
+            }
+          });
+        })
+        .catch(err => console.error(err));
       localRatings = [];
+      localReviews = [];
+      localReviewers = [];
+    } else if (i % 10000 === 0) {
+
     }
   }
 };
@@ -485,5 +453,7 @@ createCSVdoc = (noOfCourses) => {
 // populateCouchDB(10000000);
 // populatePostgresDB(2);
 // createJSONdoc(10000000);
-populateCouchbase();
+// populateCouchbase();
+// createCSVdoc(10000000);
 
+populatePostgresDB(10000000, true);
