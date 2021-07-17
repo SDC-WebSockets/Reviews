@@ -58,6 +58,12 @@ List of reviews for current course (displays the first twelve reviews by default
 - Styled Components (styling)
 - Webpack
 
+## API Endpoints
+- GET `/reviews/item/:id`
+- POST `/reviews/item`
+- PUT `/reviews/item/:id`
+- DELETE `/reviews/item/:id`
+
 ## Requirements
 - Node 6.13.0
 

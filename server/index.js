@@ -12,6 +12,7 @@ const host = process.env.HOST || 'localhost';
 
 app.use(cors());
 app.use(shrinkRay());
+app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 
 // get reviews and ratings for all courses
@@ -34,7 +35,7 @@ app.get('/reviews/item', (req, res) => {
   let courseId = Number(req.query.courseId);
   let reviews;
   let rating;
-  if (Number.isInteger(courseId) && courseId >= 1 && courseId <= 100) {
+  if (Number.isInteger(courseId)) {
     mongoDb.getReviewsForOneCourse(courseId)
       .then((results) => {
         reviews = results;
@@ -52,6 +53,72 @@ app.get('/reviews/item', (req, res) => {
   } else {
     res.json('No course selected');
   }
+});
+
+// DB CRUD
+app.get('/reviews/reviewer/:reviewerId', (req, res) => {
+  const reviewerId = req.params.reviewerId;
+
+  mongoDb.getReviewsByReviewer(reviewerId)
+    .then((reviews) => {
+      res.status(200).send(reviews);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(400).send(`Failed to fetch reviews for reviewer ${reviewerId}`);
+    });
+});
+
+app.get('/review/:reviewId', (req, res) => {
+  const reviewId = req.params.reviewId;
+
+  mongoDb.getReviewById(reviewId)
+    .then((review) => {
+      res.status(200).send(review);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(400).send(`Failed to fetch review for document ${reviewId}`);
+    });
+});
+
+app.post('/reviews/item', (req, res) => {
+  // check that all properties are present
+  let review = req.body;
+  if (review.courseId && review.reviewer && review.rating && review.comment && review.helpful) {
+    review.createdAt = review.createdAt || new Date();
+    mongoDb.addReviewAndUpdateRating(review)
+      .then((review) => res.status(201).send(review))
+      .catch((err) => {
+        console.error(err);
+        res.status(400).send(`Failed to create review for course ${review.courseId}`);
+      });
+  } else {
+    res.status(400).send('Payload missing required fields');
+  }
+});
+
+app.put('/reviews/item/:id', (req, res) => {
+  let review = req.body;
+  const reviewId = review.id;
+  mongoDb.updateReviewAndRating(req.body)
+    .then((result) => {
+      res.status(200).send(`review id ${reviewId} successfully updated`);
+    })
+    .catch((err) => {
+      res.status(400).send(`failed to update ${reviewId}`);
+    });
+});
+
+app.delete('/reviews/item/:id', (req, res) => {
+  const reviewId = req.params.id;
+  mongoDb.deleteReviewAndUpdateRating(reviewId)
+    .then((result) => {
+      res.status(200).send(`review id ${reviewId} successfully deleted`);
+    })
+    .catch((err) => {
+      res.status(400).send(`failed to update ${reviewId}`);
+    });
 });
 
 app.listen(port, () => {
