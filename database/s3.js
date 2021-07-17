@@ -1,16 +1,13 @@
-const AWS = require('aws-sdk');
 const path = require('path');
-const AWSconfig = require('../AWS/s3config.js');
+const s3 = require('../s3config.js');
 const mongoDb = require('../database/mongoDb.js');
+const faker = require('faker');
+const axios = require('axios');
+const AWS = require('aws-sdk');
+const stream = require('stream');
+const fs = require('fs');
 
-const s3 = new AWS.S3({
-  apiVersion: '2006-03-01',
-  region: 'us-west-1',
-  accessKeyId: AWSconfig.AWSAccessKeyId,
-  secretAccessKey: AWSconfig.AWSSecretKey
-});
-
-const bucketName = 'reviews-ratings-charlotte-badger';
+const bucketName = 'rpt27-sdc-websockets';
 
 const createBucket = async (bucket) => {
   await s3.createBucket({Bucket: bucket}, (err, data) => {
@@ -47,5 +44,43 @@ const resetAndPopulateBucket = async (bucket) => {
   uploadToBucket(bucket);
 };
 
+const uploadAvatarsToS3 = async (bucket) => {
+  const s3 = new AWS.S3();
+  const uploadFromStream = async (readStream, key) => {
+    const pass = new stream.PassThrough();
+    const params = {
+      Bucket: bucket,
+      Key: key,
+      Body: readStream
+    };
+
+    console.log(`== passthrough stream for ${key} ==`);
+
+    return {
+      writeStream: pass,
+      promise: s3.upload(params).promise()
+    };
+  };
+
+
+  for (let i = 0; i < 1000; i++) {
+    let avatar = faker.image.avatar();
+    const imagePath = path.join(__dirname, `${i}.jpg`);
+    axios({
+      method: 'get',
+      url: avatar,
+      responseType: 'stream',
+    })
+      .then(async (response) => {
+        console.log('== got response from faker fetch ==', response.status);
+        const { writeStream, promise } = uploadFromStream(response.data, `avatars/avatar${i}.jpg`);
+        return promise;
+      })
+      .catch((err) => {
+        console.error(`Failed to fetch image from ${avatar}`);
+      });
+  }
+};
 // === ACTIVATE HERE === (node database/s3.js)
-resetAndPopulateBucket(bucketName);
+// resetAndPopulateBucket(bucketName);
+uploadAvatarsToS3(bucketName);
