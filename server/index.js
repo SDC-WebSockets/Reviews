@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const shrinkRay = require('shrink-ray-current');
 const mongoDb = require('../database/mongoDb.js');
+const couchbase = require('./cbInterface.js');
 const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
@@ -15,40 +16,18 @@ app.use(shrinkRay());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 
-// get reviews and ratings for all courses
-app.get('/reviews', (req, res) => {
-  let reviews;
-  let ratings;
-  mongoDb.getAllReviews()
-    .then((allReviews) => {
-      reviews = allReviews;
-      mongoDb.getAllRatings()
-        .then((allRatings) => {
-          ratings = allRatings;
-          res.status(200).json({allReviews: reviews, allRatings: ratings});
-        });
-    });
-});
-
 // get reviews and ratings for one course
 app.get('/reviews/item', (req, res) => {
   let courseId = Number(req.query.courseId);
   let reviews;
   let rating;
   if (Number.isInteger(courseId)) {
-    mongoDb.getReviewsForOneCourse(courseId)
-      .then((results) => {
-        reviews = results;
-        mongoDb.getRatingForOneCourse(courseId)
-          .then((result) => {
-            rating = result;
-            let data = {
-              courseId: courseId,
-              ratings: rating,
-              reviews: reviews
-            };
-            res.status(200).json(data);
-          });
+    couchbase.getCourseReviewsAndRatings(courseId)
+      .then(results => {
+        res.status(200).json(results);
+      })
+      .catch(err => {
+        console.error('== error with get course ==', err);
       });
   } else {
     res.json('No course selected');
@@ -59,26 +38,27 @@ app.get('/reviews/item', (req, res) => {
 app.get('/reviews/reviewer/:reviewerId', (req, res) => {
   const reviewerId = req.params.reviewerId;
 
-  mongoDb.getReviewsByReviewer(reviewerId)
-    .then((reviews) => {
-      res.status(200).send(reviews);
+  couchbase.getReviewerById(reviewerId)
+    .then(reviewer => {
+      res.status(200).send(reviewer);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
-      res.status(400).send(`Failed to fetch reviews for reviewer ${reviewerId}`);
+      res.status(400).send(`Failed to fetch reviewer with id ${reviewerId}`);
     });
 });
 
-app.get('/review/:reviewId', (req, res) => {
-  const reviewId = req.params.reviewId;
+app.get('/review/item', (req, res) => {
+  const reviewerId = req.query.reviewerId;
+  const courseId = req.query.courseId;
 
-  mongoDb.getReviewById(reviewId)
+  couchbase.getReviewByReviewerIdAndCourseId(courseId, reviewerId)
     .then((review) => {
       res.status(200).send(review);
     })
     .catch((err) => {
       console.error(err);
-      res.status(400).send(`Failed to fetch review for document ${reviewId}`);
+      res.status(400).send(`Failed to fetch review for document ${reviewerId}`);
     });
 });
 
@@ -87,9 +67,9 @@ app.post('/reviews/item', (req, res) => {
   let review = req.body;
   if (review.courseId && review.reviewer && review.rating && review.comment && review.helpful) {
     review.createdAt = review.createdAt || new Date();
-    mongoDb.addReviewAndUpdateRating(review)
-      .then((review) => res.status(201).send(review))
-      .catch((err) => {
+    couchbase.addReviewForCourse(review)
+      .then(review => res.status(201).send(review))
+      .catch(err => {
         console.error(err);
         res.status(400).send(`Failed to create review for course ${review.courseId}`);
       });
@@ -98,26 +78,28 @@ app.post('/reviews/item', (req, res) => {
   }
 });
 
-app.put('/reviews/item/:id', (req, res) => {
-  let review = req.body;
-  const reviewId = review.id;
-  mongoDb.updateReviewAndRating(req.body)
+app.put('/reviews/reviewer/:id', (req, res) => {
+  let reviewer = req.body;
+  const reviewerId = reviewer.reviewer;
+
+  couchbase.updateReviewer(reviewer)
     .then((result) => {
-      res.status(200).send(`review id ${reviewId} successfully updated`);
+      res.status(200).send(`reviewer id ${reviewerId} successfully updated`);
     })
     .catch((err) => {
-      res.status(400).send(`failed to update ${reviewId}`);
+      res.status(400).send(`failed to update ${reviewerId}`);
     });
 });
 
-app.delete('/reviews/item/:id', (req, res) => {
-  const reviewId = req.params.id;
-  mongoDb.deleteReviewAndUpdateRating(reviewId)
+app.delete('/reviews/item/:courseId', (req, res) => {
+  const courseId = req.params.courseId;
+  const review = req.body;
+  couchbase.deleteReview(courseId, review)
     .then((result) => {
-      res.status(200).send(`review id ${reviewId} successfully deleted`);
+      res.status(200).send(`review for course ${courseId} successfully deleted`);
     })
     .catch((err) => {
-      res.status(400).send(`failed to update ${reviewId}`);
+      res.status(400).send(`failed to delete review for course ${courseId}`);
     });
 });
 
