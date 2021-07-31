@@ -13,7 +13,7 @@ const buildCouchbase = async () => {
   const bucketMgr = cluster.buckets();
 
   await bucketMgr.createBucket({
-    name: 'rpt27-sdc-websockets-reviews',
+    name: 'rpt27-sdc-websockets-courses',
     ramQuotaMB: 512,
     flushEnabled: true,
     replicaIndex: false,
@@ -24,6 +24,16 @@ const buildCouchbase = async () => {
 
   await bucketMgr.createBucket({
     name: 'rpt27-sdc-websockets-reviewers',
+    ramQuotaMB: 512,
+    flushEnabled: true,
+    replicaIndex: false,
+    bucketType: couchbase.BucketType.Couchbase
+  }, (err) => {
+    console.error('Failed to create reviewer bucket: ', err);
+  });
+
+  await bucketMgr.createBucket({
+    name: 'rpt27-sdc-websockets-reviews',
     ramQuotaMB: 512,
     flushEnabled: true,
     replicaIndex: false,
@@ -47,5 +57,6 @@ const flushCouchbase = async (bucketName) => {
 };
 
 // buildCouchbase();
-// flushCouchbase('rpt27-sdc-websockets-reviews');
-// flushCouchbase('rpt27-sdc-websockets-reviewers');
+flushCouchbase('rpt27-sdc-websockets-courses');
+flushCouchbase('rpt27-sdc-websockets-reviewers');
+flushCouchbase('rpt27-sdc-websockets-reviews');
