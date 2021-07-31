@@ -47,5 +47,5 @@ const flushCouchbase = async (bucketName) => {
 };
 
 // buildCouchbase();
-flushCouchbase('rpt27-sdc-websockets-reviews');
-flushCouchbase('rpt27-sdc-websockets-reviewers');
+// flushCouchbase('rpt27-sdc-websockets-reviews');
+// flushCouchbase('rpt27-sdc-websockets-reviewers');
