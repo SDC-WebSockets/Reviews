@@ -19,15 +19,13 @@ app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 // get reviews and ratings for one course
 app.get('/reviews/item', (req, res) => {
   let courseId = Number(req.query.courseId);
-  let reviews;
-  let rating;
   if (Number.isInteger(courseId)) {
     couchbase.getCourseReviewsAndRatings(courseId)
       .then(results => {
         res.status(200).json(results);
       })
       .catch(err => {
-        console.error('== error with get course ==', err);
+        res.status(400).send(`course ${courseId} does not exist`);
       });
   } else {
     res.json('No course selected');

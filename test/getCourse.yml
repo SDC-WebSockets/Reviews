@@ -1,0 +1,23 @@
+config:
+  target: "http://localhost:2712"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: Warm up
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 250
+      name: Ramp up load
+    - duration: 60
+      arrivalRate: 250
+      name: Sustained load
+  processor: "./getCourse.js"
+
+scenarios:
+  - name: "Get Page and Post Review"
+    flow:
+      - function: "setCourseId"
+      - get:
+          url: "/reviews/item"
+          qs:
+            courseId: "{{ courseId }}"

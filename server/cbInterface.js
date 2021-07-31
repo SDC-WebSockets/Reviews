@@ -114,7 +114,9 @@ module.exports.getReviewByReviewerIdAndCourseId = async (courseId, reviewerId) =
 module.exports.addReviewForCourse = async (review) => {
   const courseId = review.courseId;
   const reviewer = review.reviewer;
-  review.reviewer = reviewer.reviewerId;
+  if (reviewer.reviewerId) {
+    review.reviewer = reviewer.reviewerId;
+  }
 
   try {
     const result = await reviewsColl.mutateIn(`${courseId}`, [
@@ -135,12 +137,14 @@ module.exports.addReviewForCourse = async (review) => {
     console.error('error adding review to course =>', err);
   }
 
-  try {
-    const result = await reviewersColl.upsert(`${reviewer.reviewerId}`, reviewer,
-      { timeout: 10000 }
-    );
-  } catch(err) {
-    console.error('error adding reviewer =>', err);
+  if (reviewer.reviewerId) {
+    try {
+      const result = await reviewersColl.upsert(`${reviewer.reviewerId}`, reviewer,
+        { timeout: 10000 }
+      );
+    } catch(err) {
+      console.error('error adding reviewer =>', err);
+    }
   }
 
   return review;
