@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -63,6 +64,7 @@ app.get('/review/item', (req, res) => {
 app.post('/reviews/item', (req, res) => {
   // check that all properties are present
   let review = req.body;
+  console.log(`posting review for course ${review.courseId}`);
   if (review.courseId && review.reviewer && review.rating && review.comment && review.helpful) {
     review.createdAt = review.createdAt || new Date();
     couchbase.addReviewForCourse(review)
