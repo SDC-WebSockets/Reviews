@@ -1,0 +1,30 @@
+config:
+  target: "http://localhost:2712"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: Warm up
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 150
+      name: Ramp up load
+    - duration: 60
+      arrivalRate: 150
+      name: Sustained load
+  processor: "./postReview.js"
+
+scenarios:
+  - name: "Post Review"
+    flow:
+      - function: "setCourseId"
+      - function: "getJSONfields"
+      - post:
+          url: "/reviews/item"
+          json:
+            courseId: "{{ courseId }}"
+            rating: "{{ rating }}"
+            comment: "{{ comment }}"
+            createdAt: "{{ createdAt }}"
+            helpful: "{{ helpful }}"
+            reported: "{{ reported }}"
+            reviewer: "{{ reviewer }}"
