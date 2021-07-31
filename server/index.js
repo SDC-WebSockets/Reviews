@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const shrinkRay = require('shrink-ray-current');
-const mongoDb = require('../database/mongoDb.js');
 const couchbase = require('./cbInterface.js');
 const app = express();
 const dotenv = require('dotenv');
@@ -19,6 +18,7 @@ app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 // get reviews and ratings for one course
 app.get('/reviews/item', (req, res) => {
   let courseId = Number(req.query.courseId);
+  console.log(`fetching course reviews for ${courseId}`);
   if (Number.isInteger(courseId)) {
     couchbase.getCourseReviewsAndRatings(courseId)
       .then(results => {
