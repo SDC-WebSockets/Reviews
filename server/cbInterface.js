@@ -1,18 +1,34 @@
 const couchbase = require('couchbase');
+const crypto = require('crypto');
 const dotenv = require('dotenv');
 dotenv.config();
 
 const cluster = new couchbase.Cluster('couchbase://localhost', {
-  username: 'admin',
-  password: '$Packed98',
+  username: process.env.COUCH_USER,
+  password: process.env.COUCH_PASS,
 });
 const reviewsColl = cluster.bucket('rpt27-sdc-websockets-reviews').defaultCollection();
 const reviewersColl = cluster.bucket('rpt27-sdc-websockets-reviewers').defaultCollection();
+const coursesColl = cluster.bucket('rpt27-sdc-websockets-courses').defaultCollection();
 
-const getReviews = async (courseId) => {
-  const result = await reviewsColl.get(`${courseId}`);
+const getCourses = async (courseId) => {
+  const result = await coursesColl.get(`${courseId}`);
   const document = result.value;
   return document;
+};
+
+const getReviews = async (courseId) => {
+  const query = `
+    SELECT * FROM \`rpt27-sdc-websockets-reviews\`
+    WHERE courseId = ${courseId}
+  `;
+
+  try {
+    const result = await cluster.query(query);
+    return result.rows.map(row => row['rpt27-sdc-websockets-reviews']);
+  } catch (err) {
+    console.error('Query for getReviews failed: ', err);
+  }
 };
 
 const getReviewers = async (reviews) => {
@@ -69,8 +85,9 @@ const mapKeys = (ratings) => {
 };
 
 module.exports.getCourseReviewsAndRatings = async (courseId) => {
-  const {ratings, reviews} = await getReviews(courseId);
+  const { ratings } = await getCourses(courseId);
   const newRating = mapKeys(ratings);
+  const reviews = await getReviews(courseId);
   const reviewers = await getReviewers(reviews);
   const reviewerObj = reviewers.reduce((memo, reviewer) => {
     memo[reviewer.a.reviewerId] = reviewer.a;
@@ -96,10 +113,9 @@ module.exports.getReviewerById = async (reviewerId) => {
 
 module.exports.getReviewByReviewerIdAndCourseId = async (courseId, reviewerId) => {
   const query = `
-  SELECT r.* FROM \`rpt27-sdc-websockets-reviews\` a
-  UNNEST a.reviews AS r
-  WHERE a.courseId = ${courseId}
-  AND r.reviewer = ${reviewerId}
+  SELECT * FROM \`rpt27-sdc-websockets-reviews\`
+  WHERE courseId = ${courseId}
+  AND reviewer = ${reviewerId}
   LIMIT 1
   `;
 
@@ -111,40 +127,32 @@ module.exports.getReviewByReviewerIdAndCourseId = async (courseId, reviewerId) =
   }
 };
 
-module.exports.addReviewForCourse = async (review) => {
+module.exports.addReviewForCourse = async (review, reviewer) => {
   const courseId = review.courseId;
-  const reviewer = review.reviewer;
-  if (reviewer.reviewerId) {
-    review.reviewer = reviewer.reviewerId;
-  }
 
   try {
-    const result = await reviewsColl.mutateIn(`${courseId}`, [
-      couchbase.MutateInSpec.arrayAppend('reviews', review),
-    ]);
-    const ratingResult = await reviewsColl.lookupIn(`${courseId}`, [
-      couchbase.LookupInSpec.get('ratings'),
-    ]);
-    let docRating = ratingResult.content[0].value;
-    docRating.totalRatings = docRating.totalRatings + 1;
-    docRating.totalStars = docRating.totalStars + review.rating;
-    docRating.overallRating = docRating.totalStars / docRating.totalRatings;
-    docRating[num2Word(review.rating)] = docRating[num2Word(review.rating)] + 1;
-    const ratingUpdateResult = await reviewsColl.mutateIn(`${courseId}`, [
-      couchbase.MutateInSpec.replace('ratings', docRating),
-    ]);
+    let rating = getCourses(courseId);
+    const key = crypto.createHash('md5').update(`course${courseId}_review${rating.totalRatings + 1}`).digest('hex');
+    review.reviewId = key;
+    const result = await reviewsColl.insert(key, review);
+
+    rating.totalRatings = rating.totalRatings + 1;
+    rating.totalStars = rating.totalStars + review.rating;
+    rating.overallRating = rating.totalStars / rating.totalRatings;
+    rating[num2Word(review.rating)] = rating[num2Word(review.rating)] + 1;
+    const courseResult = await coursesColl.insert(courseId, rating);
+
+    if (reviewer) {
+      const reviewerResult = await reviewersColl.insert(reviewer.reviewerId, reviewer);
+    } else {
+      reviewer = await reviewersColl.get(review.reviewer);
+      reviewer.reviewCounts++;
+      reviewer.coursesTaken++;
+      const reviewerResult = await reviewersColl.insert(reviewer.reviewerId, reviewer);
+    }
+
   } catch(err) {
     console.error('error adding review to course =>', err);
-  }
-
-  if (reviewer.reviewerId) {
-    try {
-      const result = await reviewersColl.upsert(`${reviewer.reviewerId}`, reviewer,
-        { timeout: 10000 }
-      );
-    } catch(err) {
-      console.error('error adding reviewer =>', err);
-    }
   }
 
   return review;
@@ -167,29 +175,28 @@ module.exports.updateReviewer = async (reviewer) => {
 
 module.exports.deleteReview = async (courseId, review) => {
   const query = `
-    UPDATE \`rpt27-sdc-websockets-reviews\`
-    USE KEYS "${courseId}"
-    SET reviews = ARRAY a FOR a IN reviews WHEN a.comment <> "${review.comment}" END
-    RETURNING reviews;
+    DELETE FROM \`rpt27-sdc-websockets-reviews\`
+    WHERE courseId = ${courseId}
+    AND reviewer = ${review.reviewer}
+    LIMIT 1
   `;
 
   try {
     const result = await cluster.query(query);
 
-    const ratingResult = await reviewsColl.lookupIn(`${courseId}`, [
-      couchbase.LookupInSpec.get('ratings'),
-    ]);
-    let docRating = ratingResult.content[0].value;
-    docRating.totalRatings = docRating.totalRatings - 1;
-    docRating.totalStars = docRating.totalStars - review.rating;
-    docRating.overallRating = docRating.totalStars / docRating.totalRatings;
-    docRating[num2Word(review.rating)] = docRating[num2Word(review.rating)] - 1;
-    const ratingUpdateResult = await reviewsColl.mutateIn(`${courseId}`, [
-      couchbase.MutateInSpec.replace('ratings', docRating),
-    ]);
+    let reviewer = reviewersColl.get(review.reviewer);
+    reviewer.coursesTaken--;
+    reviewer.reviewCounts--;
+    const reviewerResult = await reviewersColl.insert(reviewer.reviewerId, reviewer);
 
-    return result;
+    let rating = coursesColl.get(courseId);
+    rating.totalRatings--;
+    rating.totalStars = rating.totalStars - review.rating;
+    rating.overallRating = rating.totalStars / rating.totalRatings;
+    const courseResult = await coursesColl.insert(courseId, rating);
+
+    return result.rows;
   } catch (err) {
-    console.error('Query failed: ', err);
+    console.error('Query for getReviews failed: ', err);
   }
 };

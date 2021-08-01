@@ -9,23 +9,24 @@ describe('CRUD API', () => {
       const date = new Date();
       const review = {
         courseId: 102,
-        reviewer: {
-          reviewerId: 123456,
-          name: 'MackDaddy123',
-          picture: 'rgb(77, 171, 101)',
-          coursesTaken: 20,
-          reviews: 2
-        },
+        reviewer: 123456,
         rating: 3,
         comment: 'solid course',
         createdAt: date,
         helpful: 22,
         reported: false
       };
+      const reviewer = {
+        reviewerId: 123456,
+        name: 'MackDaddy123',
+        picture: 'rgb(77, 171, 101)',
+        coursesTaken: 20,
+        reviews: 2
+      };
 
       axios({
         method: 'post',
-        url: 'http://localhost:2712/reviews/item',
+        url: `http://localhost:2712/reviews/item/${review.courseId}`,
         data: review
       })
         .then((res) => {
@@ -44,26 +45,6 @@ describe('CRUD API', () => {
   });
 
   describe('Read', () => {
-    let reviewCount;
-    it('should read all reviews for one course', (done) => {
-      axios({
-        method: 'get',
-        url: 'http://localhost:2712/reviews/item?courseId=102'
-      })
-        .then((res) => {
-          assert(res.status === 200);
-          assert(res.data.courseId === 102);
-          assert(res.data.ratings.totalRatings > 0);
-          assert(res.data.reviews.length > 0);
-          reviewCount = res.data.reviews.length;
-          done();
-        })
-        .catch((err) => {
-          console.error(err);
-          done();
-        });
-    });
-
     it('should read a given reviewer id', (done) => {
       axios({
         method: 'get',
@@ -83,7 +64,7 @@ describe('CRUD API', () => {
     it('should read an individual review by its ID and courseId', (done) => {
       axios({
         method: 'get',
-        url: `http://localhost:2712/review/item?reviewerId=123456&courseId=102`
+        url: `http://localhost:2712//reviews/item/102/reviewer/123456`
       })
         .then((res) => {
           assert(res.status === 200);
@@ -147,7 +128,7 @@ describe('CRUD API', () => {
           assert(res.status === 200);
           return axios({
             method: 'get',
-            url: `http://localhost:2712/review/item?reviewerId=123456&courseId=102`
+            url: `http://localhost:2712/reviews/item/102/reviewer/123456`
           });
         })
         .then((res) => {

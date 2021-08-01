@@ -17,15 +17,17 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 
 // get reviews and ratings for one course
-app.get('/reviews/item', (req, res) => {
-  let courseId = Number(req.query.courseId);
-  console.log(`fetching course reviews for ${courseId}`);
+app.get('/reviews/item/:courseId', (req, res) => {
+  let courseId = Number(req.params.courseId);
+  console.log(`fetching course reviews for course ${courseId}`);
   if (Number.isInteger(courseId)) {
     couchbase.getCourseReviewsAndRatings(courseId)
       .then(results => {
+        console.log(results);
         res.status(200).json(results);
       })
       .catch(err => {
+        console.log('error')
         res.status(400).send(`course ${courseId} does not exist`);
       });
   } else {
@@ -34,6 +36,7 @@ app.get('/reviews/item', (req, res) => {
 });
 
 // DB CRUD
+// get reviewer
 app.get('/reviews/reviewer/:reviewerId', (req, res) => {
   const reviewerId = req.params.reviewerId;
 
@@ -47,9 +50,9 @@ app.get('/reviews/reviewer/:reviewerId', (req, res) => {
     });
 });
 
-app.get('/review/item', (req, res) => {
-  const reviewerId = req.query.reviewerId;
-  const courseId = req.query.courseId;
+app.get('/reviews/item/:courseId/reviewer/:reviewerId', (req, res) => {
+  const reviewerId = req.params.reviewerId;
+  const courseId = req.params.courseId;
 
   couchbase.getReviewByReviewerIdAndCourseId(courseId, reviewerId)
     .then((review) => {
@@ -61,10 +64,10 @@ app.get('/review/item', (req, res) => {
     });
 });
 
-app.post('/reviews/item', (req, res) => {
+app.post('/reviews/item/:courseId', (req, res) => {
   // check that all properties are present
   let review = req.body;
-  console.log(`posting review for course ${review.courseId}`);
+  console.log(`posting review for course ${req.params.courseId}`);
   if (review.courseId && review.reviewer && review.rating && review.comment && review.helpful) {
     review.createdAt = review.createdAt || new Date();
     couchbase.addReviewForCourse(review)
@@ -78,7 +81,7 @@ app.post('/reviews/item', (req, res) => {
   }
 });
 
-app.put('/reviews/reviewer/:id', (req, res) => {
+app.put('/reviews/reviewer/:reviewerId', (req, res) => {
   let reviewer = req.body;
   const reviewerId = reviewer.reviewer;
 
