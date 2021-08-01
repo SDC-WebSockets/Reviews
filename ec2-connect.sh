@@ -1,0 +1,1 @@
+ssh -i "rpt27-sdc-websockets-reviews.pem" ec2-user@ec2-54-188-77-247.us-west-2.compute.amazonaws.com
