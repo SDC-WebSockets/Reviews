@@ -18,6 +18,4 @@ scenarios:
     flow:
       - function: "setCourseId"
       - get:
-          url: "/reviews/item"
-          qs:
-            courseId: "{{ courseId }}"
+          url: "/reviews/item/{{ courseId }}"
