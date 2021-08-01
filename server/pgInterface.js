@@ -1,5 +1,7 @@
 const { sequelize, Reviews, Reviewers, Ratings } = require('../database/postgres.js');
 const { Op } = require('sequelize');
+const crypto = require('crypto');
+
 
 const _num2Word = (num) => {
   const map = {
@@ -44,7 +46,7 @@ const _getCourse = async (courseId) => {
   if (course === null) {
     console.log(`course ${courseId} does not exist`);
   } else {
-    return course;
+    return course.dataValues;
   }
 };
 
@@ -57,22 +59,24 @@ const _getReviews = async (courseId) => {
   if (reviews === null) {
     console.log(`reviews for course ${courseId} do not exist`);
   } else {
-    return reviews;
+    const filteredReviews = reviews.map(review => review.dataValues);
+    return filteredReviews;
   }
 };
 
 const _getReviewers = async (reviews) => {
   const courseId = reviews[0].courseId;
-  const reviewerOrs = reviews.map(review => { reviewerId });
-  const reviewers = await Reviews.findAll({
+  const reviewerOrs = reviews.map(review => review.reviewer);
+  const reviewers = await Reviewers.findAll({
     where: {
-      [Op.or]: reviewerOrs
+      reviewerId: reviewerOrs
     }
   });
   if (reviewers === null) {
     console.log(`reviewers for course ${courseId} do not exist`);
   } else {
-    return reviewers;
+    const filteredReviewers = reviewers.map(reviewer => reviewer.dataValues);
+    return filteredReviewers;
   }
 };
 
@@ -82,8 +86,10 @@ const getAllCourseContent = async (courseId) => {
   const reviews = await _getReviews(courseId);
   const reviewers = await _getReviewers(reviews);
 
-  const reviewersObj = reviewers.reduce((memo, reviewer) => memo[reviewer.reviewerId] = reviewer, {});
-
+  const reviewersObj = reviewers.reduce((memo, reviewer) => {
+    memo[reviewer.reviewerId] = reviewer;
+    return memo;
+  }, {});
   const reviewsAndReviewers = reviews.map(review => {
     review.reviewer = reviewersObj[review.reviewer];
     return review;
@@ -101,7 +107,7 @@ const getReviewerById = async (reviewerId) => {
   if (reviewer === null) {
     console.log(`Reviewer ${reviewerId} does not exist`);
   } else {
-    return reviewer;
+    return reviewer.dataValues;
   }
 };
 
@@ -138,10 +144,10 @@ const _updateCourseWithReview = async (review, isAdd) => {
     updatedCourse.overallRatings = updatedCourse.totalStars / updatedCourse.totalRatings;
     const savedCourse = await Ratings.update(updatedCourse, {
       where: {
-        courseId
+        courseId: review.courseId
       }
     });
-    return savedCourse;
+    return updatedCourse;
   }
 };
 
@@ -156,7 +162,7 @@ const _updateReviewer = async (reviewerId, isAdd) => {
         reviewerId
       }
     })
-    return savedReviewer;
+    return updatedReviewer;
   }
 };
 
@@ -173,6 +179,8 @@ const addReview = async (review) => {
     return;
   }
 
+  const reviewId = crypto.createHash('md5').update(`course${review.courseId}_review${updatedCourse.reviews + 1}`).digest('hex');
+  review.id = reviewId;
   const savedReview = await Reviews.create(review);
   return savedReview;
 };
@@ -204,15 +212,24 @@ const addCourse = async (courseId) => {
   return savedCourse;
 };
 
-const deleteReview = (review) => {
+const deleteReview = async (review) => {
   const updatedReviewer = await _updateReviewer(review.reviewer, false);
   const updatedCourse = await _updateCourseWithReview(review, false);
 
   const savedReview = await Reviews.destroy({
     where: {
-      reviewId: review.reviewId
+      id: review.id
     }
   });
+};
+
+const updateReview = async (review) => {
+  const updatedReview = await Reviews.update(review, {
+    where: {
+      id: review.id
+    }
+  });
+  return updatedReview[0];
 };
 
 module.exports = {
@@ -223,6 +240,7 @@ module.exports = {
   addReview,
   addReviewer,
   addCourse,
-  deleteReview
+  deleteReview,
+  updateReview
 };
 

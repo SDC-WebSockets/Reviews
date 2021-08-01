@@ -46,9 +46,6 @@ module.exports.stringifyDocument = (doc) => {
 };
 
 
-
-
-
 module.exports.generateRandomReviewer = (i) => {
   // constant reviewer attributes
   // create a uuid hash for user id

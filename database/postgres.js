@@ -3,7 +3,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-const sequelize = new Sequelize(`postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@localhost:5432/udemy_reviews`);
+const sequelize = new Sequelize(`postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@localhost:5432/udemy_reviews`, {
+  logging: false
+});
 
 const Ratings = sequelize.define('ratings', {
   courseId: { type: DataTypes.INTEGER, primaryKey: true },
