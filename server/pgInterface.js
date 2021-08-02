@@ -179,7 +179,7 @@ const addReview = async (review) => {
     return;
   }
 
-  const reviewId = crypto.createHash('md5').update(`course${review.courseId}_review${updatedCourse.reviews + 1}`).digest('hex');
+  const reviewId = crypto.createHash('md5').update(`course${review.courseId}_review${updatedCourse.reviews}`).digest('hex');
   review.id = reviewId;
   const savedReview = await Reviews.create(review);
   return savedReview;
