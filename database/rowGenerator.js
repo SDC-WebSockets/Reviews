@@ -40,7 +40,7 @@ const generateCourse = (courseId) => {
 
   // update aggregate scoring on rating property
   ratings.totalRatings = randomReviewCount;
-  ratings.overallRating = ratings.totalStars / ratings.totalRatings;
+  // ratings.overallRating = ratings.totalStars / ratings.totalRatings;
 
   courseArr.push(seedHelpers.stringifyDocument(ratings));
 };
@@ -63,7 +63,8 @@ const populateReviewerCSV = (reviewers) => {
 };
 
 const populateCourseCSV = (courses) => {
-  courses = 'courseId|totalRatings|totalStars|overallRatings|five|fourhalf|four|threehalf|three|twohalf|two|onehalf|one\n' + courses;
+  courses = 'courseId|totalRatings|totalStars|five|fourhalf|four|threehalf|three|twohalf|two|onehalf|one\n' + courses;
+  // courses = 'courseId|totalRatings|totalStars|overallRatings|five|fourhalf|four|threehalf|three|twohalf|two|onehalf|one\n' + courses;
   const writableCourseStream = fs.createWriteStream(path.join('/tmp', 'courses.csv'))
     .on('error', (err) => console.error('error with courses stream: ', err.message));
   writableCourseStream.write(courses);
@@ -150,4 +151,4 @@ const setupPostgresDB = async (refresh) => {
   }
 };
 
-createCSVdocs(1, 1000000, true);
+createCSVdocs(1, 1000000, false);

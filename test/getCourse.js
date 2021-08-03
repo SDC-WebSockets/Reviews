@@ -3,6 +3,6 @@ module.exports = {
 }
 
 function setCourseId(context, events, done) {
-  context.vars['courseId'] = Math.floor(Math.random() * 1000001);
+  context.vars['courseId'] = Math.floor(Math.random() * 400000);
   return done();
 };

@@ -19,7 +19,7 @@ scenarios:
       - function: "setCourseId"
       - function: "getJSONfields"
       - post:
-          url: "/reviews/item"
+          url: "/reviews/item/{{ courseId }}/review/0"
           json:
             courseId: "{{ courseId }}"
             rating: "{{ rating }}"

@@ -6,10 +6,10 @@ config:
       name: Warm up
     - duration: 120
       arrivalRate: 10
-      rampTo: 250
+      rampTo: 100
       name: Ramp up load
     - duration: 60
-      arrivalRate: 250
+      arrivalRate: 100
       name: Sustained load
   processor: "./getCourse.js"
 
@@ -18,6 +18,4 @@ scenarios:
     flow:
       - function: "setCourseId"
       - get:
-          url: "/reviews/item"
-          qs:
-            courseId: "{{ courseId }}"
+          url: "/reviews/item/{{ courseId }}"

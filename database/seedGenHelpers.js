@@ -3,17 +3,17 @@ dotenv.config();
 const faker = require('faker');
 const crypto = require('crypto');
 
-module.exports.randomInclusiveInteger = (min, max) => {
+const randomInclusiveInteger = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-module.exports.randomDate = (date1, date2) => {
+const randomDate = (date1, date2) => {
   return new Date(date1.getTime() + Math.random() * (date2.getTime() - date1.getTime()));
 };
 
-module.exports.colors = [
+const colors = [
   'rgb(77, 171, 101)',
   'rgb(156, 70, 127)',
   'rgb(240, 189, 79)',
@@ -21,11 +21,11 @@ module.exports.colors = [
   'rgb(40, 150, 169)'
 ];
 
-module.exports.randomColor = () => {
+const randomColor = () => {
   return colors[randomInclusiveInteger(0, colors.length - 1)];
 };
 
-module.exports.num2Word = (num) => {
+const num2Word = (num) => {
   const map = {
     '5': 'five',
     '4.5': 'fourhalf',
@@ -40,13 +40,13 @@ module.exports.num2Word = (num) => {
   return map[num];
 };
 
-module.exports.stringifyDocument = (doc) => {
+const stringifyDocument = (doc) => {
   const returnStr = Object.values(doc).reduce((memo, value) => memo ? memo + `|${value}` : `${value}`, '');
   return returnStr;
 };
 
 
-module.exports.generateRandomReviewer = (i) => {
+const generateRandomReviewer = (i) => {
   // constant reviewer attributes
   // create a uuid hash for user id
   const reviewerId = crypto.createHash('md5').update(i.toString()).digest('hex');
@@ -69,7 +69,7 @@ module.exports.generateRandomReviewer = (i) => {
   return reviewerObj;
 };
 
-module.exports.generateRandomReview = (courseId, i) => {
+const generateRandomReview = (courseId, i) => {
   // make it likely to have a good rating
   const reviewId = crypto.createHash('md5').update(`course${courseId}_review${i}`).digest('hex');
   const ratingOpts = [5, 5, 5, 5, 5, 5, 5, 5, 4.5, 4.5, 4, 4, 4, 3.5, 3, 2.5, 2, 1.5, 1, 1];
@@ -90,12 +90,12 @@ module.exports.generateRandomReview = (courseId, i) => {
   };
 };
 
-module.exports.generateRating = (courseId) => {
+const generateRating = (courseId) => {
   return {
     courseId,
     totalRatings: 0,
     totalStars: null,
-    overallRating: null,
+    // overallRating: null,
     five: 0,
     fourhalf: 0,
     four: 0,
@@ -106,4 +106,16 @@ module.exports.generateRating = (courseId) => {
     onehalf: 0,
     one: 0
   };
+};
+
+module.exports = {
+  randomInclusiveInteger,
+  randomDate,
+  colors,
+  randomColor,
+  num2Word,
+  stringifyDocument,
+  generateRandomReviewer,
+  generateRandomReview,
+  generateRating
 };
