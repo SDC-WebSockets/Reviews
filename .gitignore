@@ -18,3 +18,5 @@ tbd.js
 WebSequence.png
 /data
 *.zip
+newrelic.js
+*.csv

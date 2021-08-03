@@ -11,8 +11,8 @@ import querystring from 'querystring';
 
 import { ReviewServiceWrapper } from './styles/main.style.js';
 
-const host = process.env.HOST || 'localhost';
-const port = process.env.PORT || 2712;
+const host = process.env.CLIENTHOST || 'localhost';
+const port = process.env.CLIENTPORT || 2712;
 
 class ReviewService extends React.Component {
   constructor(props) {
@@ -39,7 +39,8 @@ class ReviewService extends React.Component {
   }
 
   getReviews(id) {
-    fetch(`http://${host}:${port}/reviews/item?courseId=${id}`, {
+    console.log('fetching from localhost:6012');
+    fetch(`http://${host}:${port}/reviews/item/${id}`, {
       method: 'GET',
       mode: 'cors',
       headers: {
