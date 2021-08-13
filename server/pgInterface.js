@@ -80,26 +80,57 @@ const _getReviewers = async (reviews) => {
   }
 };
 
+const _getDataWithFormat = async (courseId) => {
+  const [data, meta] = await sequelize.query(`
+  SELECT ratings."courseId" AS "courseId",
+  jsonb_build_object(
+    'overallRatings', ratings."overallRatings",
+    'totalStars', ratings."totalStars",
+    'totalRatings', ratings."totalRatings",
+    '5', ratings.five,
+    'fourhalf', ratings.fourhalf,
+    '4', ratings.four,
+    'threehalf', ratings.threehalf,
+    '3', ratings.three,
+    'twohalf', ratings.twohalf,
+    '2', ratings.two,
+    'onehalf', ratings.onehalf,
+    '1', ratings.one
+  ) AS ratings,
+  jsonb_agg(jsonb_build_object(
+    'id', reviews.id,
+    'courseId', reviews."courseId",
+    'rating', reviews.rating,
+    'comment', reviews.comment,
+    'createdAt', reviews."createdAt",
+    'helpful', reviews.helpful,
+    'reported', reviews.reported,
+    'reviewer', jsonb_build_object(
+      'reviewerId', reviewers."reviewerId",
+      'name', reviewers.name,
+      'picture', reviewers.picture,
+      'coursesTaken', reviewers."coursesTaken",
+      'reviews', reviewers.reviews
+    )
+  )) AS reviews
+  FROM ratings INNER JOIN reviews
+  ON ratings."courseId" = reviews."courseId"
+  INNER JOIN reviewers
+  ON reviews.reviewer = reviewers."reviewerId"
+  WHERE ratings."courseId" = ${courseId}
+  GROUP BY ratings."courseId", ratings."overallRatings", ratings."totalStars",
+  ratings."totalRatings", ratings.five, ratings.fourhalf, ratings.four,
+  ratings.threehalf, ratings.three, ratings.twohalf, ratings.two,
+  ratings.onehalf, ratings.one;
+  `);
+  return data;
+};
+
 const getAllCourseContent = async (courseId) => {
-  const course = await _getCourse(courseId);
-  const newRating = _mapKeys(course);
-  const reviews = await _getReviews(courseId);
-  const reviewers = await _getReviewers(reviews);
-
-  const reviewersObj = reviewers.reduce((memo, reviewer) => {
-    memo[reviewer.reviewerId] = reviewer;
-    return memo;
-  }, {});
-  const reviewsAndReviewers = reviews.map(review => {
-    review.reviewer = reviewersObj[review.reviewer];
-    return review;
-  });
-
-  return {
-    courseId,
-    ratings: newRating,
-    reviews: reviewsAndReviewers
-  };
+  const allData = await _getDataWithFormat(courseId);
+  const course = allData[0];
+  course.ratings = _mapKeys(course.ratings);
+  return course;
 };
 
 const getReviewerById = async (reviewerId) => {
