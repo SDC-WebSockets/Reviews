@@ -1,6 +1,18 @@
 const { sequelize, Reviews, Reviewers, Ratings } = require('../database/postgres.js');
-const { Op } = require('sequelize');
 const crypto = require('crypto');
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  host: process.env.PGHOST,
+  database: 'udemy_reviews',
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD
+});
+
+pool.on('error', (err, client) => {
+  console.error('Unexpected error on postgres client', err)
+  process.exit(-1)
+});
 
 
 const _num2Word = (num) => {
@@ -19,25 +31,15 @@ const _num2Word = (num) => {
 };
 
 const _mapKeys = (ratings) => {
-  const newRatings = {};
-  const map = {
-    'five': '5',
-    'fourhalf': '4 1/2',
-    'four': '4',
-    'threehalf': '3 1/2',
-    'three': '3',
-    'twohalf': '2 1/2',
-    'two': '2',
-    'onehalf': '1 1/2',
-    'one': '1'
-  };
-  for (let key in ratings) {
-    if (map[key]) {
-      newRatings[map[key]] = ratings[key];
-    } else {
-      newRatings[key] = ratings[key];
-    }
-  }
+  const newRatings = ratings;
+  newRatings['1 1/2'] = ratings['onehalf'];
+  newRatings['2 1/2'] = ratings['twohalf'];
+  newRatings['3 1/2'] = ratings['threehalf'];
+  newRatings['4 1/2'] = ratings['fourhalf'];
+  delete newRatings['onehalf'];
+  delete newRatings['twohalf'];
+  delete newRatings['threehalf'];
+  delete newRatings['fourhalf'];
   return newRatings;
 };
 
@@ -80,26 +82,68 @@ const _getReviewers = async (reviews) => {
   }
 };
 
+const _getDataWithFormat = async (courseId) => {
+  const data = await pool
+    .connect()
+    .then(client => {
+      return client.query(`
+      SELECT ratings."courseId" AS "courseId",
+      jsonb_build_object(
+        'overallRatings', ratings."overallRatings",
+        'totalStars', ratings."totalStars",
+        'totalRatings', ratings."totalRatings",
+        '5', ratings.five,
+        'fourhalf', ratings.fourhalf,
+        '4', ratings.four,
+        'threehalf', ratings.threehalf,
+        '3', ratings.three,
+        'twohalf', ratings.twohalf,
+        '2', ratings.two,
+        'onehalf', ratings.onehalf,
+        '1', ratings.one
+      ) AS ratings,
+      jsonb_agg(jsonb_build_object(
+        'id', reviews.id,
+        'courseId', reviews."courseId",
+        'rating', reviews.rating,
+        'comment', reviews.comment,
+        'createdAt', reviews."createdAt",
+        'helpful', reviews.helpful,
+        'reported', reviews.reported,
+        'reviewer', jsonb_build_object(
+          'reviewerId', reviewers."reviewerId",
+          'name', reviewers.name,
+          'picture', reviewers.picture,
+          'coursesTaken', reviewers."coursesTaken",
+          'reviews', reviewers.reviews
+        )
+      )) AS reviews
+      FROM ratings INNER JOIN reviews
+      ON ratings."courseId" = reviews."courseId"
+      INNER JOIN reviewers
+      ON reviews.reviewer = reviewers."reviewerId"
+      WHERE ratings."courseId" = ${courseId}
+      GROUP BY ratings."courseId", ratings."overallRatings", ratings."totalStars",
+      ratings."totalRatings", ratings.five, ratings.fourhalf, ratings.four,
+      ratings.threehalf, ratings.three, ratings.twohalf, ratings.two,
+      ratings.onehalf, ratings.one;
+      `)
+      .then(res => {
+        client.release();
+        return res.rows[0];
+      })
+      .catch(err => {
+        client.release();
+        console.log('error with postgres query', err);
+      });
+    });
+  return data;
+};
+
 const getAllCourseContent = async (courseId) => {
-  const course = await _getCourse(courseId);
-  const newRating = _mapKeys(course);
-  const reviews = await _getReviews(courseId);
-  const reviewers = await _getReviewers(reviews);
-
-  const reviewersObj = reviewers.reduce((memo, reviewer) => {
-    memo[reviewer.reviewerId] = reviewer;
-    return memo;
-  }, {});
-  const reviewsAndReviewers = reviews.map(review => {
-    review.reviewer = reviewersObj[review.reviewer];
-    return review;
-  });
-
-  return {
-    courseId,
-    ratings: newRating,
-    reviews: reviewsAndReviewers
-  };
+  const course = await _getDataWithFormat(courseId);
+  course.ratings = _mapKeys(course.ratings);
+  return course;
 };
 
 const getReviewerById = async (reviewerId) => {

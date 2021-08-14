@@ -2,8 +2,6 @@ require('newrelic');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const shrinkRay = require('shrink-ray-current');
-const couchbase = require('./cbInterface.js');
 const pg = require('./pgInterface.js');
 const app = express();
 const dotenv = require('dotenv');
@@ -13,14 +11,11 @@ const port = process.env.PORT || 2712;
 const host = process.env.HOST || 'localhost';
 
 app.use(cors());
-app.use(shrinkRay());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 
 // get reviews and ratings for one course
 app.get('/reviews/item/:courseId', (req, res) => {
   let courseId = Number(req.params.courseId);
-  console.log(`fetching course reviews for course ${courseId}`);
 
   if (Number.isInteger(courseId)) {
     pg.getAllCourseContent(courseId)
@@ -28,7 +23,7 @@ app.get('/reviews/item/:courseId', (req, res) => {
         res.status(200).json(results);
       })
       .catch(err => {
-        console.log('error')
+        console.log('error', err)
         res.status(400).send(`course ${courseId} does not exist`);
       });
   } else {
