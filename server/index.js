@@ -15,7 +15,7 @@ app.use(express.json());
 
 //loaderio
 app.get('/loaderio-4a6bd7c7c4a1f5bad560db3a347b3b94.txt', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'loaderio'));
+  res.sendFile(path.join(__dirname, '..', 'loaderio', req.originalUrl));
 });
 
 // get reviews and ratings for one course
