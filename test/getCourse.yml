@@ -1,15 +1,16 @@
 config:
-  target: "http://localhost:2712"
+  target: "http://ec2-54-244-208-81.us-west-2.compute.amazonaws.com:2712"
+  # target: "http://ec2-18-236-89-228.us-west-2.compute.amazonaws.com:5000"
   phases:
-    - duration: 60
+    # - duration: 60
+    #   arrivalRate: 100
+    #   name: Warm up
+    # - duration: 120
+    #   arrivalRate: 100
+    #   rampTo: 300
+    #   name: Ramp up load
+    - duration: 240
       arrivalRate: 10
-      name: Warm up
-    - duration: 120
-      arrivalRate: 10
-      rampTo: 100
-      name: Ramp up load
-    - duration: 60
-      arrivalRate: 100
       name: Sustained load
   processor: "./getCourse.js"
 
