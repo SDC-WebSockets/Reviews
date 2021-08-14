@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-const sequelize = new Sequelize(`postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@localhost:5432/udemy_reviews`, {
+const sequelize = new Sequelize(`postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:5432/udemy_reviews`, {
   logging: false
 });
 
