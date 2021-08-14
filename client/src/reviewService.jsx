@@ -39,7 +39,6 @@ class ReviewService extends React.Component {
   }
 
   getReviews(id) {
-    console.log('fetching from localhost:6012');
     fetch(`http://${host}:${port}/reviews/item/${id}`, {
       method: 'GET',
       mode: 'cors',
@@ -74,7 +73,7 @@ class ReviewService extends React.Component {
   updateRatings(ratings) {
     this.setState({
       ratings: ratings,
-      overallRating: Number(ratings.overallRating.toFixed(1))
+      overallRating: Number(ratings.overallRatings.toFixed(1))
     });
   }
 
