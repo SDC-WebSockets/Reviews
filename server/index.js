@@ -6,6 +6,7 @@ const pg = require('./pgInterface.js');
 const app = express();
 const dotenv = require('dotenv');
 const compression = require('compression');
+const memcached = require('./cache.js');
 dotenv.config();
 
 const port = process.env.PORT || 2712;
@@ -21,7 +22,7 @@ app.get('/loaderio-4a6bd7c7c4a1f5bad560db3a347b3b94.txt', (req, res) => {
 });
 
 // get reviews and ratings for one course
-app.get('/reviews/item/:courseId', (req, res) => {
+app.get('/reviews/item/:courseId', memcached, (req, res) => {
   let courseId = Number(req.params.courseId);
 
   if (Number.isInteger(courseId)) {
