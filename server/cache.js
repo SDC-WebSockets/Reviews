@@ -1,5 +1,5 @@
 const Memcached = require('memcached');
-const dotenv = require(dotenv);
+const dotenv = require('dotenv');
 dotenv.config();
 const memcached = new Memcached(`${process.env.MEMCACHED}:11211`);
 
