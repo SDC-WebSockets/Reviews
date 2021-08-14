@@ -5,6 +5,7 @@ const cors = require('cors');
 const pg = require('./pgInterface.js');
 const app = express();
 const dotenv = require('dotenv');
+const compression = require('compression');
 dotenv.config();
 
 const port = process.env.PORT || 2712;
@@ -12,6 +13,7 @@ const host = process.env.HOST || 'localhost';
 
 app.use(cors());
 app.use(express.json());
+app.use(compression());
 
 //loaderio
 app.get('/loaderio-4a6bd7c7c4a1f5bad560db3a347b3b94.txt', (req, res) => {
