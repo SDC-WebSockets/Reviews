@@ -74,16 +74,18 @@ const generateRandomReviewer = (i) => {
   };
 };
 
-const generateRandomReview = (courseId) => {
+const generateRandomReview = (courseId, i) => {
   // make it likely to have a good rating
+  const reviewId = crypto.createHash('md5').update(`course${courseId}_review${i}`).digest('hex');
   const ratingOpts = [5, 5, 5, 5, 5, 5, 5, 5, 4.5, 4.5, 4, 4, 4, 3.5, 3, 2.5, 2, 1.5, 1, 1];
-  const rating = ratings[randomInclusiveInteger(0, ratings.length - 1)];
+  const rating = ratingOpts[randomInclusiveInteger(0, ratingOpts.length - 1)];
   const comment = faker.lorem.text().replace(/(?:\r\n|\r|\n)/g, '<br>');
   // random date within 3 months
   const createdAt = randomDate(new Date('01 May 2021 00:00 UTC'), new Date()).toISOString();
   const helpful = randomInclusiveInteger(1, 50);
 
   return {
+    reviewId,
     courseId,
     rating,
     comment,
@@ -111,27 +113,29 @@ const generateRating = (courseId) => {
   };
 };
 
-const generateJSONCourse = (courseId, start) => {
+let reviewObj = [];
+let courseObj = [];
+const generateJSONCourse = (courseId) => {
   let doc = {
     ratings: generateRating(courseId),
-    reviews: [],
     courseId
   };
   const randomReviewCount = randomInclusiveInteger(5, 30);
   for (let i = 0; i < randomReviewCount; i++) {
-    let review = generateRandomReview(courseId);
-    let randomReviewerNum = randomInclusiveInteger(0, 999);
+    let review = generateRandomReview(courseId, i);
+    let randomReviewerNum = randomInclusiveInteger(0, 9999);
     // update locally stored reviewer object with added review count
     let tempStore = reviewerObj[randomReviewerNum].reviews + 1;
     reviewerObj[randomReviewerNum].reviews += 1;
     reviewerObj[randomReviewerNum].coursesTaken = randomInclusiveInteger(tempStore, tempStore + 3);
     // add reviewer reference to review
-    review.reviewer = reviewerObj[randomReviewerNum];
+    review.reviewer = reviewerObj[randomReviewerNum].reviewerId;
     // update rating values
     doc.ratings.totalStars = doc.ratings.totalStars === null ? review.rating : doc.ratings.totalStars + review.rating;
     doc.ratings[num2Word(review.rating)] += 1;
     // push review to doc object
-    doc.reviews.push(review);
+    // doc.reviews.push(review);
+    reviewObj.push(review);
   }
 
   // update aggregate scoring on rating property
@@ -139,65 +143,197 @@ const generateJSONCourse = (courseId, start) => {
   doc.ratings.overallRating = doc.ratings.totalStars / doc.ratings.totalRatings;
 
   // return JSON object
-  return JSON.stringify(doc);
+  courseObj.push(doc);
+  // return { doc: JSON.stringify(doc), reviews: JSON.stringify(reviews) };
+};
+
+
+// ***** EXECUTION SCRIPTS *****
+const generateReviewers = (start = 1, numCourses) => {
+  reviewerObj = [];
+  for (let j = start; j <= numCourses; j++) {
+    reviewerObj.push(generateRandomReviewer(j));
+  }
+};
+
+// const populateReviewerStore = async (start = 1, numCourses, fileN) => {
+//   let i = start;
+//   let revieweri = 0;
+
+//   // control stream of input data with an interval
+//   await new Promise((resolve, reject) => {
+//     const timedStreamFeeder = setInterval(async () => {
+//       for (let j = 0; j < 5; j ++) {
+//         // use a writable stream to generate data files
+//         const writableReviewerStream = fs.createWriteStream(`data/cbImport/reviewerdocs${fileN}/reviewer${i}.json`)
+//         .on('error', (err) => console.error('error with reviewer stream: ', err.message));
+//         writableReviewerStream.write(JSON.stringify(reviewerObj[revieweri]));
+//         writableReviewerStream.end();
+
+//         i++;
+//         revieweri++;
+
+//         // once number of courses is reached, clear timeout
+//         if (i === numCourses) {
+//           clearInterval(timedStreamFeeder);
+//           exec(`zip -r reviewerdocs${fileN}.zip data/cbImport/reviewerdocs${fileN}/`);
+//           resolve('finished');
+//         }
+//       }
+//     }, 1);
+//   });
+// };
+
+const populateReviewerStore = (start = 1) => {
+  const writableReviewerStream = fs.createWriteStream(`reviewers${start}.json`)
+    .on('error', (err) => console.error('error with reviewer stream: ', err.message));
+  writableReviewerStream.write(JSON.stringify(reviewerObj));
+  writableReviewerStream.end();
+};
+
+const populateCourseStore = (start = 1) => {
+  const writableCourseStream = fs.createWriteStream(`courses${start}.json`)
+    .on('error', (err) => console.error('error with courses stream: ', err.message));
+  writableCourseStream.write(JSON.stringify(courseObj));
+  writableCourseStream.end();
+};
+
+const populateReviewStore = (start = 1) => {
+  const writableReviewStream = fs.createWriteStream(`reviews${start}.json`)
+    .on('error', (err) => console.error('error with reviews stream: ', err.message));
+  writableReviewStream.write(JSON.stringify(reviewObj));
+  writableReviewStream.end();
+};
+
+// const populateCourseStore = (start, numCourses, fileN) => {
+//   return new Promise((resolve, reject) => {
+//     let i = start;
+
+//     // control stream of input data with an interval
+//     const timedStreamFeeder = setInterval(async () => {
+//       for (let j = 0; j < 10; j++) {
+
+//         // use a writable stream to generate data files
+//         const writableStream = fs.createWriteStream(`data/cbImport/courseDocs${fileN}/course${i}.json`)
+//           .on('error', (err) => console.error('error with course stream:', err.message));
+//         const { doc, reviews } = generateJSONCourse(i);
+//         writableStream.write(doc);
+//         writableStream.end();
+
+//         const writableStream2 = fs.createWriteStream(`data/cbImport/reviewDocs${fileN}/reviews${i}.json`)
+//           .on('error', (err) => console.error('error with course stream:', err.message));
+//         writableStream2.write(reviews);
+//         writableStream2.end();
+
+//         i++;
+
+//         // compress file every 10k records and create next folder
+//         // once number of courses is reached, clear timeout
+//         if (i === numCourses) {
+//           clearInterval(timedStreamFeeder);
+//           exec(`zip -r courseDocs${fileN}.zip data/cbImport/courseDocs${fileN}/`);
+//           exec(`zip -r reviewDocs${fileN}.zip data/cbImport/reviewDocs${fileN}/`);
+//           resolve('done');
+//         }
+//       }
+//     }, 1);
+//   });
+// };
+
+const write2couch = () => {
+  return new Promise((resolve, reject) => {
+    exec('sh cbupload.sh', (err, stdout, stderr) => {
+      if (err) {
+        console.error(err);
+        reject('failed');
+      } else {
+        console.log('posted 100k records to couchbase');
+        resolve('succeeded');
+      }
+    });
+  });
+};
+
+const createDirectories = () => {
+  return new Promise((resolve, reject) => {
+    let count = 0;
+    for (let j = 0; j < 10; j++) {
+      exec(`mkdir data/cbImport/courseDocs${j}`, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          count++;
+        }
+      });
+      exec(`mkdir data/cbImport/reviewerdocs${j}`, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          count++;
+        }
+      });
+      exec(`mkdir data/cbImport/reviewDocs${j}`, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          count++;
+        }
+      });
+    }
+    if (count === 30) {
+      resolve('finished creating directories');
+    } else {
+      reject(`failed to create directories: only created ${count}`);
+    }
+  });
+};
+
+const clearDirectories = () => {
+  return new Promise((resolve, reject) => {
+    exec(`rm -rfv data/cbImport/courseDocs/*`);
+    exec(`rm -rfv data/cbImport/reviewerdocs/*`);
+    exec(`rm -rfv data/cbImport/reviewDocs/*`);
+    resolve('finished clearing directories');
+  });
+};
+
+const wait4write = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(true), 1);
+  });
 };
 
 const populateDocStore = async (start = 1, numCourses) => {
   let i = start;
-  let fileN = Math.floor(start / 10000);
 
-  // control stream of input data with an interval
-  const timedStreamFeeder = setInterval(async () => {
-    // setup for round 1
-    if (i === 1) {
-      await exec(`mkdir data/cbImport/docs${fileN}`);
-      reviewerObj = [];
-      for (let j = 0; j < 1000; j++) {
-        reviewerObj.push(generateRandomReviewer(j));
-      }
+  while (i <= numCourses) {
+    generateReviewers(i, i + 10000);
+    for (let j = i; j < i + 10000; j++) {
+      generateJSONCourse(j);
     }
-    // clear and reset locally stored reviewers every 1k courses
-    if (i % 1000 === 0) {
-      reviewerObj = [];
-      for (let j = i; j < i + 1000; j++) {
-        reviewerObj.push(generateRandomReviewer(j));
-      }
-    }
-    // compress file every 10k records and create next folder
-    if (i % 10000 === 0) {
-      console.log(`writing zip file docs${fileN}`);
-      await exec(`zip -r docs${fileN}.zip data/cbImport/docs${fileN}/`);
-      fileN = fileN === 9 ? 0 : fileN + 1;
-      await exec(`mkdir data/cbImport/docs${fileN}`);
-      await setTimeout(() => {}, 100);
-    }
+
+    populateReviewStore(1);
+    populateReviewerStore(1);
+    populateCourseStore(1);
+
+    reviewerObj = [];
+    reviewObj = [];
+    courseObj = [];
+
+    await write2couch();
+    await clearDirectories();
+
+    i += 10000;
+    console.log(`============  ${i}  ============`);
+
     // write to couchbase and clear local files every 100k records
-    if (i % 100000 === 0) {
+    if ((i - 1) % 100000 === 0) {
       console.log(`milestone: ${i} courses written to couchbase`);
-      for (let file = 0; file < 10; file++) {
-        await exec(`rm -rf data/cbImport/docs${file}`);
-      }
-      await exec('sh cbupload.sh', (err, stdout, stderr) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log('posted 100k records to couchbase');
-        }
-      });
+      // await clearDirectories();
+      // await write2couch();
     }
-    // once number of courses is reached, clear timeout
-    if (i === numCourses) {
-      clearInterval(timedStreamFeeder);
-    }
-
-    // use a writable stream to generate data files
-    const writableStream = fs.createWriteStream(`data/cbImport/docs${fileN}/courseReviews${i}.json`)
-      .on('error', (err) => console.error(err.message));
-    writableStream.write(generateJSONCourse(i));
-    writableStream.end();
-    i++;
-  }, 5);
+  }
 };
 
 // ***** EXECUTION *****
-populateDocStore(1000);
+populateDocStore(1, 1000000);

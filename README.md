@@ -15,7 +15,7 @@ Reviews for Udemy Clone (Front End Capstone project by Hack Reactor RPT27 team C
 4. [Installation](#installation)
 
 ## Description
-This review service is a fullstack application for an item page modeled after the [Udemy](www.udemy.com) front end. It includes a database for storing reviews and ratings for 100 courses, an algorithm to generate random custom data, and a server/API that handles requests from other services. It replicates all the front-end logic for rendering and filtering reviews that is found on the Udemy web page.
+This review service is a fullstack application for an item page modeled after the [Udemy](www.udemy.com) front end. It includes a database for storing reviews and ratings for 10 million courses  a server/API that can handle up to 850 requests per second.
 
 ### Featured Review feature
 If a course has at least ten reviews, the app chooses a Feature Review and renders it at a higher point in the page:

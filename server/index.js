@@ -1,124 +1,151 @@
+require('newrelic');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const shrinkRay = require('shrink-ray-current');
-const mongoDb = require('../database/mongoDb.js');
+const pg = require('./pgInterface.js');
 const app = express();
 const dotenv = require('dotenv');
+const compression = require('compression');
+const cache = require('./cache.js');
 dotenv.config();
 
 const port = process.env.PORT || 2712;
 const host = process.env.HOST || 'localhost';
 
 app.use(cors());
-app.use(shrinkRay());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
+app.use(compression());
 
-// get reviews and ratings for all courses
-app.get('/reviews', (req, res) => {
-  let reviews;
-  let ratings;
-  mongoDb.getAllReviews()
-    .then((allReviews) => {
-      reviews = allReviews;
-      mongoDb.getAllRatings()
-        .then((allRatings) => {
-          ratings = allRatings;
-          res.status(200).json({allReviews: reviews, allRatings: ratings});
-        });
-    });
+//loaderio
+app.get('/loaderio-4a6bd7c7c4a1f5bad560db3a347b3b94.txt', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'loaderio', req.originalUrl));
 });
 
 // get reviews and ratings for one course
-app.get('/reviews/item', (req, res) => {
-  let courseId = Number(req.query.courseId);
-  let reviews;
-  let rating;
+app.get('/reviews/item/:courseId', async (req, res) => {
+  let courseId = Number(req.params.courseId);
+
   if (Number.isInteger(courseId)) {
-    mongoDb.getReviewsForOneCourse(courseId)
-      .then((results) => {
-        reviews = results;
-        mongoDb.getRatingForOneCourse(courseId)
-          .then((result) => {
-            rating = result;
-            let data = {
-              courseId: courseId,
-              ratings: rating,
-              reviews: reviews
-            };
-            res.status(200).json(data);
-          });
-      });
+    const cacheData = await cache.getCacheData(courseId);
+    if (cacheData) {
+      res.status(200).json(cacheData);
+    } else {
+      pg.getAllCourseContent(courseId)
+        .then(results => {
+          cache.cacheData(courseId, results);
+          res.status(200).json(results);
+        })
+        .catch(err => {
+          console.log('error', err)
+          res.status(400).send(`course ${courseId} does not exist`);
+        });
+    }
   } else {
     res.json('No course selected');
   }
 });
 
 // DB CRUD
+// Reviewer Operations
 app.get('/reviews/reviewer/:reviewerId', (req, res) => {
   const reviewerId = req.params.reviewerId;
-
-  mongoDb.getReviewsByReviewer(reviewerId)
-    .then((reviews) => {
-      res.status(200).send(reviews);
+  console.log(`fetching reviewer ${reviewerId}`);
+  pg.getReviewerById(reviewerId)
+    .then(reviewer => {
+      res.status(200).send(reviewer);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
-      res.status(400).send(`Failed to fetch reviews for reviewer ${reviewerId}`);
+      res.status(400).send(`Failed to fetch reviewer with id ${reviewerId}`);
+    });
+});
+app.post('/reviews/reviewer/:reviewerId', (req, res) => {
+  const reviewerId = req.params.reviewerId;
+  console.log(`adding reviewer ${reviewerId}`);
+  const reviewer = req.body;
+  pg.addReviewer(reviewer)
+    .then(reviewer => {
+      res.status(201).send(reviewer.dataValues);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(400).send(`Failed to create reviewer with id ${reviewerId}`);
     });
 });
 
-app.get('/review/:reviewId', (req, res) => {
+// Review Operations
+app.get('/reviews/item/:courseId/review/:reviewId', (req, res) => {
   const reviewId = req.params.reviewId;
-
-  mongoDb.getReviewById(reviewId)
+  const courseId = req.params.courseId;
+  console.log(`fetching review ${reviewId}`);
+  pg.getReviewById(reviewId)
     .then((review) => {
       res.status(200).send(review);
     })
     .catch((err) => {
       console.error(err);
-      res.status(400).send(`Failed to fetch review for document ${reviewId}`);
+      res.status(400).send(`Failed to fetch review for document ${reviewerId}`);
     });
 });
-
-app.post('/reviews/item', (req, res) => {
+app.post('/reviews/item/:courseId/review/:reviewId', (req, res) => {
   // check that all properties are present
   let review = req.body;
+  console.log(`posting review for course ${req.params.courseId}`);
   if (review.courseId && review.reviewer && review.rating && review.comment && review.helpful) {
     review.createdAt = review.createdAt || new Date();
-    mongoDb.addReviewAndUpdateRating(review)
-      .then((review) => res.status(201).send(review))
-      .catch((err) => {
+    pg.addReview(review)
+      .then(review => {
+        if (review) {
+          res.status(201).send(review.dataValues);
+        } else {
+          throw 'review not created';
+        }
+      })
+      .catch(err => {
         console.error(err);
-        res.status(400).send(`Failed to create review for course ${review.courseId}`);
+        res.status(400).send(`Failed to create review for course ${req.params.courseId}`);
       });
   } else {
     res.status(400).send('Payload missing required fields');
   }
 });
-
-app.put('/reviews/item/:id', (req, res) => {
+app.put('/reviews/item/:courseId/review/:reviewId', (req, res) => {
   let review = req.body;
-  const reviewId = review.id;
-  mongoDb.updateReviewAndRating(req.body)
-    .then((result) => {
-      res.status(200).send(`review id ${reviewId} successfully updated`);
+  const reviewId = req.params.reviewId;
+  review.id = reviewId;
+  console.log(`updating review ${reviewId}`);
+  pg.updateReview(review)
+    .then((updCount) => {
+      res.status(200).send({updated: updCount});
     })
     .catch((err) => {
       res.status(400).send(`failed to update ${reviewId}`);
     });
 });
-
-app.delete('/reviews/item/:id', (req, res) => {
-  const reviewId = req.params.id;
-  mongoDb.deleteReviewAndUpdateRating(reviewId)
+app.delete('/reviews/item/:courseId/review/:reviewId', (req, res) => {
+  const courseId = req.params.courseId;
+  const reviewId = req.params.reviewId;
+  let review = req.body;
+  review.id = reviewId;
+  console.log(`deleting review ${reviewId}`);
+  pg.deleteReview(review)
     .then((result) => {
-      res.status(200).send(`review id ${reviewId} successfully deleted`);
+      res.status(200).send(`review for course ${courseId} successfully deleted`);
     })
     .catch((err) => {
-      res.status(400).send(`failed to update ${reviewId}`);
+      res.status(400).send(`failed to delete review for course ${courseId}`);
     });
+});
+
+// Course Operations
+app.post('/reviews/item/:courseId', (req, res) => {
+  const courseId = req.params.courseId;
+  console.log(`adding course ${courseId}`);
+  pg.addCourse(courseId)
+    .then(result => {
+      res.status(201).send(result.dataValues);
+    })
+    .catch(err => res.status(400).send(`failed to add course ${courseId}`));
 });
 
 app.listen(port, () => {

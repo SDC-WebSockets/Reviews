@@ -1,0 +1,35 @@
+## CREATE INDEX ##
+CREATE INDEX courseId ON `rpt27-sdc-websockets-reviews`(courseId) USING GSI;
+CREATE INDEX reviewerId ON `rpt27-sdc-websockets-reviewers`(reviewerId) USING GSI;
+CREATE INDEX reviewerId ON `rpt27-sdc-websockets-reviews` (DISTINCT ARRAY reviewer FOR review IN reviews END);
+
+## UNNEST REVIEWS FOR REVIEWER INDEX ##
+SELECT review.* FROM `rpt27-sdc-websockets-reviews` AS course UNNEST course.reviews AS review WHERE course.courseId = 1000;
+
+## SELECT ALL RELEVENT DATA ##
+SELECT review.ratings, reviews.*, reviewers.*
+> FROM `rpt27-sdc-websockets-reviews` review
+> UNNEST reviews.reviews AS reviews
+> INNER JOIN `rpt27-sdc-websockets-reviewers` reviewers
+> ON reviewers.reviewerId = reviews.reviewer
+> WHERE reviews.courseId = 10000;
+
+## TO AVOID DUPLICATE RATING DATA ON EACH OBJECT ##
+#### GET REVIEW AND REVIEWER
+SELECT reviewer.*, reviews.*
+> FROM `rpt27-sdc-websockets-reviews` review
+> UNNEST review.reviews AS reviews
+> INNER JOIN `rpt27-sdc-websockets-reviewers` reviewer
+> ON reviews.reviewer = reviewer.reviewerId
+> WHERE review.courseId = 50002;
+
+#### GET RATING
+SELECT ratings FROM `rpt27-sdc-websockets-reviews` WHERE courseId=50002;
+
+## UPDATE QUERY
+UPDATE `rpt27-sdc-websockets-reviewers`
+   > SET coursesTaken = coursesTaken + 1
+   > WHERE reviewerId IN
+   > (SELECT reviews.reviewer FROM `rpt27-sdc-websockets-reviews` review
+
+   > UNNEST review.reviews AS reviews WHERE review.courseId=17)
