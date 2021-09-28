@@ -59,10 +59,17 @@ List of reviews for current course (displays the first twelve reviews by default
 - Webpack
 
 ## API Endpoints
-- GET `/reviews/item/:id`
-- POST `/reviews/item`
-- PUT `/reviews/item/:id`
-- DELETE `/reviews/item/:id`
+- Courses
+  - [GET Course](readme-assets/api/course/get.md)
+  - [POST Course](readme-assets/api/course/post.md)
+- Reviews
+  - [GET Review](readme-assets/api/review/get.md)
+  - [POST Review](readme-assets/api/review/post.md)
+  - [PUT Review](readme-assets/api/review/put.md)
+  - [DELETE Review](readme-assets/api/review/delete.md)
+- Reviewers
+  - [GET Reviewer](readme-assets/api/reviewer/get.md)
+  - [GET Reviewer](readme-assets/api/reviewer/post.md)
 
 ## Requirements
 - Node 6.13.0
